@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		DF435B6019FFD12500D6B454 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF435B5F19FFD12500D6B454 /* main.cpp */; };
+		DF435B6819FFD2F900D6B454 /* GameBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF435B6619FFD2F900D6B454 /* GameBoard.cpp */; };
+		DF435B6B19FFD33E00D6B454 /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF435B6919FFD33E00D6B454 /* Tile.cpp */; };
+		DF435B6E19FFD34900D6B454 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF435B6C19FFD34900D6B454 /* Player.cpp */; };
+		DF435B7119FFD38A00D6B454 /* TileFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF435B6F19FFD38A00D6B454 /* TileFactory.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,14 @@
 /* Begin PBXFileReference section */
 		DF435B5C19FFD12500D6B454 /* BoardGame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BoardGame; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF435B5F19FFD12500D6B454 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DF435B6619FFD2F900D6B454 /* GameBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameBoard.cpp; sourceTree = "<group>"; };
+		DF435B6719FFD2F900D6B454 /* GameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBoard.h; sourceTree = "<group>"; };
+		DF435B6919FFD33E00D6B454 /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
+		DF435B6A19FFD33E00D6B454 /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
+		DF435B6C19FFD34900D6B454 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		DF435B6D19FFD34900D6B454 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		DF435B6F19FFD38A00D6B454 /* TileFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileFactory.cpp; sourceTree = "<group>"; };
+		DF435B7019FFD38A00D6B454 /* TileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileFactory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,14 @@
 			isa = PBXGroup;
 			children = (
 				DF435B5F19FFD12500D6B454 /* main.cpp */,
+				DF435B6619FFD2F900D6B454 /* GameBoard.cpp */,
+				DF435B6919FFD33E00D6B454 /* Tile.cpp */,
+				DF435B6A19FFD33E00D6B454 /* Tile.h */,
+				DF435B6F19FFD38A00D6B454 /* TileFactory.cpp */,
+				DF435B7019FFD38A00D6B454 /* TileFactory.h */,
+				DF435B6719FFD2F900D6B454 /* GameBoard.h */,
+				DF435B6C19FFD34900D6B454 /* Player.cpp */,
+				DF435B6D19FFD34900D6B454 /* Player.h */,
 			);
 			path = BoardGame;
 			sourceTree = "<group>";
@@ -118,6 +138,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF435B6E19FFD34900D6B454 /* Player.cpp in Sources */,
+				DF435B7119FFD38A00D6B454 /* TileFactory.cpp in Sources */,
+				DF435B6B19FFD33E00D6B454 /* Tile.cpp in Sources */,
+				DF435B6819FFD2F900D6B454 /* GameBoard.cpp in Sources */,
 				DF435B6019FFD12500D6B454 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
