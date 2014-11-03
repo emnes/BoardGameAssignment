@@ -15,7 +15,7 @@
 using namespace std;
 
 
-template<typename T, typename J, unsigned N, size_t, ROW, size_t COL> class GameBoard {
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameBoard {
 	
 	private:
 		array<array<T, ROW>, COL> board;
