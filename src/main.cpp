@@ -14,7 +14,7 @@ using namespace std;
 int main() {
     
     // Player test suite
-    Player* testPlayer = new Player();
+    Player* testPlayer = new Player("testPlayer");
     
     cout<< "----------------------Player tests started------------------------------" << endl;
     
@@ -43,7 +43,7 @@ int main() {
     cout<< "canAct() with food = 0 " << "\t\t\t" << ((!testPlayer->canAct())?"Succeded":"Failed") << endl;
     
     // Test paying a player
-    Player* testPlayerToPay = new Player();
+    Player* testPlayerToPay = new Player("testPlayerToPay");
     
     cout<< "pay(...) with gold > 0  " << "\t\t" << 
 		((testPlayer->pay(*testPlayerToPay)
