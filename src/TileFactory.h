@@ -8,7 +8,7 @@
 //  Copyright (c) 2014 Mazhar Shar & Patrice Boulet. All rights reserved.
 //
 
-#ifndef __BoardGame__TileFactory__
-#define __BoardGame__TileFactory__
+#ifndef __src__TileFactory__
+#define __src__TileFactory__
 
 #endif /* defined(__BoardGame__TileFactory__) */
