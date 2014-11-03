@@ -9,9 +9,14 @@
 #ifndef __src__Player__
 #define __src__Player__
 
+#include <string>
+
+using namespace std;
+
 class Player{
 	
 	private:
+		const string name;
 		unsigned int gold = 5;
 		unsigned int food = 10;
 		
@@ -23,11 +28,12 @@ class Player{
 		
 		// Cart 
 		unsigned int cart = 9;
-		unsigned int currentCartLength = 3;
+		unsigned int cartSize = 3;
 		
 	public:
-		
-		// Getters
+		Player(string _name) : name(_name){}
+				
+		// Getters & Setters
 		unsigned int getFood(){return food;}
 		unsigned int getGold(){return gold;}
 		unsigned int getRuby(){return ruby;}
@@ -35,6 +41,15 @@ class Player{
 		unsigned int getFabric(){return fabric;}
 		unsigned int getJewel(){return jewel;}
 		unsigned int getCartCapacity(){return cart;}
+		unsigned int getCartSize(){return cartSize;}
+		void setFood(unsigned int _food){food = _food;}
+		void setGold(unsigned int _gold){gold = _gold;}
+		void setRuby(unsigned int _ruby){ruby = _ruby;}
+		void setSpice(unsigned int _spice){spice = _spice;}
+		void setFabric(unsigned int _fabric){fabric = _fabric;}
+		void setJewel(unsigned int _jewel){jewel = _jewel;}
+		void setCartCapacity(unsigned int _cart){cart = _cart;}
+		void setCartSize(unsigned int _cartSize){cartSize = _cartSize;}
 		
 		// Functions
 		bool canAct() const{return food>0;}
