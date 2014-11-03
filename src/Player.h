@@ -22,18 +22,24 @@ class Player{
 		unsigned int jewel = 1;
 		
 		// Cart 
-		unsigned int cart = 6;
-		unsigned int currentCartSize = 3;
+		unsigned int cart = 9;
+		unsigned int currentCartLength = 3;
 		
 	public:
-		bool canAct() const{return food>0;}
-		void eat() {if(canAct())--food;}
+		
+		// Getters
 		unsigned int getFood(){return food;}
 		unsigned int getGold(){return gold;}
 		unsigned int getRuby(){return ruby;}
 		unsigned int getSpice(){return spice;}
 		unsigned int getFabric(){return fabric;}
 		unsigned int getJewel(){return jewel;}
+		unsigned int getCartCapacity(){return cart;}
+		
+		// Functions
+		bool canAct() const{return food>0;}
+		void eat() {if(canAct())--food;}
+		bool pay(Player& player);
 };
 
 #endif /* defined(__BoardGame__Player__) */

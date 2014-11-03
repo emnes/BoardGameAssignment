@@ -7,3 +7,13 @@
 //
 
 #include "Player.h"
+
+bool Player::pay(Player& player){
+	if( this->getGold() > 0){
+			++(player.gold);
+			--(this->gold);
+			return true;
+	}else{
+		return false;
+	}
+}
