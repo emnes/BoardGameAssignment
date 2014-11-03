@@ -8,65 +8,125 @@
 #ifndef __src__Tile__
 #define __src__Tile__
 
-#include "Player.h">
+#include "Player.h"
 #include <vector>
 
 using namespace std;
 
-template<typename T> 
+template<typename T, typename J> 
 class Tile{
 	
 	private:
 		vector<J> players;
 	public:
-		bool operation==(const Tile &t);
+		//bool operation==(const Tile &t);
 		virtual bool action( Player& player);
 		virtual Tile* clone();
-		ostream& operation<<;
+		//ostream& operation<<;
 };
 
-template<typename T>
-class Restaurant : public Tile<T>{
+template<typename T, typename J>
+class Restaurant : public Tile<T,J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class SpiceMerchant : public Tile<T>{
+template<typename T, typename J>
+class SpiceMerchant : public Tile<T,J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class FabricManufactures : public Tile<T>{
+template<typename T, typename J>
+class FabricManufactures : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class Jeweler : public Tile<T>{
+template<typename T, typename J>
+class Jeweler : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class CartManufacturer : public Tile<T>{
+template<typename T, typename J>
+class CartManufacturer : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class SmallMarket : public Tile<T>{
+template<typename T, typename J>
+class SmallMarket : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class SpiceMarket : public Tile<T>{
+template<typename T, typename J>
+class SpiceMarket : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class JewelryMarket : public Tile<T>{
+template<typename T, typename J>
+class JewelryMarket : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class BlackMarket : public Tile<T>{
+template<typename T, typename J>
+class FabricMarket : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class Restaurant : public Tile<T>{
+template<typename T, typename J>
+class BlackMarket : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
-template<typename T>
-class Restaurant : public Tile<T>{
+template<typename T, typename J>
+class Casino : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
+};
+
+template<typename T, typename J>
+class GemMerchant : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
+};
+
+template<typename T, typename J>
+class Palace : public Tile<T, J>{
+	
+	public:
+		
+		bool action( Player& player);
 };
 
 #endif /* defined(__BoardGame__Tile__) */
