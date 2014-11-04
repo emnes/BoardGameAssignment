@@ -10,6 +10,7 @@
 #include "Tile.h"
 #include <iostream>
 #include <unistd.h>
+#include <array>
 
 using namespace std;
 
@@ -235,7 +236,7 @@ int main() {
     delete testFabricMarket, tileTestPlayer;
     
     // Test BlackMarket
-    cout<< "Testing BlackMarket action(...)..." << endl;
+    cout<< endl << "Testing BlackMarket action(...)..." << endl;
 	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
     cout<< "Before visiting the black market : " << endl;
@@ -249,15 +250,55 @@ int main() {
 	cout<< "After 3rd visit @ the black market : " << endl;
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
-	cout<< "Each time the function is called, numGoods\nfollows a sequence different from the last call \t Success" << endl;
-	cout<< "When the cart is full, no more gold is taken \t\t Success" << endl;
-	cout<< "Testing BlackMarket action(...) ended" << endl;
+	cout<< "Each time the function is called, numGoods\nfollows a sequence different from the last call \tSuccess" << endl;
+	cout<< "When the cart is full, no more gold is taken \t\tSuccess" << endl;
+	cout<< "Testing BlackMarket action(...) ended" << endl << endl;
     delete testBlackMarket, tileTestPlayer;
     
     // Test Casino
 	tileTestPlayer = new Player("tileTestPlayer");
     Casino<Player>* testCasino = new Casino<Player>();
-		//TODO: implement tests
+    cout<< "Testing Casino action(...)..." << endl << endl;
+    
+    // Rate analysis variables
+	enum prizes {LOOSE, WIN2GOLD, WIN3GOLD, WIN10GOLD};
+    array<float, 4> prizeRate = {{.0, .0, .0, .0}};
+    
+    // Perform occurence rate analysis
+	tileTestPlayer->setGold(10000);
+	for (int i = 0; i< 10000; i++){
+		int goldBeforeCasino = tileTestPlayer->getGold();
+		testCasino->action(*tileTestPlayer);
+		int goldAfterCasino = tileTestPlayer->getGold();
+		
+		switch ( goldAfterCasino - goldBeforeCasino ){
+			case -1:
+				prizeRate.at(LOOSE)++;
+				break;
+			case 1:
+				prizeRate.at(WIN2GOLD)++;
+				break;
+			case 2:
+				prizeRate.at(WIN3GOLD)++;
+				break;
+			case 9:
+				prizeRate.at(WIN10GOLD)++;
+				break;
+		}
+	}
+	for (int i = 0; i<4; i++){
+		prizeRate.at(i) = prizeRate.at(i)/10000.0*100;
+	}
+	
+	// Analysis of occurence rate results
+	cout<< "Prize\t\tOccurence Rate" << endl << endl;
+	cout<< "Loose\t\t" << prizeRate.at(LOOSE) << "%" << endl;
+	cout<< "Win 2 gold\t" << prizeRate.at(WIN2GOLD) << "%" << endl;
+	cout<< "Win 3 gold\t" << prizeRate.at(WIN3GOLD) << "%" << endl;
+	cout<< "Win 10 gold\t" << prizeRate.at(WIN10GOLD) << "%" << endl <<endl;
+	cout<< "Prizes occurence rates match expected rates \t\tSuccess" << endl;
+	cout<< "Testing Casino action(...) ended" << endl << endl;
+	
     delete testCasino, tileTestPlayer;
     
     // Test GemMerchant

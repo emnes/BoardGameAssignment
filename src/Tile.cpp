@@ -173,10 +173,10 @@ bool Casino<J>::action(Player& player){
 	
 	if( player.getGold() > 0 && !player.cartIsFull()){
 		
-		enum prizes{LOOSE, WIN2GOLD, WIN3GOLD, WIN10GOLD};
+		enum prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
 		
 		// Initialize success rate for each type of winning, or loss
-		array<int, 4> prizesWeights = {{40, 30, 20, 10}};
+		array<int, 4> prizesWeights = {{10, 20, 30, 40}};
 		
 		// Calculate the sum of all weighted success rates
 		int sumPrizesWeights = 0;
