@@ -171,7 +171,7 @@ bool Casino<J>::action(Player& player){
 
 // Using roulette selection algorithm to achieve weighted randomness
 	
-	if( player.getGold() > 0 && !player.cartIsFull()){
+	if( player.getGold() > 0{
 		
 		enum prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
 		
