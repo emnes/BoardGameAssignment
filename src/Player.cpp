@@ -28,7 +28,7 @@ bool Player::incrementCartSize(){
 }
 
 ostream& operator<<(ostream& os, const Player& player){
-	return os << endl << "Player : " << player.getName() << endl
+	return os << "Player : " << player.getName() << endl
 				<< "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
 					<< player.getFood() << "\t"
 						<< player.getGold() << "\t"
@@ -37,5 +37,5 @@ ostream& operator<<(ostream& os, const Player& player){
 									<< player.getJewel() << "\t"
 										<< player.getRuby() << "\t"
 											<< player.getCartCapacity() << "\t\t"
-												<< player.getCartSize() << endl << endl;
+												<< player.getCartSize() << endl;
 }

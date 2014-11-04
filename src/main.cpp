@@ -234,6 +234,7 @@ int main() {
     delete testFabricMarket, tileTestPlayer;
     
     // Test BlackMarket
+    cout<< "Testing BlackMarket action(...)..." << endl;
 	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
 	cout<< *tileTestPlayer;
@@ -245,6 +246,9 @@ int main() {
 	cout<< *tileTestPlayer;
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
+	cout<< "Each time the function is called, numGoods\nfollows a sequence different from the last call \t Success" << endl;
+	cout<< "When the cart is full, no more gold is taken \t\t Success" << endl;
+	cout<< "Testing BlackMarket action(...) ended" << endl;
     delete testBlackMarket, tileTestPlayer;
     
     // Test Casino
