@@ -62,6 +62,7 @@ class Player{
 		void eat() {if(canAct())--food;}
 		bool pay(Player& player);
 		bool incrementCartSize();
+		bool cartIsFull(){return cartSize == cart;}
 
 };
 

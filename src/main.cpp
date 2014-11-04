@@ -236,7 +236,15 @@ int main() {
     // Test BlackMarket
 	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
-		//TODO: implement tests
+	cout<< *tileTestPlayer;
+	testBlackMarket->action(*tileTestPlayer);
+	cout<< *tileTestPlayer;
+	testBlackMarket->action(*tileTestPlayer);
+	cout<< *tileTestPlayer;
+	testBlackMarket->action(*tileTestPlayer);
+	cout<< *tileTestPlayer;
+	testBlackMarket->action(*tileTestPlayer);
+	cout<< *tileTestPlayer;
     delete testBlackMarket, tileTestPlayer;
     
     // Test Casino

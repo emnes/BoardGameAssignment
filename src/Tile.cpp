@@ -19,7 +19,7 @@ bool Restaurant<J>::action(Player& player){
 template <typename J>
 bool SpiceMerchant<J>::action(Player& player){
 	
-	if( player.getGold() > 1){
+	if( player.getGold() > 1 && !player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -35,7 +35,7 @@ bool SpiceMerchant<J>::action(Player& player){
 template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
 	
-	if( player.getGold() > 1){
+	if( player.getGold() > 1 && !player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -51,7 +51,7 @@ bool FabricManufacturer<J>::action(Player& player){
 template <typename J>
 bool Jeweler<J>::action(Player& player){
 	
-	if( player.getGold() > 1){
+	if( player.getGold() > 1 && !player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -135,7 +135,7 @@ bool FabricMarket<J>::action(Player& player){
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
 	
-	if( player.getGold() > 0){
+	if( player.getGold() > 0 && !player.cartIsFull()){
 		
 		srand(time(NULL));
 		int numGoods = rand() % 5;
@@ -146,12 +146,16 @@ bool BlackMarket<J>::action(Player& player){
 				switch ( typeOfGood ){
 					case SPICE :
 						player.setSpice(player.getSpice() + 1);
+						break;
 					case FABRIC :
 						player.setFabric(player.getFabric() + 1);
+						break;
 					case JEWEL :
 						player.setJewel(player.getJewel() + 1);
+						break;
 					case RUBY :
 						player.setRuby(player.getRuby() + 1);
+						break;
 				}
 			}		
 		}
