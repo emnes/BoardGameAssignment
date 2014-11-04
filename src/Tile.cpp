@@ -8,68 +8,93 @@
 
 #include "Tile.h"
 
-template <typename T, typename J>
-bool Restaurant<T, J>::action(Player& player){
+template <typename J>
+bool Restaurant<J>::action(Player& player){
 	player.setFood(10);
 }
 
-template <typename T, typename J>
-bool SpiceMerchant<T, J>::action(Player& player){
+template <typename J>
+bool SpiceMerchant<J>::action(Player& player){
+	
+	if( player.getGold() > 1){
+		player.setGold(player.getGold()-2);
+		for( int i = 0; i < 3; i++){
+			if( player.incrementCartSize() ){
+				player.setSpice(player.getSpice()+1);
+			}
+		}
+		return true;
+	}else{
+		return false;
+	}
+}
+
+template <typename J>
+bool FabricManufacturer<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool FabricManufactures<T, J>::action(Player& player){
+template <typename J>
+bool Jeweler<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool Jeweler<T, J>::action(Player& player){
+template <typename J>
+bool CartManufacturer<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool CartManufacturer<T, J>::action(Player& player){
+template <typename J>
+bool SmallMarket<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool SmallMarket<T, J>::action(Player& player){
+template <typename J>
+bool SpiceMarket<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool SpiceMarket<T, J>::action(Player& player){
+template <typename J>
+bool JewelryMarket<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool JewelryMarket<T, J>::action(Player& player){
+template <typename J>
+bool FabricMarket<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool FabricMarket<T, J>::action(Player& player){
+template <typename J>
+bool BlackMarket<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool BlackMarket<T, J>::action(Player& player){
+template <typename J>
+bool Casino<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool Casino<T, J>::action(Player& player){
+template <typename J>
+bool GemMerchant<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool GemMerchant<T, J>::action(Player& player){
+template <typename J>
+bool Palace<J>::action(Player& player){
 	//TODO: Implement this function
 }
 
-template <typename T, typename J>
-bool Palace<T, J>::action(Player& player){
-	//TODO: Implement this function
-}
+template class Restaurant<Player>;
+template class SpiceMerchant<Player>;
+template class FabricManufacturer<Player>;
+template class Jeweler<Player>;
+template class CartManufacturer<Player>;
+template class SmallMarket<Player>;
+template class SpiceMarket<Player>;
+template class JewelryMarket<Player>;
+template class FabricMarket<Player>;
+template class BlackMarket<Player>;
+template class Casino<Player>;
+template class GemMerchant<Player>;
+template class Palace<Player>;
 
