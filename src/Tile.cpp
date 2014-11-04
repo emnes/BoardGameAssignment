@@ -8,7 +8,6 @@
 
 #include "Tile.h"
 #include <stdlib.h>
-#include <time.h>
 
 template <typename J>
 bool Restaurant<J>::action(Player& player){
@@ -137,9 +136,8 @@ bool BlackMarket<J>::action(Player& player){
 	
 	if( player.getGold() > 0 && !player.cartIsFull()){
 		
-		srand(time(NULL));
-		int numGoods = rand() % 5;
-		
+		int numGoods = rand() % 6;
+		cout<< "numGoods = " << numGoods << endl;
 		for( int i = 0; i < numGoods; i++){
 			if( player.incrementCartSize() ){
 				int typeOfGood = rand() % 4;

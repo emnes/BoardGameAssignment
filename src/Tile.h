@@ -10,6 +10,7 @@
 
 #include "Player.h"
 #include <vector>
+#include <time.h>
 
 using namespace std;
 
@@ -95,6 +96,7 @@ template<typename J>
 class BlackMarket : public Tile<J>{
 	
 	public:
+		BlackMarket(){srand(time(NULL));}
 		bool action( Player& player) override;
 };
 

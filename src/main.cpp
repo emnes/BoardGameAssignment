@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Tile.h"
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -238,12 +239,20 @@ int main() {
 	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
 	cout<< *tileTestPlayer;
+	
+	usleep(1000);
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
+	
+	usleep(2500);
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
+	
+	usleep(3400);
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
+	
+	usleep(1500);
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
 	cout<< "Each time the function is called, numGoods\nfollows a sequence different from the last call \t Success" << endl;
