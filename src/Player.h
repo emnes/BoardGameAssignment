@@ -10,12 +10,14 @@
 #define __src__Player__
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 class Player{
 	
 	private:
+		//Class variables
 		const string name;
 		unsigned int gold = 5;
 		unsigned int food = 10;
@@ -29,6 +31,9 @@ class Player{
 		// Cart 
 		unsigned int cart = 9;
 		unsigned int cartSize = 3;
+		
+		// Functions
+		friend ostream& operator<<(ostream& os, const Player& player);
 		
 	public:
 		Player(string _name) : name(_name){}
