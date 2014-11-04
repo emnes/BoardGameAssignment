@@ -193,8 +193,10 @@ bool Casino<J>::action(Player& player){
 		// where the random number is less than that item's weight
 		unsigned int prize;
 		for(int i=0; i<4; i++) {
-		  if(rnd < prizesWeights.at(i))
+		  if(rnd < prizesWeights.at(i)){
 		    prize = i;
+		    break;
+			}
 		  rnd -= prizesWeights.at(i);
 		}
 		
