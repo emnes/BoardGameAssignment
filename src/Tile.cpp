@@ -137,7 +137,6 @@ bool BlackMarket<J>::action(Player& player){
 	if( player.getGold() > 0 && !player.cartIsFull()){
 		
 		int numGoods = rand() % 6;
-		cout<< "numGoods = " << numGoods << endl;
 		for( int i = 0; i < numGoods; i++){
 			if( player.incrementCartSize() ){
 				int typeOfGood = rand() % 4;

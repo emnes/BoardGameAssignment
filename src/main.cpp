@@ -238,21 +238,15 @@ int main() {
     cout<< "Testing BlackMarket action(...)..." << endl;
 	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
+    cout<< "Before visiting the black market : " << endl;
 	cout<< *tileTestPlayer;
-	
-	usleep(1000);
+	cout<< "After 1rst visit @ the black market : " << endl;
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
-	
-	usleep(2500);
+	cout<< "After 2nd visit @ the black market : " << endl;
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
-	
-	usleep(3400);
-	testBlackMarket->action(*tileTestPlayer);
-	cout<< *tileTestPlayer;
-	
-	usleep(1500);
+	cout<< "After 3rd visit @ the black market : " << endl;
 	testBlackMarket->action(*tileTestPlayer);
 	cout<< *tileTestPlayer;
 	cout<< "Each time the function is called, numGoods\nfollows a sequence different from the last call \t Success" << endl;
