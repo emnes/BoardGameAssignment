@@ -17,3 +17,12 @@ bool Player::pay(Player& player){
 		return false;
 	}
 }
+
+bool Player::incrementCartSize(){
+	if( cartSize < cart ){
+		this->cartSize++;
+		return true;
+	}else{
+		return false;
+	}
+}

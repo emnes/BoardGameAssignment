@@ -34,14 +34,15 @@ class Player{
 		Player(string _name) : name(_name){}
 				
 		// Getters & Setters
-		unsigned int getFood(){return food;}
-		unsigned int getGold(){return gold;}
-		unsigned int getRuby(){return ruby;}
-		unsigned int getSpice(){return spice;}
-		unsigned int getFabric(){return fabric;}
-		unsigned int getJewel(){return jewel;}
-		unsigned int getCartCapacity(){return cart;}
-		unsigned int getCartSize(){return cartSize;}
+		string getName() const {return name;}
+		unsigned int getFood() const {return food;}
+		unsigned int getGold() const {return gold;}
+		unsigned int getRuby() const {return ruby;}
+		unsigned int getSpice() const {return spice;}
+		unsigned int getFabric() const {return fabric;}
+		unsigned int getJewel() const {return jewel;}
+		unsigned int getCartCapacity() const {return cart;}
+		unsigned int getCartSize() const {return cartSize;}
 		void setFood(unsigned int _food){food = _food;}
 		void setGold(unsigned int _gold){gold = _gold;}
 		void setRuby(unsigned int _ruby){ruby = _ruby;}
@@ -55,6 +56,8 @@ class Player{
 		bool canAct() const{return food>0;}
 		void eat() {if(canAct())--food;}
 		bool pay(Player& player);
+		bool incrementCartSize();
+
 };
 
 #endif /* defined(__BoardGame__Player__) */
