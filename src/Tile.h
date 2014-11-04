@@ -104,6 +104,7 @@ template<typename J>
 class Casino : public Tile<J>{
 	
 	public:
+		Casino(){srand(time(NULL));}
 		bool action( Player& player) override;
 };
 

@@ -8,6 +8,9 @@
 
 #include "Tile.h"
 #include <stdlib.h>
+#include <array>
+
+using namespace std;
 
 template <typename J>
 bool Restaurant<J>::action(Player& player){
@@ -165,7 +168,55 @@ bool BlackMarket<J>::action(Player& player){
 
 template <typename J>
 bool Casino<J>::action(Player& player){
-	//TODO: Implement this function
+
+// Using roulette selection algorithm to achieve weighted randomness
+	
+	if( player.getGold() > 0 && !player.cartIsFull()){
+		
+		enum prizes{LOOSE, WIN2GOLD, WIN3GOLD, WIN10GOLD};
+		
+		// Initialize success rate for each type of winning, or loss
+		array<int, 4> prizesWeights = {{40, 30, 20, 10}};
+		
+		// Calculate the sum of all weighted success rates
+		int sumPrizesWeights = 0;
+		for(int i=0; i<4; i++) {
+		   sumPrizesWeights += prizesWeights.at(i);
+		}
+		
+		// Take a pseudo-random number greater or equal to 0 
+		// and less than sumOfSuccessRates
+		int rnd = rand() % sumPrizesWeights;
+		
+		// Go through the te one at a time, subtracting their 
+		// weight from your random number, until you get the item 
+		// where the random number is less than that item's weight
+		unsigned int prize;
+		for(int i=0; i<4; i++) {
+		  if(rnd < prizesWeights.at(i))
+		    prize = i;
+		  rnd -= prizesWeights.at(i);
+		}
+		
+		// Attribute prize that was won 
+		switch ( prize ){
+			case LOOSE :
+				player.setGold(player.getGold() - 1);
+				break;
+			case WIN2GOLD:
+				player.setGold(player.getGold() + 1);
+				break;
+			case WIN3GOLD:
+				player.setGold(player.getGold() + 2);
+				break;
+			case WIN10GOLD:
+				player.setGold(player.getGold() + 9);
+				break;
+		}
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
