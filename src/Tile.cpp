@@ -223,12 +223,31 @@ bool Casino<J>::action(Player& player){
 
 template <typename J>
 bool GemMerchant<J>::action(Player& player){
-	//TODO: Implement this function
+	unsigned int rubyPrice = 12 + player.getNumVisitsGemMerchant();
+	if( (player.getGold() > (rubyPrice-1) ) && !player.cartIsFull()){
+		player.setGold(player.getGold() - rubyPrice);
+		player.setRuby(player.getRuby() + 1);
+		player.incrementCartSize();
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool Palace<J>::action(Player& player){
-	//TODO: Implement this function
+	if( player.getFabric() > 4 &&
+			player.getJewel() > 4 &&
+				player.getSpice() > 4){
+		player.setFabric(player.getFabric() - 5);
+		player.setJewel(player.getJewel() - 5);
+		player.setSpice(player.getSpice() - 5);
+		player.setRuby(player.getRuby() + 1);
+		player.setCartSize(player.getCartSize() - 14);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template class Restaurant<Player>;

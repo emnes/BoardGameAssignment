@@ -28,6 +28,9 @@ class Player{
 		unsigned int fabric = 1;
 		unsigned int jewel = 1;
 		
+		// Function related variables
+		unsigned int numVisitsGemMerchant = 0;
+		
 		// Cart 
 		unsigned int cart = 9;
 		unsigned int cartSize = 3;
@@ -48,6 +51,7 @@ class Player{
 		unsigned int getJewel() const {return jewel;}
 		unsigned int getCartCapacity() const {return cart;}
 		unsigned int getCartSize() const {return cartSize;}
+		unsigned int getNumVisitsGemMerchant() {return numVisitsGemMerchant;}
 		void setFood(unsigned int _food){food = _food;}
 		void setGold(unsigned int _gold){gold = _gold;}
 		void setRuby(unsigned int _ruby){ruby = _ruby;}
@@ -56,6 +60,7 @@ class Player{
 		void setJewel(unsigned int _jewel){jewel = _jewel;}
 		void setCartCapacity(unsigned int _cart){cart = _cart;}
 		void setCartSize(unsigned int _cartSize){cartSize = _cartSize;}
+		void incrementVisitsGemMerchant(){numVisitsGemMerchant++;}
 		
 		// Functions
 		bool canAct() const{return food>0;}
