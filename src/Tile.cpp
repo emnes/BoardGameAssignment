@@ -11,6 +11,7 @@
 template <typename J>
 bool Restaurant<J>::action(Player& player){
 	player.setFood(10);
+	return true;
 }
 
 template <typename J>
@@ -31,37 +32,101 @@ bool SpiceMerchant<J>::action(Player& player){
 
 template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getGold() > 1){
+		player.setGold(player.getGold()-2);
+		for( int i = 0; i < 3; i++){
+			if( player.incrementCartSize() ){
+				player.setFabric(player.getFabric()+1);
+			}
+		}
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool Jeweler<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getGold() > 1){
+		player.setGold(player.getGold()-2);
+		for( int i = 0; i < 3; i++){
+			if( player.incrementCartSize() ){
+				player.setJewel(player.getJewel()+1);
+			}
+		}
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool CartManufacturer<J>::action(Player& player){
-	//TODO: Implement this function
+
+	if( player.getGold() > 6){
+		player.setCartCapacity(player.getCartCapacity() + 3 );
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool SmallMarket<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getFabric() > 0 &&
+			player.getJewel() > 0 &&
+				player.getSpice() > 0){
+		player.setFabric(player.getFabric() - 1);
+		player.setJewel(player.getJewel() - 1);
+		player.setSpice(player.getSpice() - 1);
+		player.setCartSize(player.getCartSize() - 3);
+		player.setGold(player.getGold() + 8);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool SpiceMarket<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getSpice() > 2 ){
+		player.setSpice(player.getSpice() - 3);
+		player.setCartSize(player.getCartSize() - 3);
+		player.setGold(player.getGold() + 6);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool JewelryMarket<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getJewel() > 2 ){
+		player.setJewel(player.getJewel() - 3);
+		player.setCartSize(player.getCartSize() - 3);
+		player.setGold(player.getGold() + 6);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
 bool FabricMarket<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getFabric() > 2 ){
+		player.setFabric(player.getFabric() - 3);
+		player.setCartSize(player.getCartSize() - 3);
+		player.setGold(player.getGold() + 6);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>

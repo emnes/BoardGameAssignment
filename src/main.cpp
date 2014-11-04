@@ -78,109 +78,177 @@ int main() {
 	
 	/*******************************TILE TEST SUITE************************************/
     
+	Player* tileTestPlayer; 
+    
 	// Test Restaurant
-	Player* tileTestPlayer1 = new Player("tileTestPlayer1");
-	Player* tileTestPlayer2 = new Player("tileTestPlayer2");
-	Player* tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
 	Restaurant<Player>* testRestaurant = new Restaurant<Player>();
-		//TODO: implement tests
-	delete testRestaurant, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;
+	
+	tileTestPlayer->setFood(1);
+	cout<< "Restaurant action(...)" << "\t\t\t\t\t" << 
+		(((testRestaurant->action(*tileTestPlayer)) && 
+			tileTestPlayer->getFood() == 10)?"Succeded":"Failed") << endl;
+	
+	delete testRestaurant, tileTestPlayer;
 	
 	// Test SpiceMerchant
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     SpiceMerchant<Player>* testSpiceMerchant = new SpiceMerchant<Player>();
-		//TODO: implement tests
-    delete testSpiceMerchant;
+	
+	// Case 1 : player has plenty of capcity in cart and gold
+	cout<< "SpiceMerchant action(...) [size<capacity]" << "\t\t" << 
+		(((testSpiceMerchant->action(*tileTestPlayer)) && 
+			tileTestPlayer->getSpice() == 4)?"Succeded":"Failed") << endl;
+	
+	// Case 2 : player has not enough gold
+	tileTestPlayer->setGold(1);
+	cout<< "SpiceMerchant action(...) [gold<2]" << "\t\t\t" << 
+		(((testSpiceMerchant->action(*tileTestPlayer)))?"Failed":"Succeded") << endl;
+		
+	// Case 3 : player has enough gold but less capacity available
+	tileTestPlayer->setGold(2);
+	tileTestPlayer->setCartSize(8);
+	cout<< "SpiceMerchant action(...) [capacity avail < 3]" << "\t\t" << 
+		(((testSpiceMerchant->action(*tileTestPlayer)) &&
+			tileTestPlayer->getCartCapacity() == 9 &&
+				tileTestPlayer->getSpice() == 5)?"Succeded":"Failed") << endl;
+	
+    delete testSpiceMerchant, tileTestPlayer;
     
     // Test FabricManufacturer
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     FabricManufacturer<Player>* testFabricManufacturer = new FabricManufacturer<Player>();
-		//TODO: implement tests
-    delete testFabricManufacturer, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	// Case 1 : player has plenty of capcity in cart and gold
+	cout<< "FabricManufacturer action(...) [size<capacity]" << "\t\t" << 
+		(((testFabricManufacturer->action(*tileTestPlayer)) && 
+			tileTestPlayer->getFabric()== 4)?"Succeded":"Failed") << endl;
+	
+	// Case 2 : player has not enough gold
+	tileTestPlayer->setGold(1);
+	cout<< "FabricManufacturer action(...) [gold<2]" << "\t\t\t" << 
+		(((testFabricManufacturer->action(*tileTestPlayer)))?"Failed":"Succeded") << endl;
+		
+	// Case 3 : player has enough gold but less capacity available
+	tileTestPlayer->setGold(2);
+	tileTestPlayer->setCartSize(8);
+	cout<< "FabricManufacturer action(...) [capacity avail < 3]" << "\t" << 
+		(((testFabricManufacturer->action(*tileTestPlayer)) &&
+			tileTestPlayer->getCartCapacity() == 9 &&
+				tileTestPlayer->getFabric()== 5)?"Succeded":"Failed") << endl;
+				
+    delete testFabricManufacturer, tileTestPlayer;
     
     // Test Jeweler
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     Jeweler<Player>* testJeweler = new Jeweler<Player>();
-		//TODO: implement tests
-    delete testJeweler, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	// Case 1 : player has plenty of capcity in cart and gold
+	cout<< "Jeweler action(...) [size<capacity]" << "\t\t\t" << 
+		(((testJeweler->action(*tileTestPlayer)) && 
+			tileTestPlayer->getJewel()== 4)?"Succeded":"Failed") << endl;
+	
+	// Case 2 : player has not enough gold
+	tileTestPlayer->setGold(1);
+	cout<< "Jeweler action(...) [gold<2]" << "\t\t\t\t" << 
+		(((testJeweler->action(*tileTestPlayer)))?"Failed":"Succeded") << endl;
+		
+	// Case 3 : player has enough gold but less capacity available
+	tileTestPlayer->setGold(2);
+	tileTestPlayer->setCartSize(8);
+	cout<< "Jeweler action(...) [capacity avail < 3]" << "\t\t" << 
+		(((testJeweler->action(*tileTestPlayer)) &&
+			tileTestPlayer->getCartCapacity() == 9 &&
+				tileTestPlayer->getJewel()== 5)?"Succeded":"Failed") << endl;
+				
+    delete testJeweler, tileTestPlayer;
     
     // Test CartManufacturer
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     CartManufacturer<Player>* testCartManufacturer = new CartManufacturer<Player>();
-		//TODO: implement tests
-    delete testCartManufacturer, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	tileTestPlayer->setGold(7);
+	cout<< "CartManufacturer action(...) " << "\t\t\t\t" << 
+		( (testCartManufacturer->action(*tileTestPlayer) &&
+			tileTestPlayer->getCartCapacity()== 12)?"Succeded":"Failed") << endl;
+    delete testCartManufacturer, tileTestPlayer;
     
     // Test SmallMarket
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     SmallMarket<Player>* testSmallMarket = new SmallMarket<Player>();
-		//TODO: implement tests
-    delete testSmallMarket, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	cout<< "SmallMarket action(...) " << "\t\t\t\t" << 
+		( (testSmallMarket->action(*tileTestPlayer) &&
+			tileTestPlayer->getGold() == 13 &&
+				tileTestPlayer->getSpice() == 0 &&
+						tileTestPlayer->getFabric() == 0 &&
+								tileTestPlayer->getJewel() == 0 &&
+									tileTestPlayer->getCartSize() == 0)
+									?"Succeded":"Failed") << endl;
+    delete testSmallMarket, tileTestPlayer;
     
     // Test SpiceMarket
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     SpiceMarket<Player>* testSpiceMarket = new SpiceMarket<Player>();
-		//TODO: implement tests
-    delete testSpiceMarket, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	tileTestPlayer->setSpice(3);
+	tileTestPlayer->setCartSize(5);
+	cout<< "SpiceMarket action(...) " << "\t\t\t\t" << 
+		( (testSpiceMarket->action(*tileTestPlayer) &&
+				tileTestPlayer->getSpice() == 0 &&
+					tileTestPlayer->getCartSize() == 2)
+									?"Succeded":"Failed") << endl;
+    delete testSpiceMarket, tileTestPlayer;
     
     // Test JewelryMarket
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     JewelryMarket<Player>* testJewelryMarket = new JewelryMarket<Player>();
-		//TODO: implement tests
-    delete testJewelryMarket, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	tileTestPlayer->setJewel(3);
+	tileTestPlayer->setCartSize(5);
+	cout<< "JewelryMarket action(...) " << "\t\t\t\t" << 
+		( (testJewelryMarket->action(*tileTestPlayer) &&
+				tileTestPlayer->getJewel() == 0 &&
+					tileTestPlayer->getCartSize() == 2)
+									?"Succeded":"Failed") << endl;
+    delete testJewelryMarket, tileTestPlayer;
     
     // Test FabricMarket
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     FabricMarket<Player>* testFabricMarket = new FabricMarket<Player>();
-		//TODO: implement tests
-    delete testFabricMarket, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+	
+	tileTestPlayer->setFabric(3);
+	tileTestPlayer->setCartSize(5);
+	cout<< "FabricMarket action(...) " << "\t\t\t\t" << 
+		( (testFabricMarket->action(*tileTestPlayer) &&
+				tileTestPlayer->getFabric() == 0 &&
+					tileTestPlayer->getCartSize() == 2)
+									?"Succeded":"Failed") << endl;
+    delete testFabricMarket, tileTestPlayer;
     
     // Test BlackMarket
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
 		//TODO: implement tests
-    delete testBlackMarket, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+    delete testBlackMarket, tileTestPlayer;
     
     // Test Casino
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     Casino<Player>* testCasino = new Casino<Player>();
 		//TODO: implement tests
-    delete testCasino, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+    delete testCasino, tileTestPlayer;
     
     // Test GemMerchant
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     GemMerchant<Player>* testGemMerchant = new GemMerchant<Player>();
 		//TODO: implement tests
-    delete testGemMerchant, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+    delete testGemMerchant, tileTestPlayer;
     
     // Test Palace
-	tileTestPlayer1 = new Player("tileTestPlayer1");
-	tileTestPlayer2 = new Player("tileTestPlayer2");
-	tileTestPlayer3 = new Player("tileTestPlayer3");
+	tileTestPlayer = new Player("tileTestPlayer");
     Palace<Player>* testPalace = new Palace<Player>();
 		//TODO: implement tests
-    delete testPalace, tileTestPlayer1, tileTestPlayer2, tileTestPlayer3;;
+    delete testPalace, tileTestPlayer;
 	
 	cout<< "----------------------Tile tests ended---------------------------------" << endl << endl;
 	
