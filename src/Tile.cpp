@@ -7,6 +7,8 @@
 //
 
 #include "Tile.h"
+#include <stdlib.h>
+#include <time.h>
 
 template <typename J>
 bool Restaurant<J>::action(Player& player){
@@ -67,6 +69,7 @@ bool CartManufacturer<J>::action(Player& player){
 
 	if( player.getGold() > 6){
 		player.setCartCapacity(player.getCartCapacity() + 3 );
+		player.setGold(player.getGold() - 6);
 		return true;
 	}else{
 		return false;
@@ -131,7 +134,32 @@ bool FabricMarket<J>::action(Player& player){
 
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
-	//TODO: Implement this function
+	
+	if( player.getGold() > 0){
+		
+		srand(time(NULL));
+		int numGoods = rand() % 5;
+		
+		for( int i = 0; i < numGoods; i++){
+			if( player.incrementCartSize() ){
+				int typeOfGood = rand() % 4;
+				switch ( typeOfGood ){
+					case SPICE :
+						player.setSpice(player.getSpice() + 1);
+					case FABRIC :
+						player.setFabric(player.getFabric() + 1);
+					case JEWEL :
+						player.setJewel(player.getJewel() + 1);
+					case RUBY :
+						player.setRuby(player.getRuby() + 1);
+				}
+			}		
+		}
+		player.setGold(player.getGold() - 1);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>

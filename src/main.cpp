@@ -92,27 +92,34 @@ int main() {
 	delete testRestaurant, tileTestPlayer;
 	
 	// Test SpiceMerchant
-	tileTestPlayer = new Player("tileTestPlayer");
     SpiceMerchant<Player>* testSpiceMerchant = new SpiceMerchant<Player>();
 	
 	// Case 1 : player has plenty of capcity in cart and gold
+	tileTestPlayer = new Player("tileTestPlayer");
+	
 	cout<< "SpiceMerchant action(...) [size<capacity]" << "\t\t" << 
 		(((testSpiceMerchant->action(*tileTestPlayer)) && 
-			tileTestPlayer->getSpice() == 4)?"Succeded":"Failed") << endl;
+			tileTestPlayer->getSpice() == 4 &&
+				tileTestPlayer->getGold() == 3)?"Succeded":"Failed") << endl;
+	delete tileTestPlayer;
 	
 	// Case 2 : player has not enough gold
+	tileTestPlayer = new Player("tileTestPlayer");
 	tileTestPlayer->setGold(1);
+	
 	cout<< "SpiceMerchant action(...) [gold<2]" << "\t\t\t" << 
-		(((testSpiceMerchant->action(*tileTestPlayer)))?"Failed":"Succeded") << endl;
-		
+		((!((testSpiceMerchant->action(*tileTestPlayer))) &&
+			tileTestPlayer->getGold() == 1)?"Succeded":"Failed") << endl;
+	delete tileTestPlayer;	
+	
 	// Case 3 : player has enough gold but less capacity available
-	tileTestPlayer->setGold(2);
+	tileTestPlayer = new Player("tileTestPlayer");
 	tileTestPlayer->setCartSize(8);
 	cout<< "SpiceMerchant action(...) [capacity avail < 3]" << "\t\t" << 
 		(((testSpiceMerchant->action(*tileTestPlayer)) &&
 			tileTestPlayer->getCartCapacity() == 9 &&
-				tileTestPlayer->getSpice() == 5)?"Succeded":"Failed") << endl;
-	
+				tileTestPlayer->getSpice() == 2 &&
+					tileTestPlayer->getGold() == 3)?"Succeded":"Failed") << endl;
     delete testSpiceMerchant, tileTestPlayer;
     
     // Test FabricManufacturer

@@ -13,6 +13,8 @@
 
 using namespace std;
 
+enum goods{SPICE, FABRIC, JEWEL, RUBY};
+
 template<typename J> 
 class Tile{
 	
