@@ -261,7 +261,7 @@ int main() {
     cout<< "Testing Casino action(...)..." << endl << endl;
     
     // Rate analysis variables
-	enum prizes {LOOSE, WIN2GOLD, WIN3GOLD, WIN10GOLD};
+	enum Prizes {LOOSE, WIN2GOLD, WIN3GOLD, WIN10GOLD};
     array<float, 4> prizeRate = {{.0, .0, .0, .0}};
     
     // Perform occurence rate analysis

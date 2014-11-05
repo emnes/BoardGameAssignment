@@ -7,3 +7,8 @@
 //
 
 #include "GameBoard.h"
+
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
+const T& GameBoard<T, J, N, ROW, COL>::getTile(int row, int col) const{
+	return (board.at(row)).at(col);
+}

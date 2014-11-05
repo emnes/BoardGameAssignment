@@ -14,13 +14,13 @@
 
 using namespace std;
 
-enum goods{SPICE, FABRIC, JEWEL, RUBY};
+enum Goods{SPICE, FABRIC, JEWEL, RUBY};
 
 template<typename J> 
 class Tile{
 	
 	private:
-		vector<J> players;
+		vector<J> playersOnTile;
 		
 	public:
 		//bool operation==(const Tile &t);

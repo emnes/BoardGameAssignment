@@ -13,12 +13,23 @@
 #include "Tile.h"
 
 using namespace std;
-
+enum Move{TOP, DOWN, LEFT, RIGHT};
 
 template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameBoard {
 	
 	private:
 		array<array<T, ROW>, COL> board;
+		array<J, N> players;
+		
+	public:
+		//TODO: implement      void add(const T& tile, int row, int col);
+		const T& getTile(int row, int col) const;
+		//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
+		//TODO: implement      void setPlayer(J player);
+		//TODO: implement      J getPlayer(const std::string& playerName);
+		//TODO: implement      const T& getTile(const std::string& playerName) const;
+		//TODO: implement      std::vector<J> getPlayers(const T& tile) const;
+		//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
 		
 };
 

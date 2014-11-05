@@ -173,7 +173,7 @@ bool Casino<J>::action(Player& player){
 	
 	if( player.getGold() > 0){
 		
-		enum prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
+		enum Prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
 		
 		// Initialize success rate for each type of winning, or loss
 		array<int, 4> prizesWeights = {{10, 20, 30, 40}};
