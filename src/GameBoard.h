@@ -25,7 +25,8 @@ template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameB
 		map<string, J*> players;
 		
 	public:
-		//TODO: implement      void add(const T& tile, int row, int col);
+		GameBoard();
+		void add(const T& tile, int row, int col);
 		const T& getTile(int row, int col) const;
 		//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
 		//TODO: implement      void setPlayer(J player);
