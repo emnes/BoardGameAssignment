@@ -9,6 +9,7 @@
 #ifndef __src__Player__
 #define __src__Player__
 
+//#include "Tile.h"
 #include <string>
 #include <iostream>
 
@@ -30,6 +31,7 @@ class Player{
 		
 		// Function related variables
 		unsigned int numVisitsGemMerchant = 0;
+		//Tile& currentTile;
 		
 		// Cart 
 		unsigned int cart = 9;
@@ -52,6 +54,7 @@ class Player{
 		unsigned int getCartCapacity() const {return cart;}
 		unsigned int getCartSize() const {return cartSize;}
 		unsigned int getNumVisitsGemMerchant() {return numVisitsGemMerchant;}
+		//Tile& getCurrentTile(){return currentTile;}
 		void setFood(unsigned int _food){food = _food;}
 		void setGold(unsigned int _gold){gold = _gold;}
 		void setRuby(unsigned int _ruby){ruby = _ruby;}
@@ -60,6 +63,8 @@ class Player{
 		void setJewel(unsigned int _jewel){jewel = _jewel;}
 		void setCartCapacity(unsigned int _cart){cart = _cart;}
 		void setCartSize(unsigned int _cartSize){cartSize = _cartSize;}
+		//void setCurrentTile(const T& _currentTile){currentTile = _currentTile};
+		
 		void incrementVisitsGemMerchant(){numVisitsGemMerchant++;}
 		
 		// Functions
