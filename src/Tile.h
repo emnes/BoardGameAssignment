@@ -20,13 +20,14 @@ template<typename J>
 class Tile{
 	
 	private:
-		vector<J> playersOnTile;
+		vector<J> players;
 		
 	public:
 		//bool operation==(const Tile &t);
 		virtual bool action( Player& player){return false;}
 		//virtual Tile* clone();
 		//ostream& operation<<;
+		vector<J> getPlayers(){return players;}
 };
 
 template<typename J>

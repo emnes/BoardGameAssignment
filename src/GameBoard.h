@@ -9,6 +9,9 @@
 #ifndef __src__GameBoard__
 #define __src__GameBoard__
 
+
+#include <map>
+#include <string>
 #include <array>
 #include "Tile.h"
 
@@ -19,17 +22,18 @@ template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameB
 	
 	private:
 		array<array<T, ROW>, COL> board;
-		array<J, N> players;
+		map<string, J*> players;
 		
 	public:
 		//TODO: implement      void add(const T& tile, int row, int col);
 		const T& getTile(int row, int col) const;
 		//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
 		//TODO: implement      void setPlayer(J player);
-		//TODO: implement      J getPlayer(const std::string& playerName);
+		J getPlayer(const std::string& playerName);
 		//TODO: implement      const T& getTile(const std::string& playerName) const;
-		//TODO: implement      std::vector<J> getPlayers(const T& tile) const;
+		std::vector<J> getPlayers(const T& tile) const;
 		//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
+		void addPlayer(string playerName);
 		
 };
 

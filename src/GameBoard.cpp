@@ -12,3 +12,18 @@ template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
 const T& GameBoard<T, J, N, ROW, COL>::getTile(int row, int col) const{
 	return (board.at(row)).at(col);
 }
+
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
+void GameBoard<T, J, N, ROW, COL>::addPlayer(string playerName){
+	players.emplace(playerName, new Player(playerName));
+}
+
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
+J GameBoard<T, J, N, ROW, COL>::getPlayer(const std::string& playerName){
+	return *(players.at(playerName));
+}
+
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
+std::vector<J> GameBoard<T, J, N, ROW, COL>::getPlayers(const T& tile) const{
+	return tile.getPlayers();
+}
