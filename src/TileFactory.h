@@ -11,4 +11,21 @@
 #ifndef __src__TileFactory__
 #define __src__TileFactory__
 
+#import "Tile.h"
+
+class TileFactory
+{
+public:
+        static TileFactory* get(int _nTiles)
+        {
+            static TileFactory tf(_nTiles);
+            return &tf;
+        }
+        Tile* <J> next();
+private:
+    TileFactory(int _nTiles){};
+    TileFactory(TileFactory const&); // Unimplemented copy ctor prevents singleton being copied
+    void operator=(TileFactory const&); // Unimplemented assignment operator prevents assignment
+};
+
 #endif /* defined(__BoardGame__TileFactory__) */
