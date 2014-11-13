@@ -42,7 +42,9 @@ class Player{
 		
 	public:
 		Player(string _name) : name(_name){}
-				
+    
+		// We learned on Friday 7/11 inline functions are best defined outside of class declaration - M
+    
 		// Getters & Setters
 		string getName() const {return name;}
 		unsigned int getFood() const {return food;}

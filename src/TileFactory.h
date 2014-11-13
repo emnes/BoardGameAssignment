@@ -21,7 +21,7 @@ public:
             static TileFactory tf(_nTiles);
             return &tf;
         }
-        Tile* <J> next();
+        Tile* next();
 private:
     TileFactory(int _nTiles){};
     TileFactory(TileFactory const&); // Unimplemented copy ctor prevents singleton being copied
