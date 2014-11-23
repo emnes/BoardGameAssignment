@@ -38,7 +38,7 @@ public:
 	//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
 	//TODO: implement      void setPlayer(J player);
 	J getPlayer(const std::string& playerName);
-	//TODO: implement      const T& getTile(const std::string& playerName) const;
+	const T& getTile(const std::string& playerName) const;
 	std::vector<J> getPlayers(const T& tile) const;
 	//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
 	void addPlayer(string playerName);
