@@ -73,11 +73,15 @@ const T& GameBoard<T, J, N, ROW, COL>::getTile(const std::string& playerName) co
 {
     if(!players.at(playerName))
         throw std::out_of_range("Player does not exist.");
+    
+    J player = *(players.at(playerName));
     for (T tile : board) {
-        if (std::find(tile.getPlayers().begin(), tile.getPlayers().end(), playerName)) {
+        if (std::find(tile.getPlayers().begin(), tile.getPlayers().end(), player))
+        { // Look for player in tile's players.
             return tile; // or should it be *tile?
         }
     }
+
 }
 /*
  * Returns all players on a specific tile
