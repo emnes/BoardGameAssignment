@@ -26,11 +26,16 @@ GameBoard<T, J, N, ROW, COL>::GameBoard(){
 /*
  * Adds referenced tile to board.
  * Parameters: reference to tile, row and column of where to place tile.
+ * Exception: std::out_of_range
  *
  */
 template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
-void GameBoard<T, J, N, ROW, COL>::add(const T& tile, int row, int col){
-    board[row][col] = tile;
+void GameBoard<T, J, N, ROW, COL>::add(const T& tile, int row, int col)
+{
+    if (!board[row][col])
+        throw std::out_of_range("Tile not added. Board does not contain specified coordinates.");
+    else
+        board[row][col] = tile;
 }
 
 /*
@@ -41,7 +46,8 @@ void GameBoard<T, J, N, ROW, COL>::add(const T& tile, int row, int col){
  *
  */
 template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
-const T& GameBoard<T, J, N, ROW, COL>::getTile(int row, int col) const{
+const T& GameBoard<T, J, N, ROW, COL>::getTile(int row, int col) const
+{
     if (!board[row][col])
         throw std::out_of_range("Tile does not exist.");
     return board[row][col];
@@ -55,12 +61,16 @@ const T& GameBoard<T, J, N, ROW, COL>::getTile(int row, int col) const{
  *
  */
 template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
-J GameBoard<T, J, N, ROW, COL>::getPlayer(const std::string& playerName){
+J GameBoard<T, J, N, ROW, COL>::getPlayer(const std::string& playerName)
+{
 	if(!players.at(playerName))
         throw std::out_of_range("Player does not exist.");
     return *(players.at(playerName));
 }
-
+T& GameBoard<T, J, N, ROW, COL>::getTile(const std::string& playerName)
+{
+    
+}
 /*
  * Returns all players on a specific tile
  * Parameters: tile
