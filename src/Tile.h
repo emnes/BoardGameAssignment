@@ -34,6 +34,7 @@ class Tile
 		//virtual Tile* clone();
 		//ostream& operator<<;
 		vector<J> getPlayers(){return players;}
+        size_t getSize(){return players.size();}
 };
 
 // Desert has same function as base but should still exist, I think.
