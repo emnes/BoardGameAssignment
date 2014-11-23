@@ -36,12 +36,20 @@ public:
 	void add(const T& tile, int row, int col);
 	const T& getTile(int row, int col) const;
 	//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
+    // Look through tiles to find that tile. Then u have board[i][j].
+    // *row = i and *col = j (or something similar)
+    
 	//TODO: implement      void setPlayer(J player);
 	J getPlayer(const std::string& playerName);
 	const T& getTile(const std::string& playerName) const;
 	std::vector<J> getPlayers(const T& tile) const;
 	//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
-	void addPlayer(string playerName);
+    // getTile of player. remove that player from that tile.
+    // get coordinates of tile. if move up then increment column
+    // move down decrement  column
+    // move right increment row, move left decrement row
+    
+	void addPlayer(string playerName); // I think setPlayer is addPlayer
 };
 
 #endif /* defined(__BoardGame__GameBoard__) */
