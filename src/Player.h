@@ -35,7 +35,7 @@ class Player{
 		
 		// Cart 
 		unsigned int cart = 9;
-		unsigned int cartSize = 3;
+		unsigned int currentCartSize = 3; // What is this? Cart contents?
 		
 		// Functions
 		friend ostream& operator<<(ostream& os, const Player& player);
@@ -44,6 +44,7 @@ class Player{
 		Player(string _name) : name(_name){}
     
 		// We learned on Friday 7/11 inline functions are best defined outside of class declaration - M
+        // ^ Probably not important for this assignment. Maybe something to do if we have time to refactor - M
     
 		// Getters & Setters
 		string getName() const {return name;}
@@ -54,7 +55,7 @@ class Player{
 		unsigned int getFabric() const {return fabric;}
 		unsigned int getJewel() const {return jewel;}
 		unsigned int getCartCapacity() const {return cart;}
-		unsigned int getCartSize() const {return cartSize;}
+		unsigned int getCartSize() const {return currentCartSize;}
 		unsigned int getNumVisitsGemMerchant() {return numVisitsGemMerchant;}
 		//Tile& getCurrentTile(){return currentTile;}
 		void setFood(unsigned int _food){food = _food;}
@@ -64,7 +65,7 @@ class Player{
 		void setFabric(unsigned int _fabric){fabric = _fabric;}
 		void setJewel(unsigned int _jewel){jewel = _jewel;}
 		void setCartCapacity(unsigned int _cart){cart = _cart;}
-		void setCartSize(unsigned int _cartSize){cartSize = _cartSize;}
+		void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
 		//void setCurrentTile(const T& _currentTile){currentTile = _currentTile};
 		
 		void incrementVisitsGemMerchant(){numVisitsGemMerchant++;}
@@ -74,8 +75,7 @@ class Player{
 		void eat() {if(canAct())--food;}
 		bool pay(Player& player);
 		bool incrementCartSize();
-		bool cartIsFull(){return cartSize == cart;}
-
+		bool cartIsFull(){return currentCartSize == cart;}
 };
 
 #endif /* defined(__BoardGame__Player__) */
