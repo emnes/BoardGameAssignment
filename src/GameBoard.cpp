@@ -67,9 +67,17 @@ J GameBoard<T, J, N, ROW, COL>::getPlayer(const std::string& playerName)
         throw std::out_of_range("Player does not exist.");
     return *(players.at(playerName));
 }
-T& GameBoard<T, J, N, ROW, COL>::getTile(const std::string& playerName)
+
+template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
+const T& GameBoard<T, J, N, ROW, COL>::getTile(const std::string& playerName) const
 {
-    
+    if(!players.at(playerName))
+        throw std::out_of_range("Player does not exist.");
+    for (T tile : board) {
+        if (std::find(tile.getPlayers().begin(), tile.getPlayers().end(), playerName)) {
+            return tile; // or should it be *tile?
+        }
+    }
 }
 /*
  * Returns all players on a specific tile
@@ -80,7 +88,7 @@ T& GameBoard<T, J, N, ROW, COL>::getTile(const std::string& playerName)
  */
 template<typename T, typename J, unsigned N, size_t ROW, size_t COL>
 std::vector<J> GameBoard<T, J, N, ROW, COL>::getPlayers(const T& tile) const{
-    if (tile.getSize() == 0)
+    if (tile.noPlayers())
         throw std::out_of_range("Tile has no players.");
     
 	return tile.getPlayers();

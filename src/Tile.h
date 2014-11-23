@@ -25,16 +25,17 @@ enum Goods
 template<typename J> 
 class Tile
 {
-	private:
-		vector<J> players;
+private:
+	vector<J> players;
 		
-	public:
-		//bool operator==(const Tile &t);
-		virtual bool action( Player& player){return false;}
-		//virtual Tile* clone();
-		//ostream& operator<<;
-		vector<J> getPlayers(){return players;}
-        size_t getSize(){return players.size();}
+public:
+	//bool operator==(const Tile &t);
+	virtual bool action( Player& player){return false;}
+	//virtual Tile* clone();
+	//ostream& operator<<;
+	vector<J> getPlayers(){return players;}
+    bool noPlayers(){return players.size() == 0;}
+    //void getCoordinate(int *row, int *col){ *row =
 };
 
 // Desert has same function as base but should still exist, I think.
@@ -56,7 +57,7 @@ template<typename J>
 class Casino : public Tile<J>
 {
     public:
-        Casino(){srand(time(NULL));}
+        Casino(){srand(time(NULL));} // fix
         bool action( Player& player) override;
 };
 
@@ -124,9 +125,9 @@ class FabricMarket : public Tile<J>
 template<typename J>
 class BlackMarket : public Tile<J>
 {
-	public:
-		BlackMarket(){srand(time(NULL));}
-		bool action( Player& player) override;
+public:
+    BlackMarket(){int numOfGoods = rand() % 6;} // fix
+    bool action( Player& player) override;
 };
 
 //--------- Merchants ---------\\
