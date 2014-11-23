@@ -40,6 +40,9 @@ public:
     // *row = i and *col = j (or something similar)
     
 	//TODO: implement      void setPlayer(J player);
+    void addPlayer(string playerName); // I think setPlayer is addPlayer ?:Jochen
+
+    
 	J getPlayer(const std::string& playerName);
 	const T& getTile(const std::string& playerName) const;
 	std::vector<J> getPlayers(const T& tile) const;
@@ -48,8 +51,6 @@ public:
     // get coordinates of tile. if move up then increment column
     // move down decrement  column
     // move right increment row, move left decrement row
-    
-	void addPlayer(string playerName); // I think setPlayer is addPlayer
 };
 
 #endif /* defined(__BoardGame__GameBoard__) */
