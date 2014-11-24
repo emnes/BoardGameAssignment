@@ -10,6 +10,7 @@
 
 #include "Player.h"
 #include <vector>
+#include <array>
 #include <time.h>
 
 using namespace std;
@@ -22,11 +23,13 @@ enum Goods
     RUBY
 };
 
-template<typename J> 
+// Tile is a template class because in the feature there could be more than one type of Player, for code reuse. -P
+template<typename J>  
 class Tile
 {
 private:
 	vector<J> players;
+	array<int, 2> coordinates;
 		
 public:
 	//bool operator==(const Tile &t);
@@ -36,6 +39,8 @@ public:
 	vector<J> getPlayers(){return players;}
     bool noPlayers(){return players.size() == 0;}
     //void getCoordinate(int *row, int *col){ *row =
+    void setXCoordinate(const int xCoord){coordinates[0] = xCoord;}
+    void setYCoordinate(const int yCoord){coordinates[1] = yCoord;}
     
     typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
 };

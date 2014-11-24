@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Mazhar Shar & Patrice Boulet. All rights reserved.
 //
 
-#include "Player.h"
-#include "Tile.h"
 #include <iostream>
 #include <unistd.h>
 #include <array>
+#include "Player.h"
+#include "Tile.h"
+#include "GameBoard.h"
 
 using namespace std;
 
@@ -314,6 +315,11 @@ int main() {
     delete testPalace, tileTestPlayer;
 	
 	cout<< "----------------------Tile tests ended---------------------------------" << endl << endl;
+	
+	cout<< "Testing the creation of a 10x10 board with 4 players" << endl;
+	
+	GameBoard<Tile<Player>, Player, 4 ,10>* gameBoardTest = new GameBoard();
+	
 	
     return 0;
 }

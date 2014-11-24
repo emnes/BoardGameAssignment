@@ -26,7 +26,7 @@ using namespace std;
 enum Move{TOP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, left, right
 
 
-template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameBoard {
+template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
 	
 private:
 	array<array<T, ROW>, COL> board;
