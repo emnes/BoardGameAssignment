@@ -20,6 +20,7 @@
 #include <string>
 #include <array>
 #include "Tile.h"
+#include "TileFactory.h"
 
 using namespace std;
 enum Move{TOP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, left, right
@@ -30,14 +31,14 @@ template<typename T, typename J, unsigned N, size_t ROW, size_t COL> class GameB
 private:
 	array<array<T, ROW>, COL> board;
 	map<string, J*> players;
+	map<Tile<J>, string> indexesByTile;  // Maps each tile reference to its coordinates;
+	TileFactory<J>* tileFactory;		 // Singleton instance of TileFactory.
 		
 public:
 	GameBoard();
 	void add(const T& tile, int row, int col);
 	const T& getTile(int row, int col) const;
-	//TODO: implement      void getCoordinate(const T &tile, int *row, int *col) const;
-    // Look through tiles to find that tile. Then u have board[i][j].
-    // *row = i and *col = j (or something similar)
+	void getCoordinate(const T &tile, int *row, int *col) const;   
     
 	//TODO: implement      void setPlayer(J player);
     void addPlayer(string playerName); // I think setPlayer is addPlayer ?:Jochen
