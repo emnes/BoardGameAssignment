@@ -17,7 +17,7 @@ template< class J>
 Tile <J>* TileFactory<J>::next()
 {		
 	// Initialize success rate for each type of tile
-	array<TileType, 2> tileTypeWeights = {{10, 140}};
+	array<int, 2> tileTypeWeights = {{10, 140}};
 	
 	// Calculate the sum of all weighted success rates
 	int sumTileTypeWeights = 0;
