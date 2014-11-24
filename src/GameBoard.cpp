@@ -98,7 +98,7 @@ std::vector<J> GameBoard<T, J, N, ROW, COL>::getPlayers(const T& tile) const{
 	return tile.getPlayers();
 }
 
-/* Do we need this? <------------------*
+/* Do we need this? <------------------* 
  * Adds player.
  * Parameters: name of player
  *

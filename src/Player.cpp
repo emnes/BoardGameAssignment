@@ -19,8 +19,8 @@ bool Player::pay(Player& player){
 }
 
 bool Player::incrementCartSize(){
-	if( cartSize < cart ){
-		this->cartSize++;
+	if( currentCartSize < cart ){
+		this->currentCartSize++;
 		return true;
 	}else{
 		return false;

@@ -14,21 +14,38 @@
 #ifndef __src__TileFactory__
 #define __src__TileFactory__
 
-#import "Tile.h"
+#include "Tile.h"
+#include <map>
 
+using namespace std;
+enum TileType{RESTAURANT, SPICEMERCHANT, FABRICMANUFACTURER, JEWELER,
+				CARTMANUFACTURER, SMALLMARKET, SPICEMARKET, JEWELRYMARKET, 
+					FABRICMARKET, BLACKMARKET, CASINO, GEMMERCHANT, PALACE }; 
+
+template < class J >
 class TileFactory
 {
+
 public:
-        static TileFactory* get(int _nTiles)
+		typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
+		
+        static TileFactory* Get(int _nTiles)
         {
-            static TileFactory tf(_nTiles);
-            return &tf;
+            static TileFactory instance(_nTiles);
+            return &instance;
         }
-        Tile* next();
+        Tile<J>* next();
+        
+        typedef map<TileType, Tile<J>&>  FactoryMap;
+    	void Register(const TileType &tileType, CreateTileFn pfnCreate);
+    	Tile<J>* CreateTile(const TileType &tileType);
 private:
-    TileFactory(int _nTiles){};
-    TileFactory(TileFactory const&); // Unimplemented copy ctor prevents singleton being copied
-    void operator=(TileFactory const&); // Unimplemented assignment operator prevents assignment
+	int nTiles;
+    TileFactory<J> (int _nTiles);
+    TileFactory<J> (const TileFactory<J> &); // Unimplemented copy ctor prevents singleton being copied
+    TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }
+    
+    FactoryMap m_FactoryMap;
 };
 
 #endif /* defined(__BoardGame__TileFactory__) */

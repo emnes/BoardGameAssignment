@@ -13,8 +13,51 @@
 
 #include "TileFactory.h"
 
-Tile* TileFactory::next()
+template< class J>
+Tile <J>* TileFactory<J>::next()
 {
-    
-    return &t;
+    //return &t;
+}
+
+/* 
+ * Tile factory constructor.  Register the types of tiles here.
+ */
+template < class J >
+TileFactory<J>::TileFactory(int _nTiles)
+{
+	nTiles = _nTiles;
+	Register(RESTAURANT, &Restaurant<J>::Create());
+	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create());
+	Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create());
+	Register(JEWELER, &Jeweler<J>::Create());
+	Register(CARTMANUFACTURER, &CartManufacturer<J>::Create());
+	Register(SMALLMARKET, &SmallMarket<J>::Create());
+	Register(SPICEMARKET, &SpiceMarket<J>::Create());
+	Register(JEWELRYMARKET, &JewelryMarket<J>::Create());
+	Register(FABRICMARKET, &FabricMarket<J>::Create());
+	Register(BLACKMARKET, &BlackMarket<J>::Create());
+	Register(CASINO, &Casino<J>::Create());
+	Register(GEMMERCHANT, &GemMerchant<J>::Create());
+	Register(PALACE, &Palace<J>::Create());
+}
+
+/*
+ * Creates a mapping between tile types and their create functions.
+ */
+template <class J>
+void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
+{
+   m_FactoryMap[tileType] = pfnCreate;
+}
+
+/*
+ * Returns a new instance of the given tile type.
+ */
+template <class J>
+Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
+{
+    typename FactoryMap::iterator it = m_FactoryMap.find(tileType);
+    if( it != m_FactoryMap.end() )
+    	return it->second();
+    return NULL;
 }

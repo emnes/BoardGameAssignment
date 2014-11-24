@@ -35,7 +35,8 @@ class Player{
 		
 		// Cart 
 		unsigned int cart = 9;
-		unsigned int currentCartSize = 3; // What is this? Cart contents?
+		unsigned int currentCartSize = 3; // What is this? Cart contents? -M,  
+		// Keeps track of the current number of goods in the cart. -P
 		
 		// Functions
 		friend ostream& operator<<(ostream& os, const Player& player);
