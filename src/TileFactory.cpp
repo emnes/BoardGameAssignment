@@ -26,6 +26,7 @@ template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
 	nTiles = _nTiles;
+	Register(DESERT, &Desert<J>::Create());
 	Register(RESTAURANT, &Restaurant<J>::Create());
 	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create());
 	Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create());

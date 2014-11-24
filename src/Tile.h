@@ -40,13 +40,13 @@ public:
     typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
 };
 
-// Desert has same function as base but should still exist, I think.
 
-/*template<typename J>
+template<typename J>
 class Desert : public Tile<J>
 {
-    public:
-}; */
+	public:		
+		static Tile<J>* __stdcall Create() { return new Desert<J>(); }
+};
 
 template<typename J>
 class Restaurant : public Tile<J>
