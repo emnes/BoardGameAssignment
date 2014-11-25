@@ -242,6 +242,10 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     //initial position of each player to Restaurant is to be set here. -P
 }
 
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+void GameBoard<T, J, ROW, COL>::getCoordinate(const T &tile, int *row, int *col) const{   	// Returns the coordinates of a tile
+	tile->getCoordinate(row, col);
+}
 /*
  * Moves a player to a different tile.
  * 
@@ -255,24 +259,24 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 	
 	const T& currentTile = getTile(playerName);
 	currentTile->removePlayer(playerName);
-	
-	int* row;
-	int* col;
-	getCoordinate(currentTile, row, col);
+	int row, col;
+	int* rowPtr = &row;
+	int* colPtr = &col;
+	getCoordinate(currentTile, rowPtr, colPtr);
 	
 	const T& nextTile;
 	switch ( move ){							// we MUST handle illegal moves in UI. -P
 		case UP:
-			nextTile = getTile(*row, *col +1);
+			nextTile = getTile(row, col +1);
 			break;
 		case RIGHT:
-			nextTile = getTile(*row +1, *col);
+			nextTile = getTile(row +1, col);
 			break;
 		case DOWN:
-			nextTile = getTile(*row, *col -1);
+			nextTile = getTile(row, col -1);
 			break;
 		case LEFT:
-			nextTile = getTile(*row -1, *col);
+			nextTile = getTile(row -1, col);
 			break;
 	}
 	
@@ -282,11 +286,11 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL> 
 void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
-	const T& playerTile = getTile(playerName);
-	//int* row;
-	//int* col;
-	cout<< "works up to here" << endl;
-	// playerTile->getCoordinate(row, col); // This statement makes the game crash, have to work on it!
+	const T playerTile = getTile(playerName);
+	int playerRow, playerCol;
+	int* rowPtr = &playerRow;
+	int* colPtr = &playerCol;
+	getCoordinate(playerTile, rowPtr, colPtr); // This statement makes the game crash, have to work on it!
 	cout<< endl;
 	cout<< "YOU ARE HERE : X" << endl;
 	//prints the top of the board
@@ -296,12 +300,12 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 		}
 		cout << endl;
 	}
-	for (int j = 0; j < COL; j++){
+	for (int j = COL-1; j > -1; j--){
 		cout<< "** ";
 		for (int i = 0; i < ROW; i++){
-	//		if( i == *row && j == *col){
-	//			cout<< "  X  ";
-	//		}else{
+		//if( playerRow == i && playerCol == j){			// This works but the players
+		//		cout<< "  X  ";								// are not currenlty correctly initialized 
+		//	}else{											// a restaurant tile, their position is (0,0). -P
 				const T& aTile = getTile(i, j);
 				switch (aTile->getType()){
 	    			case DESERT:
@@ -347,7 +351,7 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 	    				cout << " PAL ";
 	    				break;
 				}
-	//		}
+			//} 
 			if (i == ROW-1){
 				cout << " **";
 			}		
