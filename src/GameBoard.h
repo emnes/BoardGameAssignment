@@ -23,7 +23,7 @@
 #include "TileFactory.h"
 
 using namespace std;
-enum Move{TOP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, left, right
+enum Move{UP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, left, right
 
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
@@ -260,9 +260,24 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const std::string& playerNam
 	int* col;
 	getCoordinate(currentTile, row, col);
 	
-    // get coordinates of tile. if move up then increment column
-    // move down decrement  column
-    // move right increment row, move left decrement row	
+	const T& nextTile;
+	switch ( move ){							// we MUST handle illegal moves in UI. -P
+		case UP:
+			nextTile = getTile(*row, *col +1);
+			break;
+		case RIGHT:
+			nextTile = getTile(*row +1, *col);
+			break;
+		case DOWN:
+			nextTile = getTile(*row, *col -1);
+			break;
+		case LEFT:
+			nextTile = getTile(*row -1, *col);
+			break;
+	}
+	
+	nextTile->addPlayer(playerName);
+	playersCurrentTile[playerName] = nextTile;	
 }
 
 #endif /* defined(__BoardGame__GameBoard__) */
