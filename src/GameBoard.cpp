@@ -17,12 +17,14 @@
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(unsigned int noPlayers) : 
 	numberOfPlayers(noPlayers){
-    
+		
     tileFactory = TileFactory<J>::Get(ROW*COL);
-	
+	   
     for(int i = 0; i < ROW; i++){
     	for( int j = 0; j < COL; j++){
+    		cout<< "works for tile " << i  << "," << j;
     		Tile<J>* tileToInsert = tileFactory->next();
+    		cout<< " breaks here?" << endl;
     		tileToInsert->setXCoordinate(i);
     		tileToInsert->setYCoordinate(j);
     		add(tileToInsert, i, j); // Add tile to board

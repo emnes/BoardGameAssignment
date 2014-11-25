@@ -9,6 +9,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <array>
+#include <time.h>
 #include "Player.h"
 #include "Tile.h"
 #include "GameBoard.h"
@@ -17,6 +18,7 @@ using namespace std;
 
 int main() {
 	
+	srand(time(NULL));// fix
 	/*******************************PLAYER TEST SUITE************************************/
     Player* testPlayer = new Player("testPlayer");
     
@@ -316,11 +318,17 @@ int main() {
 	
 	cout<< "----------------------Tile tests ended---------------------------------" << endl << endl;
 	
-	cout<< "Testing the creation of a 6x6 board with 4 players" << endl;
+	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
+	
+	
 	
 	// Initialize a a 6x6 board with 4 players of type Player.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoardTest = new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(4);
 	
-	
+	cout << "CSI2372 Final Project" << endl;
+	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
+	cout << "**********************************************************************" << endl;
+	cout << "*********************************AGAME********************************" << endl;
+	cout << "**********************************************************************" << endl;
     return 0;
 }

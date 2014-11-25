@@ -12,42 +12,13 @@
 //
 
 #include "TileFactory.h"
+#include <time.h>
 
 template< class J>
 Tile <J>* TileFactory<J>::next()
 {		
-	// Initialize success rate for each type of tile
-	array<int, 2> tileTypeWeights = {{10, 140}}; // should be dependent of nTiles ? -P
-	
-	// Calculate the sum of all weighted success rates
-	int sumTileTypeWeights = 0;
-	for(int i=0; i<2; i++) {
-	   sumTileTypeWeights += tileTypeWeights.at(i);
-	}
-	
-	// Take a pseudo-random number greater or equal to 0 
-	// and less than sumOfSuccessRates
-	int rnd = rand() % sumTileTypeWeights;
-	
-	// Go through the tile types one at a time, subtracting their 
-	// weight from your random number, until you get the item 
-	// where the random number is less than that item's weight
-	TileType tileType;
-	for(int i=0; i<4; i++) {
-	  if(rnd < tileTypeWeights.at(i)){
-	    tileType = static_cast<TileType>(i);
-	    break;
-		}
-	  rnd -= tileTypeWeights.at(i);
-	}
-	
-	// Generate tile type 
-	if( tileType == DESERT ){
-		return CreateTile(DESERT);
-	}else{
-		rnd = rand() % 14 + 1;  // Randomly chooses between 13 specialized tile types.
+		int rnd = ((double) rand() / (RAND_MAX+1)) * (13+1);
 		return CreateTile(static_cast<TileType>(rnd));
-	}
 }
 
 /* 
@@ -56,7 +27,6 @@ Tile <J>* TileFactory<J>::next()
 template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
-	srand(time(NULL));// fix
 	nTiles = _nTiles;
 	Register(DESERT, &Desert<J>::Create);
 	Register(RESTAURANT, &Restaurant<J>::Create);
@@ -89,6 +59,7 @@ void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
 template <class J>
 Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
 {
+	cout<< " tileType created = " << tileType << endl;
     return m_FactoryMap[tileType]();
 }
 

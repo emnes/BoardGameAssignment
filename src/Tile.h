@@ -11,7 +11,6 @@
 #include "Player.h"
 #include <vector>
 #include <array>
-#include <time.h>
 
 using namespace std;
 
@@ -39,8 +38,9 @@ public:
 	vector<J> getPlayers(){return players;}
     bool noPlayers(){return players.size() == 0;}
     //void getCoordinate(int *row, int *col){ *row =
-    void setXCoordinate(const int xCoord){coordinates[0] = xCoord;}
-    void setYCoordinate(const int yCoord){coordinates[1] = yCoord;}
+    void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
+    void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
+    array<int, 2> getCoordinates(){return coordinates;}
     
     typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
 };
@@ -66,7 +66,6 @@ template<typename J>
 class Casino : public Tile<J>
 {
     public:
-        Casino(){srand(time(NULL));} // fix
         bool action( Player& player) override;
         
         static Tile<J>* __stdcall Create() { return new Casino<J>(); }
