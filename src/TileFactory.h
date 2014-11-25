@@ -18,9 +18,6 @@
 #include <map>
 
 using namespace std;
-enum TileType{DESERT, RESTAURANT, SPICEMERCHANT, FABRICMANUFACTURER, JEWELER,
-				CARTMANUFACTURER, SMALLMARKET, SPICEMARKET, JEWELRYMARKET, 
-					FABRICMARKET, BLACKMARKET, CASINO, GEMMERCHANT, PALACE }; 
 
 template < class J >
 class TileFactory
@@ -41,7 +38,7 @@ public:
     	Tile<J>* CreateTile(const TileType &tileType);
     	
 private:
-	int nTiles;
+	vector<TileType> randomTiles;		     // Holds the remaining types of tile to be created randomly
     TileFactory<J> (int _nTiles);
     TileFactory<J> (const TileFactory<J> &); // Unimplemented copy ctor prevents singleton being copied
     TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }

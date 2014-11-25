@@ -30,21 +30,19 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBo
 	
 private:
 	array<array<T, ROW>, COL> board;
-	map<string, J*> players;
-	map<string, Tile<J>*> playersCurrentTiles;	// Keeps a referene of a player's current tile.
+	map<string, J*> players;					// Key : Player's Name, Element : Pointer to Player object
+	map<string, Tile<J>*> playersCurrentTile;	// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 		// Singleton instance of TileFactory.
-	unsigned int numberOfPlayers;
 public:
-	GameBoard(unsigned int noPlayers);
+	GameBoard(string *playerNames, int playerNamesSize);
 
 	void add(const T& tile, int row, int col);
 	const T& getTile(int row, int col) const;
 	void getCoordinate(const T &tile, int *row, int *col) const;   
     
 	//TODO: implement      void setPlayer(J player);
-    void addPlayer(string playerName); // I think setPlayer is addPlayer ?:Jochen
+    void addPlayer(string playerName); 
 
-    
 	J getPlayer(const std::string& playerName);
 	const T& getTile(const std::string& playerName) const;
 	std::vector<J> getPlayers(const T& tile) const;

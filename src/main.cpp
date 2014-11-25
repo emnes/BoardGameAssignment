@@ -322,13 +322,28 @@ int main() {
 	
 	
 	
-	// Initialize a a 6x6 board with 4 players of type Player.
-	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoardTest = new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(4);
-	
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
 	cout << "**********************************************************************" << endl;
 	cout << "*********************************AGAME********************************" << endl;
-	cout << "**********************************************************************" << endl;
+	cout << "**********************************************************************" << endl << endl;
+
+	int numOfPlayers;
+	cout<< "Enter the number of players:";
+	cin >> numOfPlayers;
+	
+	vector<string> playerNames;
+	for( int i = 0; i < numOfPlayers; i++){
+		cout<< "Enter the name of player " << i+1 << " : ";
+		string playerName;
+		cin >> playerName;
+		playerNames.push_back(playerName);
+	}
+	
+	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
+	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
+		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
+			playerNames.data(), playerNames.size());
+	
     return 0;
 }

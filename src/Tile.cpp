@@ -12,11 +12,23 @@
 
 using namespace std;
 
+
+template <typename J>
+bool Desert<J>::action(Player& player){
+	return false;
+}
+
+template <typename J>
+TileType Desert<J>::getType() { return DESERT;}
+
 template <typename J>
 bool Restaurant<J>::action(Player& player){
 	player.setFood(10);
 	return true;
 }
+
+template <typename J>
+TileType Restaurant<J>::getType(){return RESTAURANT;};
 
 template <typename J>
 bool SpiceMerchant<J>::action(Player& player){
@@ -35,6 +47,9 @@ bool SpiceMerchant<J>::action(Player& player){
 }
 
 template <typename J>
+TileType SpiceMerchant<J>::getType() { return SPICEMERCHANT;}
+
+template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
 	
 	if( player.getGold() > 1 && !player.cartIsFull()){
@@ -51,6 +66,9 @@ bool FabricManufacturer<J>::action(Player& player){
 }
 
 template <typename J>
+TileType FabricManufacturer<J>::getType() { return FABRICMANUFACTURER;}
+
+template <typename J>
 bool Jeweler<J>::action(Player& player){
 	
 	if( player.getGold() > 1 && !player.cartIsFull()){
@@ -65,6 +83,8 @@ bool Jeweler<J>::action(Player& player){
 		return false;
 	}
 }
+template <typename J>
+TileType Jeweler<J>::getType() { return JEWELER;}
 
 template <typename J>
 bool CartManufacturer<J>::action(Player& player){
@@ -77,6 +97,9 @@ bool CartManufacturer<J>::action(Player& player){
 		return false;
 	}
 }
+
+template <typename J>
+TileType CartManufacturer<J>::getType() { return CARTMANUFACTURER;}
 
 template <typename J>
 bool SmallMarket<J>::action(Player& player){
@@ -96,6 +119,9 @@ bool SmallMarket<J>::action(Player& player){
 }
 
 template <typename J>
+TileType SmallMarket<J>::getType() { return SMALLMARKET;}
+
+template <typename J>
 bool SpiceMarket<J>::action(Player& player){
 	
 	if( player.getSpice() > 2 ){
@@ -107,6 +133,9 @@ bool SpiceMarket<J>::action(Player& player){
 		return false;
 	}
 }
+
+template <typename J>
+TileType SpiceMarket<J>::getType() { return SPICEMARKET;}
 
 template <typename J>
 bool JewelryMarket<J>::action(Player& player){
@@ -122,6 +151,9 @@ bool JewelryMarket<J>::action(Player& player){
 }
 
 template <typename J>
+TileType JewelryMarket<J>::getType() { return JEWELRYMARKET;}
+
+template <typename J>
 bool FabricMarket<J>::action(Player& player){
 	
 	if( player.getFabric() > 2 ){
@@ -133,6 +165,9 @@ bool FabricMarket<J>::action(Player& player){
 		return false;
 	}
 }
+
+template <typename J>
+TileType FabricMarket<J>::getType() { return FABRICMARKET;}
 
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
@@ -165,6 +200,9 @@ bool BlackMarket<J>::action(Player& player){
 		return false;
 	}
 }
+
+template <typename J>
+TileType BlackMarket<J>::getType() { return BLACKMARKET;}
 
 template <typename J>
 bool Casino<J>::action(Player& player){
@@ -222,6 +260,9 @@ bool Casino<J>::action(Player& player){
 }
 
 template <typename J>
+TileType Casino<J>::getType() { return CASINO;}
+
+template <typename J>
 bool GemMerchant<J>::action(Player& player){
 	unsigned int rubyPrice = 12 + player.getNumVisitsGemMerchant();
 	if( (player.getGold() > (rubyPrice-1) ) && !player.cartIsFull()){
@@ -233,6 +274,9 @@ bool GemMerchant<J>::action(Player& player){
 		return false;
 	}
 }
+
+template <typename J>
+TileType GemMerchant<J>::getType() { return GEMMERCHANT;}
 
 template <typename J>
 bool Palace<J>::action(Player& player){
@@ -250,6 +294,10 @@ bool Palace<J>::action(Player& player){
 	}
 }
 
+template <typename J>
+TileType Palace<J>::getType() { return PALACE;}
+
+template class Desert<Player>;
 template class Restaurant<Player>;
 template class SpiceMerchant<Player>;
 template class FabricManufacturer<Player>;
@@ -263,4 +311,3 @@ template class BlackMarket<Player>;
 template class Casino<Player>;
 template class GemMerchant<Player>;
 template class Palace<Player>;
-

@@ -13,12 +13,16 @@
 
 #include "TileFactory.h"
 #include <time.h>
+#include <algorithm> 
+
+using namespace std;
 
 template< class J>
 Tile <J>* TileFactory<J>::next()
 {		
-		int rnd = ((double) rand() / (RAND_MAX+1)) * (13+1);
-		return CreateTile(static_cast<TileType>(rnd));
+		TileType tileType = randomTiles.back();
+		randomTiles.pop_back();
+		return CreateTile(tileType);
 }
 
 /* 
@@ -27,7 +31,22 @@ Tile <J>* TileFactory<J>::next()
 template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
-	nTiles = _nTiles;
+	int numTilesToCreate = _nTiles;
+	int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
+	for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
+		for ( int j = 1; j < 14; j++){
+			randomTiles.push_back(static_cast<TileType>(j));
+			numTilesToCreate--;
+		}
+	}
+	while( numTilesToCreate > 0){
+		randomTiles.push_back(DESERT);
+		numTilesToCreate--;
+	}
+	
+	auto engine = std::default_random_engine{};
+	std::shuffle(std::begin(randomTiles), std::end(randomTiles), engine);
+	
 	Register(DESERT, &Desert<J>::Create);
 	Register(RESTAURANT, &Restaurant<J>::Create);
 	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create);
@@ -59,7 +78,6 @@ void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
 template <class J>
 Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
 {
-	cout<< " tileType created = " << tileType << endl;
     return m_FactoryMap[tileType]();
 }
 
