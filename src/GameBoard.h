@@ -30,8 +30,8 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBo
 	
 private:
 	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game
-	map<string, J> players;									// Key : Player's Name, Element : Pointer to Player object
-	map<string, T> playersCurrentTile;					// Keeps a reference of a player's current tile.
+	map<string, J> players;											// Key : Player's Name, Element : Pointer to Player object
+	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
 public:
@@ -47,11 +47,7 @@ public:
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
 	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile
 	
-	//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
-    // getTile of player. remove that player from that tile.
-    // get coordinates of tile. if move up then increment column
-    // move down decrement  column
-    // move right increment row, move left decrement row
+	const T& move(Move move, const std::string& playerName );
 };
 
 #endif /* defined(__BoardGame__GameBoard__) */

@@ -9,8 +9,11 @@
 #define __src__Tile__
 
 #include "Player.h"
+#include <stdlib.h>
 #include <vector>
 #include <array>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -43,9 +46,9 @@ public:
 	vector<J> getPlayers(){return players;}										// I think we won't be using this anymore. -P
    
    	void addPlayer( const string& playerName){players.push_back(playerName);}	// Adds a player to the tile's current player list
-   	void removePlayer(string playerName);											// Removes a player to the tile's current players list
-   	
+   	void removePlayer(string playerName);								// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
+    
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
@@ -187,5 +190,11 @@ class GemMerchant : public Tile<J>
 	    virtual TileType getType() override;
 		static Tile<J>* __stdcall Create() { return new GemMerchant<J>(); }
 };
+
+template <typename J>
+void Tile<J>::removePlayer(string playerName){
+	auto removeIt = std::remove(players.begin(), players.end(), playerName);
+	players.erase(removeIt, players.end());
+}
 
 #endif /* defined(__BoardGame__Tile__) */

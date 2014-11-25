@@ -40,7 +40,7 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     					for (auto i = 0; i < playerNamesSize; i++){
 						    addPlayer(*(playerNames + i));							// Add players 
 						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
-						    tileToInsert->addPlayer(*(playerNames + i));	// Adds the player to this Restaurant tile
+						    tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
 						}
 						playersAreSetToStartTile = true;
 					}
@@ -204,6 +204,25 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     players.emplace(playerName, new Player(playerName));
     //initial position of each player to Restaurant is to be set here. -P
+}
+
+/*
+ * Moves a player to a different tile.
+ * 
+ * @param move
+ *		type of Move
+ * @param playerName
+ *		name of the player to move	
+ */
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+const T& GameBoard<T, J, ROW, COL>::move(Move move, const std::string& playerName ){
+	
+	const T& currentTile = getTile(playerName);
+	currentTile->removePlayer(playerName);
+	
+    // get coordinates of tile. if move up then increment column
+    // move down decrement  column
+    // move right increment row, move left decrement row	
 }
 
 template class GameBoard<Tile<Player*>*,Player*, 6, 6>;
