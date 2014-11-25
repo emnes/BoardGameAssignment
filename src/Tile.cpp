@@ -9,13 +9,14 @@
 #include "Tile.h"
 #include <stdlib.h>
 #include <array>
+#include <algorithm>
 
 using namespace std;
 
 template <typename J>
 void Tile<J>::removePlayer(string playerName){
-	//auto removeIt = std::remove(players.begin(), players.end()
-	//players.erase(removeIt, playerName), players.end());
+	auto removeIt = std::remove(players.begin(), players.end(), playerName);
+	players.erase(removeIt, players.end());
 }
 
 template <typename J>
