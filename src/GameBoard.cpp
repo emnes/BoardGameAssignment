@@ -40,7 +40,7 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     					for (auto i = 0; i < playerNamesSize; i++){
 						    addPlayer(*(playerNames + i));							// Add players 
 						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
-						    //tileToInsert->addPlayer(players[*(playerNames + i)]);	// Adds the player to this Restaurant tile
+						    tileToInsert->addPlayer(*(playerNames + i));	// Adds the player to this Restaurant tile
 						}
 						playersAreSetToStartTile = true;
 					}
@@ -164,20 +164,21 @@ const T& GameBoard<T, J, ROW, COL>::getTile(int row, int col) const
  *
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-J GameBoard<T, J, ROW, COL>::getPlayer(const std::string& playerName)
+J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
 {
-	if(!players.at(playerName))
-        throw std::out_of_range("Player does not exist.");
-    return *(players.at(playerName));
+	//if( players[playerName] ))			// should be a search here and if pointer to end is returned then throw. -P
+        //throw std::out_of_range("Player does not exist.");
+    return players[playerName];
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
 {
-    if(!players.at(playerName))
-        throw std::out_of_range("Player does not exist.");
+	//auto it = playersCurrentTile.find(playerName);
+    //if( it == playersCurrentTile.end())			// should be a search here and if pointer to end is returned then throw. -P
+      //throw std::out_of_range("Player does not exist.");
     
-	//return playersCurrentTiles[playerName];
+	//return it->second;
 }
 /*
  * Returns all players on a specific tile
@@ -188,10 +189,10 @@ const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
-    if (tile->noPlayers())
-        throw std::out_of_range("Tile has no players.");
+    //if (tile->noPlayers())
+      ///  throw std::out_of_range("Tile has no players.");
     
-	return tile->getPlayers();
+	//return tile->getPlayers();
 }
 
 /*
@@ -205,4 +206,4 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     //initial position of each player to Restaurant is to be set here. -P
 }
 
-template class GameBoard<Tile<Player>*,Player, 6, 6>;
+template class GameBoard<Tile<Player*>*,Player*, 6, 6>;

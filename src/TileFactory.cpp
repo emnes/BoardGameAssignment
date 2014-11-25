@@ -81,4 +81,4 @@ Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
     return m_FactoryMap[tileType]();
 }
 
-template class TileFactory<Player>;
+template class TileFactory<Player*>;

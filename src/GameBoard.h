@@ -30,8 +30,8 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBo
 	
 private:
 	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game
-	map<string, J*> players;										// Key : Player's Name, Element : Pointer to Player object
-	map<string, Tile<Player>*> playersCurrentTile;					// Keeps a reference of a player's current tile.
+	map<string, J> players;									// Key : Player's Name, Element : Pointer to Player object
+	map<string, T> playersCurrentTile;					// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
 public:

@@ -31,7 +31,7 @@ template<typename J>
 class Tile
 {
 private:
-	vector<J> players;
+	vector<string> players;
 	array<int, 2> coordinates;
 		
 public:
@@ -40,9 +40,11 @@ public:
 	virtual TileType getType() = 0;
 	//virtual Tile* clone();
 	//ostream& operator<<;
-	vector<J> getPlayers(){return players;}
+	vector<J> getPlayers(){return players;}										// I think we won't be using this anymore. -P
    
-   	void addPlayer( Player& player){players.push_back(player);}
+   	void addPlayer( const string& playerName){players.push_back(playerName);}	// Adds a player to the tile's current player list
+   	void removePlayer(string playerName);											// Removes a player to the tile's current players list
+   	
     bool noPlayers(){return players.size() == 0;}
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}

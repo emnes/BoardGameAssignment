@@ -40,6 +40,7 @@ class Player{
 		
 		// Functions
 		friend ostream& operator<<(ostream& os, const Player& player);
+		friend bool operator==(const Player& playerA, const Player& playerB);
 		
 	public:
 		Player(string _name) : name(_name){}

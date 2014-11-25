@@ -87,7 +87,7 @@ int main() {
     
 	// Test Restaurant
 	tileTestPlayer = new Player("tileTestPlayer");
-	Restaurant<Player>* testRestaurant = new Restaurant<Player>();
+	Restaurant<Player*>* testRestaurant = new Restaurant<Player*>();
 	
 	tileTestPlayer->setFood(1);
 	cout<< "Restaurant action(...)" << "\t\t\t\t\t" << 
@@ -97,7 +97,7 @@ int main() {
 	delete testRestaurant, tileTestPlayer;
 	
 	// Test SpiceMerchant
-    SpiceMerchant<Player>* testSpiceMerchant = new SpiceMerchant<Player>();
+    SpiceMerchant<Player*>* testSpiceMerchant = new SpiceMerchant<Player*>();
 	
 	// Case 1 : player has plenty of capcity in cart and gold
 	tileTestPlayer = new Player("tileTestPlayer");
@@ -129,7 +129,7 @@ int main() {
     
     // Test FabricManufacturer
 	tileTestPlayer = new Player("tileTestPlayer");
-    FabricManufacturer<Player>* testFabricManufacturer = new FabricManufacturer<Player>();
+    FabricManufacturer<Player*>* testFabricManufacturer = new FabricManufacturer<Player*>();
 	
 	// Case 1 : player has plenty of capcity in cart and gold
 	cout<< "FabricManufacturer action(...) [size<capacity]" << "\t\t" << 
@@ -153,7 +153,7 @@ int main() {
     
     // Test Jeweler
 	tileTestPlayer = new Player("tileTestPlayer");
-    Jeweler<Player>* testJeweler = new Jeweler<Player>();
+    Jeweler<Player*>* testJeweler = new Jeweler<Player*>();
 	
 	// Case 1 : player has plenty of capcity in cart and gold
 	cout<< "Jeweler action(...) [size<capacity]" << "\t\t\t" << 
@@ -177,7 +177,7 @@ int main() {
     
     // Test CartManufacturer
 	tileTestPlayer = new Player("tileTestPlayer");
-    CartManufacturer<Player>* testCartManufacturer = new CartManufacturer<Player>();
+    CartManufacturer<Player*>* testCartManufacturer = new CartManufacturer<Player*>();
 	
 	tileTestPlayer->setGold(7);
 	cout<< "CartManufacturer action(...) " << "\t\t\t\t" << 
@@ -187,7 +187,7 @@ int main() {
     
     // Test SmallMarket
 	tileTestPlayer = new Player("tileTestPlayer");
-    SmallMarket<Player>* testSmallMarket = new SmallMarket<Player>();
+    SmallMarket<Player*>* testSmallMarket = new SmallMarket<Player*>();
 	
 	cout<< "SmallMarket action(...) " << "\t\t\t\t" << 
 		( (testSmallMarket->action(*tileTestPlayer) &&
@@ -201,7 +201,7 @@ int main() {
     
     // Test SpiceMarket
 	tileTestPlayer = new Player("tileTestPlayer");
-    SpiceMarket<Player>* testSpiceMarket = new SpiceMarket<Player>();
+    SpiceMarket<Player*>* testSpiceMarket = new SpiceMarket<Player*>();
 	
 	tileTestPlayer->setSpice(3);
 	tileTestPlayer->setCartSize(5);
@@ -214,7 +214,7 @@ int main() {
     
     // Test JewelryMarket
 	tileTestPlayer = new Player("tileTestPlayer");
-    JewelryMarket<Player>* testJewelryMarket = new JewelryMarket<Player>();
+    JewelryMarket<Player*>* testJewelryMarket = new JewelryMarket<Player*>();
 	
 	tileTestPlayer->setJewel(3);
 	tileTestPlayer->setCartSize(5);
@@ -227,7 +227,7 @@ int main() {
     
     // Test FabricMarket
 	tileTestPlayer = new Player("tileTestPlayer");
-    FabricMarket<Player>* testFabricMarket = new FabricMarket<Player>();
+    FabricMarket<Player*>* testFabricMarket = new FabricMarket<Player*>();
 	
 	tileTestPlayer->setFabric(3);
 	tileTestPlayer->setCartSize(5);
@@ -241,7 +241,7 @@ int main() {
     // Test BlackMarket
     cout<< endl << "Testing BlackMarket action(...)..." << endl;
 	tileTestPlayer = new Player("tileTestPlayer");
-    BlackMarket<Player>* testBlackMarket = new BlackMarket<Player>();
+    BlackMarket<Player*>* testBlackMarket = new BlackMarket<Player*>();
     cout<< "Before visiting the black market : " << endl;
 	cout<< *tileTestPlayer;
 	cout<< "After 1rst visit @ the black market : " << endl;
@@ -260,7 +260,7 @@ int main() {
     
     // Test Casino
 	tileTestPlayer = new Player("tileTestPlayer");
-    Casino<Player>* testCasino = new Casino<Player>();
+    Casino<Player*>* testCasino = new Casino<Player*>();
     cout<< "Testing Casino action(...)..." << endl << endl;
     
     // Rate analysis variables
@@ -306,13 +306,13 @@ int main() {
     
     // Test GemMerchant
 	tileTestPlayer = new Player("tileTestPlayer");
-    GemMerchant<Player>* testGemMerchant = new GemMerchant<Player>();
+    GemMerchant<Player*>* testGemMerchant = new GemMerchant<Player*>();
 		//TODO: implement tests
     delete testGemMerchant, tileTestPlayer;
     
     // Test Palace
 	tileTestPlayer = new Player("tileTestPlayer");
-    Palace<Player>* testPalace = new Palace<Player>();
+    Palace<Player*>* testPalace = new Palace<Player*>();
 		//TODO: implement tests
     delete testPalace, tileTestPlayer;
 	
@@ -341,8 +341,8 @@ int main() {
 	}
 	
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
-	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
-		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
+	GameBoard<Tile<Player*>*, Player*, 6 ,6>* gameBoard = 
+		new typename GameBoard<Tile<Player*>*, Player*, 6, 6>::GameBoard(
 			playerNames.data(), playerNames.size());
 	
     return 0;

@@ -27,6 +27,10 @@ bool Player::incrementCartSize(){
 	}
 }
 
+bool operator==(const Player& playerA, const Player& playerB){
+	return playerA.getName()==playerB.getName();
+}
+
 ostream& operator<<(ostream& os, const Player& player){
 	return os << "Player : " << player.getName() << endl
 				<< "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
