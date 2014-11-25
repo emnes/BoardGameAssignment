@@ -35,7 +35,7 @@ Tile <J>* TileFactory<J>::next()
 	TileType tileType;
 	for(int i=0; i<4; i++) {
 	  if(rnd < tileTypeWeights.at(i)){
-	    tileType = i;
+	    tileType = static_cast<TileType>(i);
 	    break;
 		}
 	  rnd -= tileTypeWeights.at(i);
@@ -46,7 +46,7 @@ Tile <J>* TileFactory<J>::next()
 		return CreateTile(DESERT);
 	}else{
 		rnd = rand() % 14 + 1;  // Randomly chooses between 13 specialized tile types.
-		return CreateTile(rnd);
+		return CreateTile(static_cast<TileType>(rnd));
 	}
 }
 
@@ -58,20 +58,20 @@ TileFactory<J>::TileFactory(int _nTiles)
 {
 	srand(time(NULL));// fix
 	nTiles = _nTiles;
-	Register(DESERT, &Desert<J>::Create());
-	Register(RESTAURANT, &Restaurant<J>::Create());
-	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create());
-	Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create());
-	Register(JEWELER, &Jeweler<J>::Create());
-	Register(CARTMANUFACTURER, &CartManufacturer<J>::Create());
-	Register(SMALLMARKET, &SmallMarket<J>::Create());
-	Register(SPICEMARKET, &SpiceMarket<J>::Create());
-	Register(JEWELRYMARKET, &JewelryMarket<J>::Create());
-	Register(FABRICMARKET, &FabricMarket<J>::Create());
-	Register(BLACKMARKET, &BlackMarket<J>::Create());
-	Register(CASINO, &Casino<J>::Create());
-	Register(GEMMERCHANT, &GemMerchant<J>::Create());
-	Register(PALACE, &Palace<J>::Create());
+	Register(DESERT, &Desert<J>::Create);
+	Register(RESTAURANT, &Restaurant<J>::Create);
+	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create);
+	Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create);
+	Register(JEWELER, &Jeweler<J>::Create);
+	Register(CARTMANUFACTURER, CartManufacturer<J>::Create);
+	Register(SMALLMARKET, &SmallMarket<J>::Create);
+	Register(SPICEMARKET, &SpiceMarket<J>::Create);
+	Register(JEWELRYMARKET, &JewelryMarket<J>::Create);
+	Register(FABRICMARKET, &FabricMarket<J>::Create);
+	Register(BLACKMARKET, &BlackMarket<J>::Create);
+	Register(CASINO, &Casino<J>::Create);
+	Register(GEMMERCHANT, &GemMerchant<J>::Create);
+	Register(PALACE, &Palace<J>::Create);
 }
 
 /*
@@ -89,10 +89,7 @@ void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
 template <class J>
 Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
 {
-    typename FactoryMap::iterator it = m_FactoryMap.find(tileType);
-    if( it != m_FactoryMap.end() )
-    	return it->second();
-    return NULL;
+    return m_FactoryMap[tileType]();
 }
 
 template class TileFactory<Player>;

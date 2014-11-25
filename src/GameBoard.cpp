@@ -110,4 +110,4 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     players.emplace(playerName, new Player(playerName));
 }
 
-template class GameBoard<Tile<Player>*,Player, 6, 6>;
+template class GameBoard<Tile<Player>*,Player, 4, 6>;

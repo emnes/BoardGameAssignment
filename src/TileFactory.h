@@ -27,7 +27,8 @@ class TileFactory
 {
 
 public:
-		typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
+		typedef Tile<J>* (*CreateTileFn)(void); 
+		typedef map<TileType, CreateTileFn>  FactoryMap;
 		
         static TileFactory* Get(int _nTiles)
         {
@@ -36,7 +37,6 @@ public:
         }
         Tile<J>* next();
         
-        typedef map<TileType, Tile<J>*>  FactoryMap;
     	void Register(const TileType &tileType, CreateTileFn pfnCreate);
     	Tile<J>* CreateTile(const TileType &tileType);
     	
