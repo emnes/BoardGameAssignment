@@ -29,23 +29,24 @@ enum Move{TOP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, l
 template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
 	
 private:
-	array<array<T, ROW>, COL> board;
-	map<string, J*> players;					// Key : Player's Name, Element : Pointer to Player object
-	map<string, Tile<J>*> playersCurrentTile;	// Keeps a reference of a player's current tile.
-	TileFactory<J>* tileFactory;		 		// Singleton instance of TileFactory.
+	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game
+	map<string, J*> players;										// Key : Player's Name, Element : Pointer to Player object
+	map<string, Tile<Player>*> playersCurrentTile;					// Keeps a reference of a player's current tile.
+	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
+
 public:
-	GameBoard(string *playerNames, int playerNamesSize);
-
-	void add(const T& tile, int row, int col);
-	const T& getTile(int row, int col) const;
-	void getCoordinate(const T &tile, int *row, int *col) const;   
-    
+	GameBoard(string *playerNames, int playerNamesSize);			// ctor
+	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board
+	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board
+	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile
+    void addPlayer(string playerName); 								// Adds a player to the game   
 	//TODO: implement      void setPlayer(J player);
-    void addPlayer(string playerName); 
 
-	J getPlayer(const std::string& playerName);
-	const T& getTile(const std::string& playerName) const;
-	std::vector<J> getPlayers(const T& tile) const;
+
+	J getPlayer(const std::string& playerName);						// Get a Player object by player name
+	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
+	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile
+	
 	//TODO: implement      const T& move(Enum Move move, const std::string& playerName );
     // getTile of player. remove that player from that tile.
     // get coordinates of tile. if move up then increment column

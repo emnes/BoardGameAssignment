@@ -20,10 +20,6 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
 	array<float, 14> tileCreationRates = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		// for testing purpose. -P
     tileFactory = TileFactory<J>::Get(ROW*COL);
 	
-	for (auto i = 0; i < playerNamesSize; i++){
-	    addPlayer(*(playerNames + i));
-	}
-	
 	bool playersAreSetToStartTile = false;
 	
     for(int i = 0; i < ROW; i++){
@@ -40,6 +36,14 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     				break;
     			case RESTAURANT:
     				cout << "RESTAURANT tile created" << endl;
+    				if( !playersAreSetToStartTile ){// NOT FOR TESTING PURPOSE DON'T REMOVE THIS PART*************
+    					for (auto i = 0; i < playerNamesSize; i++){
+						    addPlayer(*(playerNames + i));							// Add players 
+						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
+						    //tileToInsert->addPlayer(players[*(playerNames + i)]);	// Adds the player to this Restaurant tile
+						}
+						playersAreSetToStartTile = true;
+					}
     				tileCreationRates.at(RESTAURANT)++;
     				break;
 				case SPICEMERCHANT:
@@ -96,7 +100,7 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     	}
     }	
     		for (int i = 0; i<14; i++){
-				tileCreationRates.at(i) = tileCreationRates.at(i)/36.0*100;
+				tileCreationRates.at(i) = tileCreationRates.at(i)/(static_cast<double>(ROW*COL))*100;
 			}
 			
 			cout<< endl;
@@ -190,7 +194,7 @@ std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
 	return tile->getPlayers();
 }
 
-/* Do we need this? <------------------* 
+/*
  * Adds player.
  * Parameters: name of player
  *

@@ -42,6 +42,7 @@ public:
 	//ostream& operator<<;
 	vector<J> getPlayers(){return players;}
    
+   	void addPlayer( Player& player){players.push_back(player);}
     bool noPlayers(){return players.size() == 0;}
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
