@@ -316,9 +316,10 @@ int main() {
 	
 	cout<< "----------------------Tile tests ended---------------------------------" << endl << endl;
 	
-	cout<< "Testing the creation of a 10x10 board with 4 players" << endl;
+	cout<< "Testing the creation of a 6x6 board with 4 players" << endl;
 	
-	GameBoard<Tile<Player>*, Player, 4 ,6>* gameBoardTest = new typename GameBoard<Tile<Player>*, Player, 4, 6>::GameBoard();
+	// Initialize a a 6x6 board with 4 players of type Player.
+	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoardTest = new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(4);
 	
 	
     return 0;

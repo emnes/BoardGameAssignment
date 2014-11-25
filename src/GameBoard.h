@@ -33,9 +33,9 @@ private:
 	map<string, J*> players;
 	map<string, Tile<J>*> playersCurrentTiles;	// Keeps a referene of a player's current tile.
 	TileFactory<J>* tileFactory;		 		// Singleton instance of TileFactory.
-		
+	unsigned int numberOfPlayers;
 public:
-	GameBoard();
+	GameBoard(unsigned int noPlayers);
 
 	void add(const T& tile, int row, int col);
 	const T& getTile(int row, int col) const;

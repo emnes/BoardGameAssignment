@@ -15,10 +15,11 @@
 #include "GameBoard.h"
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(){
+GameBoard<T, J, ROW, COL>::GameBoard(unsigned int noPlayers) : 
+	numberOfPlayers(noPlayers){
     
     tileFactory = TileFactory<J>::Get(ROW*COL);
-
+	
     for(int i = 0; i < ROW; i++){
     	for( int j = 0; j < COL; j++){
     		Tile<J>* tileToInsert = tileFactory->next();
@@ -110,4 +111,4 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     players.emplace(playerName, new Player(playerName));
 }
 
-template class GameBoard<Tile<Player>*,Player, 4, 6>;
+template class GameBoard<Tile<Player>*,Player, 6, 6>;
