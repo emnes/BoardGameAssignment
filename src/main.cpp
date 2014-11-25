@@ -16,6 +16,41 @@
 
 using namespace std;
 
+/*
+	bool takeTurn( 
+		GameBoard<Tile<Player*>*,Player*,6,6>& gameBoard, const std::string& playerName ) { 
+		
+		try { 
+			int m; 
+	 		cin.exceptions(std::istream::failbit); 
+	 		cin>> m; 
+	 		const Tile<Player*>* tilePtr = gameBoard.move( static_cast<Move>(m), playerName ); 
+	 		Player* currentPlayer = gameBoard.getPlayer( playerName ); 
+	 		if (currentPlayer->canAct()) { 
+		 		bool makeAction; 
+		 		cin>>makeAction; 
+		 		if ( makeAction ) 
+					std::vector<Player*> opL = gameBoard.getPlayers( tilePtr ); 
+				if (currentPlayer->getGold()>= opL.size()) { 
+					currentPlayer.eat(); 
+				for ( auto op : opL ) { 
+		 			currentPlayer.pay( op, 1 ); 
+					gameBoard.setPlayer( op ); // What is this supposed to do? -P
+		 		} 
+		 		tilePtr->action( p ); 
+		 		gameBoard.setPlayer( p ); 
+				} 
+	 		} 
+		} 
+	 return true; 
+	} catch ( std::istream::failure e ) { 
+		cout<< "Incorrect key pressed"; cin.clear(); } 
+	} catch ( std::out_of_range e ) { 
+	 	cout<< e.what(); 
+		return false; 
+	} 
+	*/
+
 int main() {
 	
 	srand(time(NULL));// fix
@@ -344,6 +379,10 @@ int main() {
 	GameBoard<Tile<Player*>*, Player*, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player*>*, Player*, 6, 6>::GameBoard(
 			playerNames.data(), playerNames.size());
+			
+	gameBoard->printCurrentLocation(playerNames[0]);
 	
     return 0;
 }
+
+

@@ -42,11 +42,11 @@ public:
     void addPlayer(string playerName); 								// Adds a player to the game   
 	//TODO: implement      void setPlayer(J player);
 
-
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
 	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile
 	
+	void printCurrentLocation(const string& playerName);
 	const T& move(Move move, const std::string& playerName );
 };
 
@@ -251,7 +251,7 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
  *		name of the player to move	
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-const T& GameBoard<T, J, ROW, COL>::move(Move move, const std::string& playerName ){
+const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 	
 	const T& currentTile = getTile(playerName);
 	currentTile->removePlayer(playerName);
@@ -278,6 +278,91 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const std::string& playerNam
 	
 	nextTile->addPlayer(playerName);
 	playersCurrentTile[playerName] = nextTile;	
+}
+
+template<typename T, typename J, unsigned int ROW, unsigned int COL> 
+void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
+	const T& playerTile = getTile(playerName);
+	//int* row;
+	//int* col;
+	cout<< "works up to here" << endl;
+	// playerTile->getCoordinate(row, col); // This statement makes the game crash, have to work on it!
+	cout<< endl;
+	cout<< "YOU ARE HERE : X" << endl;
+	//prints the top of the board
+	for ( int j=0; j<2; j++){
+		for ( int i = 0; i < COL; i++){
+			cout<< "******";
+		}
+		cout << endl;
+	}
+	for (int j = 0; j < COL; j++){
+		cout<< "** ";
+		for (int i = 0; i < ROW; i++){
+	//		if( i == *row && j == *col){
+	//			cout<< "  X  ";
+	//		}else{
+				const T& aTile = getTile(i, j);
+				switch (aTile->getType()){
+	    			case DESERT:
+	    				cout << " DES ";
+	    				break;
+	    			case RESTAURANT:
+	    				cout << " RES ";
+	    				break;
+					case SPICEMERCHANT:
+	    				cout << " SPI ";
+	    				break;
+					case FABRICMANUFACTURER:
+	    				cout << " FAB ";
+	    				break;
+					case JEWELER:
+	    				cout << " JEW ";
+	    				break;
+					case CARTMANUFACTURER:
+	    				cout << " CAR ";
+	    				break;
+					case SMALLMARKET: 
+	    				cout << " SMM ";
+	    				break;
+					case SPICEMARKET:
+	    				cout << " SPM ";
+	    				break;
+					case JEWELRYMARKET: 
+	    				cout << " JEM ";
+	    				break;
+					case FABRICMARKET:
+	    				cout << " FAM ";
+	    				break;
+					case BLACKMARKET:
+	    				cout << " BLM ";
+	    				break;
+					case CASINO:
+	    				cout << " CAS ";
+	    				break;
+					case GEMMERCHANT:
+	    				cout << " GEM ";
+	    				break;
+					case PALACE: 
+	    				cout << " PAL ";
+	    				break;
+				}
+	//		}
+			if (i == ROW-1){
+				cout << " **";
+			}		
+		}
+		cout<< endl;
+		cout<< endl;
+	}
+	
+	//prints the bottom of the board
+	for ( int j=0; j<2; j++){
+		for ( int i = 0; i < COL; i++){
+			cout<< "******";
+		}
+		cout << endl;
+	}
 }
 
 #endif /* defined(__BoardGame__GameBoard__) */
