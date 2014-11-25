@@ -94,3 +94,5 @@ Tile<J> *TileFactory<J>::CreateTile(const TileType &tileType)
     	return it->second();
     return NULL;
 }
+
+template class TileFactory<Player>;

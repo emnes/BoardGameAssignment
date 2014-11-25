@@ -36,9 +36,10 @@ public:
         }
         Tile<J>* next();
         
-        typedef map<TileType, Tile<J>&>  FactoryMap;
+        typedef map<TileType, Tile<J>*>  FactoryMap;
     	void Register(const TileType &tileType, CreateTileFn pfnCreate);
     	Tile<J>* CreateTile(const TileType &tileType);
+    	
 private:
 	int nTiles;
     TileFactory<J> (int _nTiles);

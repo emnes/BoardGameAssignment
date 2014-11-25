@@ -31,11 +31,12 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBo
 private:
 	array<array<T, ROW>, COL> board;
 	map<string, J*> players;
-	map<Tile<J>, string> indexesByTile;  // Maps each tile reference to its coordinates;
-	TileFactory<J>* tileFactory;		 // Singleton instance of TileFactory.
+	map<string, Tile<J>*> playersCurrentTiles;	// Keeps a referene of a player's current tile.
+	TileFactory<J>* tileFactory;		 		// Singleton instance of TileFactory.
 		
 public:
 	GameBoard();
+
 	void add(const T& tile, int row, int col);
 	const T& getTile(int row, int col) const;
 	void getCoordinate(const T &tile, int *row, int *col) const;   

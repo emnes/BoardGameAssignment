@@ -24,7 +24,7 @@ GameBoard<T, J, ROW, COL>::GameBoard(){
     		Tile<J>* tileToInsert = tileFactory->next();
     		tileToInsert->setXCoordinate(i);
     		tileToInsert->setYCoordinate(j);
-    		add(*tileToInsert, i, j); // Add tile to board
+    		add(tileToInsert, i, j); // Add tile to board
 		}
 	}
     
@@ -83,14 +83,7 @@ const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
     if(!players.at(playerName))
         throw std::out_of_range("Player does not exist.");
     
-    J player = *(players.at(playerName));
-    for (T tile : board) {
-        if (std::find(tile.getPlayers().begin(), tile.getPlayers().end(), player))
-        { // Look for player in tile's players.
-            return tile; // or should it be *tile?
-        }
-    }
-
+	//return playersCurrentTiles[playerName];
 }
 /*
  * Returns all players on a specific tile
@@ -101,10 +94,10 @@ const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
-    if (tile.noPlayers())
+    if (tile->noPlayers())
         throw std::out_of_range("Tile has no players.");
     
-	return tile.getPlayers();
+	return tile->getPlayers();
 }
 
 /* Do we need this? <------------------* 
@@ -117,4 +110,4 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     players.emplace(playerName, new Player(playerName));
 }
 
-template class GameBoard<Tile<Player>,Player, 6, 6>;
+template class GameBoard<Tile<Player>*,Player, 6, 6>;

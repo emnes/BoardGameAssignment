@@ -318,7 +318,7 @@ int main() {
 	
 	cout<< "Testing the creation of a 10x10 board with 4 players" << endl;
 	
-	GameBoard<Tile<Player>, Player, 4 ,10>* gameBoardTest = new GameBoard();
+	GameBoard<Tile<Player>*, Player, 4 ,10>* gameBoardTest = new typename GameBoard<Tile<Player>*, Player, 4, 10>::GameBoard();
 	
 	
     return 0;
