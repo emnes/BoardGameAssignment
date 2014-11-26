@@ -384,12 +384,24 @@ int main() {
 	cout << "Hi, ";
 	for( string currentPlayerName : playerNames){
 		Player	 currentPlayer = gameBoard->getPlayer(currentPlayerName);
-		cout<< " " << currentPlayer.getName();
+		cout<< currentPlayer << endl;
+		gameBoard->printCurrentLocation(playerNames[0]);
+		cout << "Where do you want to move next ? ";
+		Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+		int i, j;
+		int* iPtr;
+		int* jPtr;
+		currentPlayerTile->getCoordinate(iPtr, jPtr);
+		int moveInt;
+		//cout << ""
+ 		cin.exceptions(std::istream::failbit);
+ 		cin>> moveInt;
+ 		Move move = static_cast<Move>(moveInt);
+		cout << "Move is :" << move; 
 	}
-	
-	gameBoard->printCurrentLocation(playerNames[0]);
 	//gameBoard->move(DOWN, playerNames[0]);
 	//gameBoard->printCurrentLocation(playerNames[0]);
+	
 	
 	
     return 0;
