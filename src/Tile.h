@@ -43,7 +43,7 @@ public:
 	virtual TileType getType() = 0;
 	//virtual Tile* clone();
 	//ostream& operator<<;
-	vector<J> getPlayers(){return players;}										// I think we won't be using this anymore. -P
+	vector<string> getPlayers(){return players;}										// I think we won't be using this anymore. -P
    
    	void addPlayer( const string& playerName){players.push_back(playerName);}	// Adds a player to the tile's current player list
    	void removePlayer(string playerName);								// Removes a player to the tile's current players list

@@ -63,7 +63,6 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     		Tile<J>* tileToInsert = tileFactory->next();
     		tileToInsert->setXCoordinate(i);
     		tileToInsert->setYCoordinate(j);
-    		
     		// for testing purpose -P
 			switch (tileToInsert->getType()){
     			case DESERT:
@@ -291,83 +290,91 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL> 
 void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
-	const T playerTile = getTile(playerName);
-	int playerRow, playerCol;
-	int* rowPtr = &playerRow;
-	int* colPtr = &playerCol;
-	getCoordinate(playerTile, rowPtr, colPtr);
-	cout<< "(" << playerRow << "," << playerCol << endl;
 	cout<< endl;
-	cout<< "YOU ARE HERE : X" << endl;
+	cout<< "\t\t\t     YOU ARE HERE : X" << endl;
 	//prints the top of the board
 	for ( int j=0; j<2; j++){
+		cout<< "\t\t  ";
 		for ( int i = 0; i < COL; i++){
 			cout<< "******";
 		}
 		cout << endl;
 	}
 	for (int j = COL-1; j > -1; j--){
-		cout<< "** ";
+		cout<< "\t\t  ** ";
 		for (int i = 0; i < ROW; i++){
-		//if( playerRow == i && playerCol == j){			// This works but the players
-		//		cout<< "  X  ";								// are not currenlty correctly initialized 
-		//	}else{											// a restaurant tile, their position is (0,0). -P
+				bool isCurrentLocation = false;				
 				const T& aTile = getTile(i, j);
-				switch (aTile->getType()){
-	    			case DESERT:
-	    				cout << " DES ";
-	    				break;
-	    			case RESTAURANT:
-	    				cout << " RES ";
-	    				break;
-					case SPICEMERCHANT:
-	    				cout << " SPI ";
-	    				break;
-					case FABRICMANUFACTURER:
-	    				cout << " FAB ";
-	    				break;
-					case JEWELER:
-	    				cout << " JEW ";
-	    				break;
-					case CARTMANUFACTURER:
-	    				cout << " CAR ";
-	    				break;
-					case SMALLMARKET: 
-	    				cout << " SMM ";
-	    				break;
-					case SPICEMARKET:
-	    				cout << " SPM ";
-	    				break;
-					case JEWELRYMARKET: 
-	    				cout << " JEM ";
-	    				break;
-					case FABRICMARKET:
-	    				cout << " FAM ";
-	    				break;
-					case BLACKMARKET:
-	    				cout << " BLM ";
-	    				break;
-					case CASINO:
-	    				cout << " CAS ";
-	    				break;
-					case GEMMERCHANT:
-	    				cout << " GEM ";
-	    				break;
-					case PALACE: 
-	    				cout << " PAL ";
-	    				break;
+				if( !aTile->noPlayers() ){
+					for( string tilePlayerName : aTile->getPlayers()){
+						if (tilePlayerName == playerName)
+							isCurrentLocation = true;
+					}
 				}
-			//} 
+				if( !isCurrentLocation ){
+					switch (aTile->getType()){
+		    			case DESERT:
+		    				cout << "  +  ";
+		    				break;
+		    			case RESTAURANT:
+		    				cout << " RES ";
+		    				break;
+						case SPICEMERCHANT:
+		    				cout << " SPI ";
+		    				break;
+						case FABRICMANUFACTURER:
+		    				cout << " FAB ";
+		    				break;
+						case JEWELER:
+		    				cout << " JEW ";
+		    				break;
+						case CARTMANUFACTURER:
+		    				cout << " CAR ";
+		    				break;
+						case SMALLMARKET: 
+		    				cout << " SMM ";
+		    				break;
+						case SPICEMARKET:
+		    				cout << " SPM ";
+		    				break;
+						case JEWELRYMARKET: 
+		    				cout << " JEM ";
+		    				break;
+						case FABRICMARKET:
+		    				cout << " FAM ";
+		    				break;
+						case BLACKMARKET:
+		    				cout << " BLM ";
+		    				break;
+						case CASINO:
+		    				cout << " CAS ";
+		    				break;
+						case GEMMERCHANT:
+		    				cout << " GEM ";
+		    				break;
+						case PALACE: 
+		    				cout << " PAL ";
+		    				break;
+					}
+				}else{
+					cout<< "  X  ";
+				}
 			if (i == ROW-1){
 				cout << " **";
 			}		
 		}
 		cout<< endl;
-		cout<< endl;
+		cout<< "\t\t  **";
+		for ( int i = 0; i < COL; i++){
+			cout<< "     ";
+		}
+		cout << "  **" << endl;
+		
 	}
 	
 	//prints the bottom of the board
 	for ( int j=0; j<2; j++){
+		cout<< "\t\t  ";
 		for ( int i = 0; i < COL; i++){
 			cout<< "******";
 		}

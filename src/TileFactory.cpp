@@ -33,7 +33,7 @@ Tile <J>* TileFactory<J>::next()
 template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
-	int numTilesToCreate = _nTiles;
+	int numTilesToCreate = _nTiles;								// We could improve randomness here. -P
 	int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
 	for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
 		for ( int j = 1; j < 14; j++){
