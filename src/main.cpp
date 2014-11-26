@@ -379,7 +379,7 @@ int main() {
 	GameBoard<Tile<Player*>*, Player*, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player*>*, Player*, 6, 6>::GameBoard(
 			playerNames.data(), playerNames.size());
-			
+
 	gameBoard->printCurrentLocation(playerNames[0]);
 	
     return 0;

@@ -76,7 +76,12 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     					for (auto i = 0; i < playerNamesSize; i++){
 						    addPlayer(*(playerNames + i));							// Add players 
 						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
-						    tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
+						    int row, col;
+						    int* rowPtr = &row;
+						    int* colPtr = &col;					
+							playersCurrentTile[*(playerNames + i)]->getCoordinate(rowPtr, colPtr);
+							cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl; 
+							tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
 						}
 						playersAreSetToStartTile = true;
 					}
@@ -290,7 +295,8 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 	int playerRow, playerCol;
 	int* rowPtr = &playerRow;
 	int* colPtr = &playerCol;
-	getCoordinate(playerTile, rowPtr, colPtr); // This statement makes the game crash, have to work on it!
+	getCoordinate(playerTile, rowPtr, colPtr);
+	cout<< "(" << playerRow << "," << playerCol << endl;
 	cout<< endl;
 	cout<< "YOU ARE HERE : X" << endl;
 	//prints the top of the board

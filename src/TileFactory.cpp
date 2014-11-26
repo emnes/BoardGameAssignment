@@ -12,8 +12,10 @@
 //
 
 #include "TileFactory.h"
-#include <time.h>
-#include <algorithm> 
+#include <ctime>
+#include <algorithm> 	// std::shuffle
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
 
 using namespace std;
 
@@ -44,8 +46,12 @@ TileFactory<J>::TileFactory(int _nTiles)
 		numTilesToCreate--;
 	}
 	
-	auto engine = std::default_random_engine{};
-	std::shuffle(std::begin(randomTiles), std::end(randomTiles), engine);
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  	shuffle (randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
+	
+	for( TileType tileTypeA : randomTiles){
+		cout<< tileTypeA;
+	}
 	
 	Register(DESERT, &Desert<J>::Create);
 	Register(RESTAURANT, &Restaurant<J>::Create);
