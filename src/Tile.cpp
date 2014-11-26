@@ -11,6 +11,12 @@
 using namespace std;
 
 template <typename J>
+ostream& operator<<(ostream& os, const Tile<J>& tile){
+    os << "Tile Coordinates: " << endl << "X: "<< tile.coordinates[0] << "Y: "<< tile.coordinates[1] << "Tile Type: " << tile.TileType << "Players on tile: "<< endl << tile.getPlayers() << endl;
+    return os;
+}
+
+template <typename J>
 bool Desert<J>::action(Player& player){
 	return false;
 }
