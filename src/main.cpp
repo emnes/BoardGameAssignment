@@ -389,11 +389,11 @@ int main() {
 		cout << "Where do you want to move next ? ";
 		Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 		int i, j;
-		int* iPtr;
-		int* jPtr;
+		int* iPtr = &i;
+		int* jPtr = &j;
 		currentPlayerTile->getCoordinate(iPtr, jPtr);
 		int moveInt;
-		//cout << ""
+		cout << "Coordinates are " << i << "," << j << ")" << endl;
  		cin.exceptions(std::istream::failbit);
  		cin>> moveInt;
  		Move move = static_cast<Move>(moveInt);
