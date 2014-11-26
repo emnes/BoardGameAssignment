@@ -30,7 +30,7 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBo
 	
 private:
 	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game
-	map<string, J> players;											// Key : Player's Name, Element : Pointer to Player object
+	vector<J> players;												
 	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
@@ -208,7 +208,10 @@ J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
 {
 	//if( players[playerName] ))			// should be a search here and if pointer to end is returned then throw. -P
         //throw std::out_of_range("Player does not exist.");
-    return players[playerName];
+    for( Player& player : players){
+    	if (player.getName() == playerName)
+    		return player;
+	}
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -242,12 +245,16 @@ std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
-    players.emplace(playerName, new Player(playerName));
-    //initial position of each player to Restaurant is to be set here. -P
+    Player* newPlayer = new Player(playerName);
+    players.push_back(*newPlayer);
 }
 
+/*
+ * Returns a given tile's coordinate on the 
+ * game board.
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-void GameBoard<T, J, ROW, COL>::getCoordinate(const T &tile, int *row, int *col) const{   	// Returns the coordinates of a tile
+void GameBoard<T, J, ROW, COL>::getCoordinate(const T &tile, int *row, int *col) const{   
 	tile->getCoordinate(row, col);
 }
 /*
@@ -268,7 +275,7 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 	int* colPtr = &col;
 	getCoordinate(currentTile, rowPtr, colPtr);
 	
-	const T& nextTile;
+	T nextTile;
 	switch ( move ){							// we MUST handle illegal moves in UI. -P
 		case UP:
 			nextTile = getTile(row, col +1);
@@ -285,7 +292,8 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 	}
 	
 	nextTile->addPlayer(playerName);
-	playersCurrentTile[playerName] = nextTile;	
+	playersCurrentTile[playerName] = nextTile;
+	return nextTile;	
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL> 
@@ -382,4 +390,6 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 	}
 }
 
+			
+	
 #endif /* defined(__BoardGame__GameBoard__) */

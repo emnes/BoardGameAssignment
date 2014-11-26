@@ -294,17 +294,17 @@ bool Palace<J>::action(Player& player){
 template <typename J>
 TileType Palace<J>::getType() { return PALACE;}
 
-template class Desert<Player*>;
-template class Restaurant<Player*>;
-template class SpiceMerchant<Player*>;
-template class FabricManufacturer<Player*>;
-template class Jeweler<Player*>;
-template class CartManufacturer<Player*>;
-template class SmallMarket<Player*>;
-template class SpiceMarket<Player*>;
-template class JewelryMarket<Player*>;
-template class FabricMarket<Player*>;
-template class BlackMarket<Player*>;
-template class Casino<Player*>;
-template class GemMerchant<Player*>;
-template class Palace<Player*>;
+template class Desert<Player>;
+template class Restaurant<Player>;
+template class SpiceMerchant<Player>;
+template class FabricManufacturer<Player>;
+template class Jeweler<Player>;
+template class CartManufacturer<Player>;
+template class SmallMarket<Player>;
+template class SpiceMarket<Player>;
+template class JewelryMarket<Player>;
+template class FabricMarket<Player>;
+template class BlackMarket<Player>;
+template class Casino<Player>;
+template class GemMerchant<Player>;
+template class Palace<Player>;
