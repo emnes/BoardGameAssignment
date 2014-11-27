@@ -387,9 +387,19 @@ int main() {
 	vector<string> playerNames;
 	for( int i = 0; i < numOfPlayers; i++){
 		cout<< "Enter the name of player " << i+1 << " : ";
-		string playerName;
-		cin >> playerName;
-		playerNames.push_back(playerName);
+		bool invalidPlayerName = true;
+		while( invalidPlayerName){
+			string playerName;
+			cin >> playerName;	
+			if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
+				playerNames.push_back(playerName);
+				invalidPlayerName = false;
+			}else{
+				cout << "Cannot have two players with the same name." << endl;
+				cout << "Please enter another name:" << endl;
+			}
+		}
+
 	}
 	
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
