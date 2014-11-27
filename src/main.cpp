@@ -414,7 +414,7 @@ int main() {
 	while (!hasWon){
 		for( string currentPlayerName : playerNames){
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
-			cout << "Current player:" << currentPlayer.getName() << endl;
+			cout << "Current player:" << currentPlayerName << endl;
 			cout<< currentPlayer << endl;
 			gameBoard->printCurrentLocation(currentPlayerName);
 	
@@ -463,9 +463,19 @@ int main() {
 						cout << currentPlayer << endl;
 						gameBoard->printCurrentLocation(currentPlayer.getName());
 						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+						if( (currentPlayerTile->getPlayers()).size() > 1){
+							cout << endl << "Other player(s) on this tile : ";
+							for( string sameTilePlayerName : currentPlayerTile->getPlayers()){
+								if (sameTilePlayerName != currentPlayer.getName())
+									cout << sameTilePlayerName << " ";
+							}	
+							cout << endl;
+							cout << "(It will cost you 1 more gold per other player on this tile to do an action.)" << endl << endl;
+						}
 						cout << *currentPlayerTile;
 					}else{
-						cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;
+						cout<< "Sorry, not a valid direction." << endl;  
+						cout<< "Please enter again in which direction you want to go:" << endl;
 					}
 				}
 			}
@@ -481,14 +491,32 @@ int main() {
 							cin.clear(); // Clears the input stream fail flag
 					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
 						}else{
-							if( actionInput.compare("y") || actionInput.compare("Y") ){
-								if( !currentPlayerTile->action(currentPlayer))
+							if( !actionInput.compare("y") || !actionInput.compare("Y") ){
+								if( !currentPlayerTile->action(currentPlayer)){
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
-								gameBoard->updatePlayer(currentPlayer);
-								cout << endl << 	"Your status after performing this action is: " << endl;
-								cout << currentPlayer << endl;
+								}else{
+									if( currentPlayerTile->getType() != RESTAURANT)
+										currentPlayer.eat();
+									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
+										if( recipientPlayerName.compare(currentPlayerName)){
+											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
+											cout << "recipient gold before pay : " <<recipientPlayer.getGold() << endl;
+											currentPlayer.pay(recipientPlayer);
+											gameBoard->setPlayer(recipientPlayer);
+											cout << "recipient gold after pay : " <<recipientPlayer.getGold() << endl;				
+										}
+									}
+									gameBoard->setPlayer(currentPlayer);
+									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
+										cout << "Player : " << recipientPlayerName << endl;
+										Player printPlayer = gameBoard->getPlayer(recipientPlayerName);
+										cout << printPlayer << endl;				
+									}
+									//cout << endl << "Your status after performing this action is: " << endl;
+									//cout << currentPlayer << endl;	
+								}
 								invalidInput = false;
-							}else if( actionInput.compare("n") || actionInput.compare("N") ){
+							}else if( !actionInput.compare("n") || !actionInput.compare("N") ){
 								invalidInput = false;
 							}else{
 								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		

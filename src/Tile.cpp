@@ -34,13 +34,15 @@ TileType Restaurant<J>::getType(){return RESTAURANT;};
 
 template <typename J>
 string Restaurant<J>::print() const {
-	return "Restaurant : Replenish food items to 10? (Y/N)(Y/N)";
+	return "Restaurant : Replenish food items to 10? (Y/N)";
 }
 
 template <typename J>
 bool SpiceMerchant<J>::action(Player& player){
 	
-	if( player.getGold() > 1 && !player.cartIsFull()){
+	if( player.getGold() > 1 &&
+			player.getGold() > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+				!player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -64,7 +66,9 @@ string SpiceMerchant<J>::print() const {
 template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
 	
-	if( player.getGold() > 1 && !player.cartIsFull()){
+	if( player.getGold() > 1 &&
+			player.getGold() > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+				!player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -88,7 +92,9 @@ string FabricManufacturer<J>::print() const {
 template <typename J>
 bool Jeweler<J>::action(Player& player){
 	
-	if( player.getGold() > 1 && !player.cartIsFull()){
+	if( player.getGold() > 1 &&
+			player.getGold() > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+				!player.cartIsFull()){
 		player.setGold(player.getGold()-2);
 		for( int i = 0; i < 3; i++){
 			if( player.incrementCartSize() ){
@@ -111,7 +117,8 @@ string Jeweler<J>::print() const {
 template <typename J>
 bool CartManufacturer<J>::action(Player& player){
 
-	if( player.getGold() > 6){
+	if( player.getGold() > 6 && 
+			player.getGold() > (6 + Tile<J>::numPlayersOnTile() - 1)){
 		player.setCartCapacity(player.getCartCapacity() + 3 );
 		player.setGold(player.getGold() - 6);
 		return true;
@@ -133,7 +140,8 @@ bool SmallMarket<J>::action(Player& player){
 	
 	if( player.getFabric() > 0 &&
 			player.getJewel() > 0 &&
-				player.getSpice() > 0){
+				player.getSpice() > 0 &&
+				 player.getGold() > (Tile<J>::numPlayersOnTile() - 2)){
 		player.setFabric(player.getFabric() - 1);
 		player.setJewel(player.getJewel() - 1);
 		player.setSpice(player.getSpice() - 1);
@@ -156,7 +164,7 @@ string SmallMarket<J>::print() const {
 template <typename J>
 bool SpiceMarket<J>::action(Player& player){
 	
-	if( player.getSpice() > 2 ){
+	if( player.getSpice() > 2 && player.getGold() > (Tile<J>::numPlayersOnTile() - 2)){
 		player.setSpice(player.getSpice() - 3);
 		player.setCartSize(player.getCartSize() - 3);
 		player.setGold(player.getGold() + 6);
@@ -177,7 +185,7 @@ string SpiceMarket<J>::print() const {
 template <typename J>
 bool JewelryMarket<J>::action(Player& player){
 	
-	if( player.getJewel() > 2 ){
+	if( player.getJewel() > 2 && player.getGold() > (Tile<J>::numPlayersOnTile() - 2)){
 		player.setJewel(player.getJewel() - 3);
 		player.setCartSize(player.getCartSize() - 3);
 		player.setGold(player.getGold() + 6);
@@ -198,7 +206,7 @@ string JewelryMarket<J>::print() const {
 template <typename J>
 bool FabricMarket<J>::action(Player& player){
 	
-	if( player.getFabric() > 2 ){
+	if( player.getFabric() > 2 && player.getGold() > (Tile<J>::numPlayersOnTile() - 2)){
 		player.setFabric(player.getFabric() - 3);
 		player.setCartSize(player.getCartSize() - 3);
 		player.setGold(player.getGold() + 6);
@@ -219,7 +227,7 @@ string FabricMarket<J>::print() const {
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
 	
-	if( player.getGold() > 0 && !player.cartIsFull()){
+	if( player.getGold() > (Tile<J>::numPlayersOnTile() - 1) && !player.cartIsFull() && player.getGold() > 0){
 		
 		int numGoods = rand() % 6;
 		for( int i = 0; i < numGoods; i++){
@@ -261,7 +269,7 @@ bool Casino<J>::action(Player& player){
 
 // Using roulette selection algorithm to achieve weighted randomness
 	
-	if( player.getGold() > 0){
+	if( player.getGold() > (Tile<J>::numPlayersOnTile() - 1) && player.getGold() > 0){
 		
 		enum Prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
 		
@@ -294,15 +302,22 @@ bool Casino<J>::action(Player& player){
 		switch ( prize ){
 			case LOOSE :
 				player.setGold(player.getGold() - 1);
+				cout << "YOU LOST..." << endl;
 				break;
 			case WIN2GOLD:
 				player.setGold(player.getGold() + 1);
+				cout << "YOU WON 2 GOLD!" << endl;
+				cout << '\a'; cout << '\a';
 				break;
 			case WIN3GOLD:
 				player.setGold(player.getGold() + 2);
+				cout << "YOU WON 3 GOLD!" << endl;
+				cout << '\a'; cout << '\a'; cout << '\a';
 				break;
 			case WIN10GOLD:
 				player.setGold(player.getGold() + 9);
+				cout << "YOU WON 10 GOLD!!!" << endl;
+				cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a';
 				break;
 		}
 		return true;

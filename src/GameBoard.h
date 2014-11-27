@@ -41,8 +41,7 @@ public:
 	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board
 	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile
     void addPlayer(string playerName); 								// Adds a player to the game   
-    void updatePlayer(Player& player);
-	//TODO: implement      void setPlayer(J player);
+    void setPlayer(J player);
 
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
@@ -253,12 +252,12 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
 }
 
 /*
- * Updates a player reference.
+ * Updates a player status.
  * Parameters: name of player
  *
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-void GameBoard<T, J, ROW, COL>::updatePlayer(Player& player){
+void GameBoard<T, J, ROW, COL>::setPlayer(J player){
    for( int i; i < players.size(); i ++){
    		if( players.at(i) == player )
    			players.at(i) = player;

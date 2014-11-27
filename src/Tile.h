@@ -52,6 +52,7 @@ public:
    	void removePlayer(string playerName);								// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
+    int numPlayersOnTile(){return players.size();}
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
