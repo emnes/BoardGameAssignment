@@ -386,7 +386,8 @@ int main() {
 	
 	while (!hasWon){
 		for( string currentPlayerName : playerNames){
-			Player	 currentPlayer = gameBoard->getPlayer(currentPlayerName);
+			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
+			cout << "Current player:" << endl;
 			cout<< currentPlayer << endl;
 			gameBoard->printCurrentLocation(currentPlayerName);
 	
@@ -395,23 +396,22 @@ int main() {
 			int* iPtr = &i;
 			int* jPtr = &j;
 			currentPlayerTile->getCoordinate(iPtr, jPtr);
-			cout << "Coordinates are " << i << "," << j << ")" << endl;
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), i, j);
 			int moveInt;
-			cout << "Where do you want to move next ? ";
+			cout << "Where do you want to move next ? " << endl;
 			
 			if( validMoves[UP] ){
-				cout << "0 - UP\t";
+				cout << "0-UP\t";
 			}
 			if( validMoves[RIGHT] ){
-				cout << "1 - RIGHT\t";
+				cout << "1-RIGHT\t";
 			}
 			if( validMoves[DOWN] ){
-				cout << "2 - DOWN\t";
+				cout << "2-DOWN\t";
 			}
 			if( validMoves[LEFT] ){
-				cout << "3 - LEFT\t";
+				cout << "3-LEFT\t";
 			}
 			
 			bool invalidInput = true;
@@ -431,6 +431,10 @@ int main() {
 									(direction == LEFT && validMoves[LEFT]) ){
 										invalidInput = false;
 										gameBoard->move(direction, currentPlayer.getName());
+										cout << string( 100, '\n' );
+										cout << "Current player:" << endl;
+										cout << currentPlayer << endl;
+										gameBoard->printCurrentLocation(currentPlayer.getName());
 										currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 										cout << *currentPlayerTile;
 					}else{
@@ -439,9 +443,8 @@ int main() {
 				}
 			}
 			if( currentPlayer.canAct()){
-				
 				invalidInput = true;
-				char actionInput;
+				string actionInput;
 				while(invalidInput)
 				{
 					cin >> actionInput;
@@ -450,15 +453,19 @@ int main() {
 						cin.clear(); // Clears the input stream fail flag
 				  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
 					}else{
-						if( actionInput == 'Y'){
+						if( actionInput.compare("y") || actionInput.compare("N") ){
 							if( !currentPlayerTile->action(currentPlayer))
 								cout<< "Sorry, you do not have enough ressources to perform an action here." << endl;
+							gameBoard->updatePlayer(currentPlayer);
+							cout << "Your status after performing this action is: " << endl;
+							cout << currentPlayer << endl;
 							invalidInput = false;
-						}else if( actionInput = 'N' ){
-							
+							cout << "Press ENTER to continue..." << endl;
+							cin.ignore();
+						}else if( actionInput.compare("n") || actionInput.compare("N") ){
 							invalidInput = false;
 						}else{
-							cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;		
+							cout<<"Sorry, your input is no valid, please choose Y or N" << endl;		
 						}
 					}
 				}

@@ -19,7 +19,7 @@ class Player{
 	
 	private:
 		//Class variables
-		const string name;
+		string name;
 		unsigned int gold = 5;
 		unsigned int food = 10;
 		
@@ -35,8 +35,7 @@ class Player{
 		
 		// Cart 
 		unsigned int cart = 9;
-		unsigned int currentCartSize = 3; // What is this? Cart contents? -M,  
-		// Keeps track of the current number of goods in the cart. -P
+		unsigned int currentCartSize = 3; 	// Keeps track of the current number of goods in the cart. -P
 		
 		// Functions
 		friend ostream& operator<<(ostream& os, const Player& player);
@@ -48,7 +47,7 @@ class Player{
 		// We learned on Friday 7/11 inline functions are best defined outside of class declaration - M
         // ^ Probably not important for this assignment. Maybe something to do if we have time to refactor - M
     
-		// Getters & Setters
+		// Getters 
 		string getName() const {return name;}
 		unsigned int getFood() const {return food;}
 		unsigned int getGold() const {return gold;}
@@ -59,7 +58,8 @@ class Player{
 		unsigned int getCartCapacity() const {return cart;}
 		unsigned int getCartSize() const {return currentCartSize;}
 		unsigned int getNumVisitsGemMerchant() {return numVisitsGemMerchant;}
-		//Tile& getCurrentTile(){return currentTile;}
+		
+		// Setters
 		void setFood(unsigned int _food){food = _food;}
 		void setGold(unsigned int _gold){gold = _gold;}
 		void setRuby(unsigned int _ruby){ruby = _ruby;}
@@ -68,7 +68,6 @@ class Player{
 		void setJewel(unsigned int _jewel){jewel = _jewel;}
 		void setCartCapacity(unsigned int _cart){cart = _cart;}
 		void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
-		//void setCurrentTile(const T& _currentTile){currentTile = _currentTile};
 		
 		void incrementVisitsGemMerchant(){numVisitsGemMerchant++;}
 		

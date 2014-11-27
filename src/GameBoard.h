@@ -19,6 +19,7 @@
 #include <map>
 #include <string>
 #include <array>
+#include <algorithm>
 #include "Tile.h"
 #include "TileFactory.h"
 
@@ -40,6 +41,7 @@ public:
 	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board
 	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile
     void addPlayer(string playerName); 								// Adds a player to the game   
+    void updatePlayer(Player& player);
 	//TODO: implement      void setPlayer(J player);
 
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name
@@ -248,6 +250,19 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
     Player* newPlayer = new Player(playerName);
     players.push_back(*newPlayer);
+}
+
+/*
+ * Updates a player reference.
+ * Parameters: name of player
+ *
+ */
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+void GameBoard<T, J, ROW, COL>::updatePlayer(Player& player){
+   for( int i; i < players.size(); i ++){
+   		if( players.at(i) == player )
+   			players.at(i) = player;
+   }
 }
 
 /*
