@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <array>
 #include <time.h>
+#include <limits> 
 #include "Player.h"
 #include "Tile.h"
 #include "GameBoard.h"
@@ -387,7 +388,7 @@ int main() {
 	while (!hasWon){
 		for( string currentPlayerName : playerNames){
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
-			cout << "Current player:" << endl;
+			cout << "Current player:" << currentPlayer.getName() << endl;
 			cout<< currentPlayer << endl;
 			gameBoard->printCurrentLocation(currentPlayerName);
 	
@@ -399,7 +400,7 @@ int main() {
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), i, j);
 			int moveInt;
-			cout << "Where do you want to move next ? " << endl;
+			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if( validMoves[UP] ){
 				cout << "0-UP\t";
@@ -429,46 +430,50 @@ int main() {
 							(direction == RIGHT && validMoves[RIGHT]) ||
 								(direction == DOWN && validMoves[DOWN]) ||
 									(direction == LEFT && validMoves[LEFT]) ){
-										invalidInput = false;
-										gameBoard->move(direction, currentPlayer.getName());
-										cout << string( 100, '\n' );
-										cout << "Current player:" << endl;
-										cout << currentPlayer << endl;
-										gameBoard->printCurrentLocation(currentPlayer.getName());
-										currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-										cout << *currentPlayerTile;
+						invalidInput = false;
+						gameBoard->move(direction, currentPlayer.getName());
+						cout << string( 100, '\n' );
+						cout << "Current player:" << endl;
+						cout << currentPlayer << endl;
+						gameBoard->printCurrentLocation(currentPlayer.getName());
+						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+						cout << *currentPlayerTile;
 					}else{
 						cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;
 					}
 				}
 			}
 			if( currentPlayer.canAct()){
-				invalidInput = true;
-				string actionInput;
-				while(invalidInput)
-				{
-					cin >> actionInput;
-					if ( cin.fail() ){
-						cout<<"Wrong input, choose Y or N" << endl;
-						cin.clear(); // Clears the input stream fail flag
-				  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
-					}else{
-						if( actionInput.compare("y") || actionInput.compare("N") ){
-							if( !currentPlayerTile->action(currentPlayer))
-								cout<< "Sorry, you do not have enough ressources to perform an action here." << endl;
-							gameBoard->updatePlayer(currentPlayer);
-							cout << "Your status after performing this action is: " << endl;
-							cout << currentPlayer << endl;
-							invalidInput = false;
-							cout << "Press ENTER to continue..." << endl;
-							cin.ignore();
-						}else if( actionInput.compare("n") || actionInput.compare("N") ){
-							invalidInput = false;
+				if( currentPlayerTile->getType() != DESERT){
+					invalidInput = true;
+					string actionInput;
+					while(invalidInput)
+					{
+						cin >> actionInput;
+						if ( cin.fail() ){
+							cout<<"Wrong input, choose Y or N" << endl;
+							cin.clear(); // Clears the input stream fail flag
+					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
 						}else{
-							cout<<"Sorry, your input is no valid, please choose Y or N" << endl;		
+							if( actionInput.compare("y") || actionInput.compare("Y") ){
+								if( !currentPlayerTile->action(currentPlayer))
+									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
+								gameBoard->updatePlayer(currentPlayer);
+								cout << endl << 	"Your status after performing this action is: " << endl;
+								cout << currentPlayer << endl;
+								invalidInput = false;
+							}else if( actionInput.compare("n") || actionInput.compare("N") ){
+								invalidInput = false;
+							}else{
+								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
+							}
 						}
 					}
 				}
+				cout << "Press enter to continue . . . ";
+				cin.sync();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << string( 100, '\n' );
 			}
 	
 	}

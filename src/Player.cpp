@@ -32,8 +32,7 @@ bool operator==(const Player& playerA, const Player& playerB){
 }
 
 ostream& operator<<(ostream& os, const Player& player){
-	return os << "Player : " << player.getName() << endl
-				<< "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
+	return os 	<< "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
 					<< player.getFood() << "\t"
 						<< player.getGold() << "\t"
 							<< player.getSpice() << "\t"
