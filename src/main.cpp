@@ -365,8 +365,24 @@ int main() {
 	cout << "**********************************************************************" << endl << endl;
 
 	int numOfPlayers;
+	bool invalidNumberOfPlayers = true;
 	cout<< "Enter the number of players:";
-	cin >> numOfPlayers;
+	while(invalidNumberOfPlayers){
+		cin >> numOfPlayers;
+		if ( cin.fail() ){
+				cout<<"The number of players needs to be an integer greater than 1." << endl;
+				cout<<"Please enter a correct number of players:" << endl;
+				cin.clear(); // Clears the input stream fail flag
+				cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+		}else{	
+			if( numOfPlayers > 1)
+				invalidNumberOfPlayers = false;
+			else {
+				cout << "At least 2 players are required to play this game." << endl;
+				cout << "Please enter a correct number of players:" << endl;
+			}
+		}	
+	}
 	
 	vector<string> playerNames;
 	for( int i = 0; i < numOfPlayers; i++){
