@@ -378,31 +378,69 @@ int main() {
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
-			playerNames.data(), playerNames.size());
-
-	cout << endl << endl << endl << endl;
-	cout << "Hi, ";
-	for( string currentPlayerName : playerNames){
-		Player	 currentPlayer = gameBoard->getPlayer(currentPlayerName);
-		cout<< currentPlayer << endl;
-		gameBoard->printCurrentLocation(playerNames[0]);
-		cout << "Where do you want to move next ? ";
-		Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-		int i, j;
-		int* iPtr = &i;
-		int* jPtr = &j;
-		currentPlayerTile->getCoordinate(iPtr, jPtr);
-		int moveInt;
-		cout << "Coordinates are " << i << "," << j << ")" << endl;
- 		cin.exceptions(std::istream::failbit);
- 		cin>> moveInt;
- 		Move move = static_cast<Move>(moveInt);
-		cout << "Move is :" << move; 
+			playerNames.data(), playerNames.size());		
+	cout << endl << endl << endl << endl;										//  WE SHOULD REMOVE THIS LINE EVENTUALLY
+	
+	
+	bool hasWon = false;
+	
+	while (!hasWon){
+		for( string currentPlayerName : playerNames){
+			Player	 currentPlayer = gameBoard->getPlayer(currentPlayerName);
+			cout<< currentPlayer << endl;
+			gameBoard->printCurrentLocation(currentPlayerName);
+	
+			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+			int i, j;
+			int* iPtr = &i;
+			int* jPtr = &j;
+			currentPlayerTile->getCoordinate(iPtr, jPtr);
+			cout << "Coordinates are " << i << "," << j << ")" << endl;
+			array<bool, 4> validMoves = {true,true,true,true};
+			gameBoard->getValidMoves(validMoves.data(), i, j);
+			int moveInt;
+			cout << "Where do you want to move next ? ";
+			
+			if( validMoves[UP] ){
+				cout << "0 - UP\t";
+			}
+			if( validMoves[RIGHT] ){
+				cout << "1 - RIGHT\t";
+			}
+			if( validMoves[DOWN] ){
+				cout << "2 - DOWN\t";
+			}
+			if( validMoves[LEFT] ){
+				cout << "3 - LEFT\t";
+			}
+			
+			bool invalidInput = true;
+			int input;
+			while(invalidInput)
+			{
+				cin >> input;
+				if ( cin.fail() ){
+					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
+					cin.clear(); // Clears the input stream fail flag
+			  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+				}else{
+					Move direction = static_cast<Move>(input);
+					if( (direction == UP && validMoves[UP])	||
+							(direction == RIGHT && validMoves[RIGHT]) ||
+								(direction == DOWN && validMoves[DOWN]) ||
+									(direction == LEFT && validMoves[LEFT]) ){
+										invalidInput = false;
+										gameBoard->move(direction, currentPlayer.getName());
+					}else{
+						cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;
+					}
+				}
+			}
+					
+			//cin.exceptions(std::istream::failbit);     //WHY?	
 	}
-	//gameBoard->move(DOWN, playerNames[0]);
-	//gameBoard->printCurrentLocation(playerNames[0]);
 	
-	
+	}
 	
     return 0;
 }
