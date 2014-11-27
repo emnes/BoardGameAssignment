@@ -440,12 +440,32 @@ int main() {
 			}
 			if( currentPlayer.canAct()){
 				
+				invalidInput = true;
+				char actionInput;
+				while(invalidInput)
+				{
+					cin >> actionInput;
+					if ( cin.fail() ){
+						cout<<"Wrong input, choose Y or N" << endl;
+						cin.clear(); // Clears the input stream fail flag
+				  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+					}else{
+						if( actionInput == 'Y'){
+							if( !currentPlayerTile->action(currentPlayer))
+								cout<< "Sorry, you do not have enough ressources to perform an action here." << endl;
+							invalidInput = false;
+						}else if( actionInput = 'N' ){
+							
+							invalidInput = false;
+						}else{
+							cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;		
+						}
+					}
+				}
 			}
-					
-			//cin.exceptions(std::istream::failbit);     //WHY?	
-	}
 	
 	}
+}
 	
     return 0;
 }
