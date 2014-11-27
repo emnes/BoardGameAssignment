@@ -38,11 +38,23 @@ private:
 	array<int, 2> coordinates;
 		
 public:
-	//bool operator==(const Tile &t);
+    inline bool operator==(const Tile &t){
+        if(t != nullptr)
+        {
+            if (&this == &t)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 	virtual bool action( Player& player) = 0;
 	virtual TileType getType() = 0;
-	//virtual Tile* clone();
-	//ostream& operator<<;
+    Tile<J>* clone(){
+        Tile<J> copy(this);
+        return &copy;
+    }
+    friend ostream& operator<<(ostream& os, const Tile& tile);
 	vector<string> getPlayers(){return players;}										// I think we won't be using this anymore. -P
    
    	void addPlayer( const string& playerName){players.push_back(playerName);}	// Adds a player to the tile's current player list
@@ -60,10 +72,10 @@ public:
 template<typename J>
 class Desert : public Tile<J>
 {
-	public:		
-		virtual TileType getType() override;
-		virtual bool action( Player& player ) override;
-		static Tile<J>* __stdcall Create() { return new Desert<J>(); }
+public:
+    virtual TileType getType() override;
+	virtual bool action( Player& player ) override;
+	static Tile<J>* __stdcall Create() { return new Desert<J>(); }
 };
 
 template<typename J>
