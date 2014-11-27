@@ -23,7 +23,7 @@
 #include "TileFactory.h"
 
 using namespace std;
-enum Move{UP, DOWN, LEFT, RIGHT}; // Only four possible neighbours: up, down, left, right
+enum Move{UP, RIGHT, DOWN, LEFT}; // Only four possible neighbours: up, down, left, right
 
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
@@ -45,6 +45,7 @@ public:
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
 	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile
+	void getValidMoves(bool* b, int i, int j);
 	
 	void printCurrentLocation(const string& playerName);
 	const T& move(Move move, const std::string& playerName );
@@ -217,11 +218,11 @@ J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
 {
-	//auto it = playersCurrentTile.find(playerName);
-    //if( it == playersCurrentTile.end())			// should be a search here and if pointer to end is returned then throw. -P
-      //throw std::out_of_range("Player does not exist.");
+	auto it = playersCurrentTile.find(playerName);
+    if( it == playersCurrentTile.end())			// should be a search here and if pointer to end is returned then throw. -P
+      throw std::out_of_range("Player does not exist.");
     
-	//return it->second;
+	return it->second;
 }
 /*
  * Returns all players on a specific tile
@@ -390,6 +391,17 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 	}
 }
 
-			
+template<typename T, typename J, unsigned int ROW, unsigned int COL> 
+void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
+	
+	if ( j == COL - 1)
+		*(b + static_cast<int>(UP)) = false;
+	if ( i == ROW - 1)
+		*(b + static_cast<int>(RIGHT)) = false;
+	if( j == 0 )
+		*(b + static_cast<int>(DOWN)) = false;
+	if( i == 0 )
+		*(b + static_cast<int>(LEFT)) = false;
+}
 	
 #endif /* defined(__BoardGame__GameBoard__) */

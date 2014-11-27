@@ -431,10 +431,15 @@ int main() {
 									(direction == LEFT && validMoves[LEFT]) ){
 										invalidInput = false;
 										gameBoard->move(direction, currentPlayer.getName());
+										currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+										cout << *currentPlayerTile;
 					}else{
 						cout<<"Sorry, not a valid direction.  Please enter again in which direction you want to go:" << endl;
 					}
 				}
+			}
+			if( currentPlayer.canAct()){
+				
 			}
 					
 			//cin.exceptions(std::istream::failbit);     //WHY?	
