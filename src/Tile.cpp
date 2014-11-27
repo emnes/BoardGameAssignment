@@ -11,18 +11,17 @@
 using namespace std;
 
 template <typename J>
-ostream& operator<<(ostream& os, const Tile<J>& tile){
-    os << "Tile Coordinates: " << endl << "X: "<< tile.coordinates[0] << "Y: "<< tile.coordinates[1] << "Tile Type: " << tile.TileType << "Players on tile: "<< endl << tile.getPlayers() << endl;
-    return os;
-}
-
-template <typename J>
 bool Desert<J>::action(Player& player){
 	return false;
 }
 
 template <typename J>
 TileType Desert<J>::getType() { return DESERT;}
+
+template <typename J>
+string Desert<J>::print() {
+	return "You've landed on a Desert tile.  You cannot perform any action.";
+}
 
 template <typename J>
 bool Restaurant<J>::action(Player& player){
@@ -32,6 +31,11 @@ bool Restaurant<J>::action(Player& player){
 
 template <typename J>
 TileType Restaurant<J>::getType(){return RESTAURANT;};
+
+template <typename J>
+string Restaurant<J>::print() {
+	return "You've landed on a Restaurant tile.  You can replenish all you food items to 10.";
+}
 
 template <typename J>
 bool SpiceMerchant<J>::action(Player& player){
@@ -53,6 +57,11 @@ template <typename J>
 TileType SpiceMerchant<J>::getType() { return SPICEMERCHANT;}
 
 template <typename J>
+string SpiceMerchant<J>::print() {
+	return "You've landed on a Spice Merchant tile.  For 2 pieces of gold you can purchase 3 sacks of spices .";
+}
+
+template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
 	
 	if( player.getGold() > 1 && !player.cartIsFull()){
@@ -70,6 +79,11 @@ bool FabricManufacturer<J>::action(Player& player){
 
 template <typename J>
 TileType FabricManufacturer<J>::getType() { return FABRICMANUFACTURER;}
+
+template <typename J>
+string FabricManufacturer<J>::print() {
+	return "You've landed on a Fabric Manufacturer tile.  For 2 pieces of gold you can purchase 3 rolls of fabri tissues.";
+}
 
 template <typename J>
 bool Jeweler<J>::action(Player& player){
@@ -90,6 +104,11 @@ template <typename J>
 TileType Jeweler<J>::getType() { return JEWELER;}
 
 template <typename J>
+string Jeweler<J>::print() {
+	return "You've landed on a Fabric Manufacturer tile.  For 2 pieces of gold you can purchase 3 pieces of jewelry.";
+}
+
+template <typename J>
 bool CartManufacturer<J>::action(Player& player){
 
 	if( player.getGold() > 6){
@@ -103,6 +122,11 @@ bool CartManufacturer<J>::action(Player& player){
 
 template <typename J>
 TileType CartManufacturer<J>::getType() { return CARTMANUFACTURER;}
+
+template <typename J>
+string CartManufacturer<J>::print() {
+	return "You've landed on Cart Manufacturer tile.  For 7 pieces of gold you can increase your cart capacity by 3.";
+}
 
 template <typename J>
 bool SmallMarket<J>::action(Player& player){
@@ -125,6 +149,11 @@ template <typename J>
 TileType SmallMarket<J>::getType() { return SMALLMARKET;}
 
 template <typename J>
+string SmallMarket<J>::print() {
+	return "You've landed on Small Market tile.  You can sell 1 roll of fabric, 1 jewel and 1 sack of spices for 8 pieces of gold.";
+}
+
+template <typename J>
 bool SpiceMarket<J>::action(Player& player){
 	
 	if( player.getSpice() > 2 ){
@@ -139,6 +168,11 @@ bool SpiceMarket<J>::action(Player& player){
 
 template <typename J>
 TileType SpiceMarket<J>::getType() { return SPICEMARKET;}
+
+template <typename J>
+string SpiceMarket<J>::print() {
+	return "You've landed on Spice Market tile.  You can sell 3 sacks of spices for 6 pieces of gold.";
+}
 
 template <typename J>
 bool JewelryMarket<J>::action(Player& player){
@@ -157,6 +191,11 @@ template <typename J>
 TileType JewelryMarket<J>::getType() { return JEWELRYMARKET;}
 
 template <typename J>
+string JewelryMarket<J>::print() {
+	return "You've landed on Spice Market tile.  You can sell 3 pieces of jewelry for 6 pieces of gold.";
+}
+
+template <typename J>
 bool FabricMarket<J>::action(Player& player){
 	
 	if( player.getFabric() > 2 ){
@@ -171,6 +210,11 @@ bool FabricMarket<J>::action(Player& player){
 
 template <typename J>
 TileType FabricMarket<J>::getType() { return FABRICMARKET;}
+
+template <typename J>
+string FabricMarket<J>::print() {
+	return "You've landed on Fabric Market tile.  You can sell 3 rolls of fabrics for 6 pieces of gold.";
+}
 
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
@@ -202,6 +246,11 @@ bool BlackMarket<J>::action(Player& player){
 	}else{
 		return false;
 	}
+}
+
+template <typename J>
+string BlackMarket<J>::print() {
+	return "You've landed on Black Market tile.  For 1 piece of gold, you can get between 0 and 5 goods at random.";
 }
 
 template <typename J>
@@ -266,6 +315,11 @@ template <typename J>
 TileType Casino<J>::getType() { return CASINO;}
 
 template <typename J>
+string Casino<J>::print() {
+	return "You've landed on a Casino tile.  For 1 piece of gold, the player has 2 in 5 chance to loose, i.e., win 0 pieces of gold, a 3 out of 10 chance to get 2 pieces of gold, a 2 out of 10 chance to get 3 pieces of gold and a 1 in 10 chance to win 10 pieces of gold.";
+}
+
+template <typename J>
 bool GemMerchant<J>::action(Player& player){
 	unsigned int rubyPrice = 12 + player.getNumVisitsGemMerchant();
 	if( (player.getGold() > (rubyPrice-1) ) && !player.cartIsFull()){
@@ -280,6 +334,11 @@ bool GemMerchant<J>::action(Player& player){
 
 template <typename J>
 TileType GemMerchant<J>::getType() { return GEMMERCHANT;}
+
+template <typename J>
+string GemMerchant<J>::print() {
+	return "You've landed on a GemMerchant tile.  You can buy a ruby for 12 pieces of gold + numbers of times you've bought here.";
+}
 
 template <typename J>
 bool Palace<J>::action(Player& player){
@@ -299,6 +358,11 @@ bool Palace<J>::action(Player& player){
 
 template <typename J>
 TileType Palace<J>::getType() { return PALACE;}
+
+template <typename J>
+string Palace<J>::print() {
+	return "You've landed on a Palace tile.  You can get a ruby in exchange for 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices.";
+}
 
 template class Desert<Player>;
 template class Restaurant<Player>;
