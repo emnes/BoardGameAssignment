@@ -234,10 +234,10 @@ const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
-    if (tile->noPlayers()){
+    vector<J> tilePlayers;
+	if (tile->noPlayers()){
       	throw std::out_of_range("Tile has no players.");
     }else{
-    	vector<J> tilePlayers;
     	for ( string playerName : tile->getPlayers()){
     		tilePlayers.push_back(GameBoard<T, J, ROW, COL>::getPlayer(playerName));
 		}	
