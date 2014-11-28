@@ -220,7 +220,7 @@ template<typename T, typename J, unsigned int ROW, unsigned int COL>
 const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
 {
 	auto it = playersCurrentTile.find(playerName);
-    if( it == playersCurrentTile.end())			// should be a search here and if pointer to end is returned then throw. -P
+    if( it == playersCurrentTile.end())		
       throw std::out_of_range("Player does not exist.");
     
 	return it->second;
@@ -234,10 +234,15 @@ const T& GameBoard<T, J, ROW, COL>::getTile(const std::string& playerName) const
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 std::vector<J> GameBoard<T, J, ROW, COL>::getPlayers(const T& tile) const{
-    //if (tile->noPlayers())
-      ///  throw std::out_of_range("Tile has no players.");
-    
-	//return tile->getPlayers();
+    if (tile->noPlayers()){
+      	throw std::out_of_range("Tile has no players.");
+    }else{
+    	vector<J> tilePlayers;
+    	for ( string playerName : tile->getPlayers()){
+    		tilePlayers.push_back(GameBoard<T, J, ROW, COL>::getPlayer(playerName));
+		}	
+	} 
+    return tilePlayers;
 }
 
 /*

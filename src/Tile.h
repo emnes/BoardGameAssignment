@@ -29,7 +29,6 @@ enum TileType{DESERT, RESTAURANT, SPICEMERCHANT, FABRICMANUFACTURER, JEWELER,
 				CARTMANUFACTURER, SMALLMARKET, SPICEMARKET, JEWELRYMARKET, 
 					FABRICMARKET, BLACKMARKET, CASINO, GEMMERCHANT, PALACE }; 
 
-// Tile is a template class because in the feature there could be more than one type of Player, for code reuse. -P
 template<typename J>  
 class Tile
 {
@@ -39,27 +38,26 @@ private:
 		
 public:
 	//bool operator==(const Tile &t);
-	virtual bool action( Player& player) = 0;
-	virtual TileType getType() = 0;
-	//virtual Tile* clone();
+	virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
+	virtual TileType getType() = 0;													// Dynamic type of a tile, refer to the enum
+	//virtual Tile* clone();													
 	
 	template <typename K>
-	friend ostream& operator<<(ostream& os, const Tile<J>& tile);
+	friend ostream& operator<<(ostream& os, const Tile<J>& tile);					// Print the type and action definition of a tile
 	
-	vector<string> getPlayers(){return players;}										// I think we won't be using this anymore. -P
+	vector<string> getPlayers(){return players;}									// Returns a vector of the player names
    
-   	void addPlayer( const string& playerName){players.push_back(playerName);}	// Adds a player to the tile's current player list
-   	void removePlayer(string playerName);								// Removes a player to the tile's current players list
+   	void addPlayer( const string& playerName){players.push_back(playerName);}		// Adds a player to the tile's current player list
+   	void removePlayer(string playerName);											// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
-    int numPlayersOnTile(){return players.size();}
-    void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }
-    void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
+    int  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
+    void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
+    void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
-    
     virtual string print() const= 0;
     
-    typedef Tile<J>* (__stdcall *CreateTileFn)(void); 
+    typedef Tile<J>* (__stdcall *CreateTileFn)(void); 								// Create function pointer type definition.
 };
 
 
@@ -113,7 +111,6 @@ class Jeweler : public Tile<J>
 		static Tile<J>* __stdcall Create() { return new Jeweler<J>(); }
 };
 
-// Speak to TA about using inheritance for Manufacturers, Merchants and Markets.
 //--------- Manufacturers ---------//
 
 template<typename J>
@@ -182,7 +179,7 @@ template<typename J>
 class BlackMarket : public Tile<J>
 {
     public:
-        BlackMarket(){int numOfGoods = rand() % 6;} // fix
+        BlackMarket(){int numOfGoods = rand() % 6;} 
         bool action( Player& player) override;
         virtual TileType getType() override;
 		virtual string print() const;

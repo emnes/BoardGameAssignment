@@ -55,7 +55,10 @@ using namespace std;
 int main() {
 	
 	srand(time(NULL));// fix
-	/*******************************PLAYER TEST SUITE************************************/
+	
+	/*
+	
+	//******************************PLAYER TEST SUITE***********************************
     Player* testPlayer = new Player("testPlayer");
     
     cout<< "----------------------Player tests started------------------------------" << endl;
@@ -117,7 +120,7 @@ int main() {
 	cout<< "----------------------Player tests ended---------------------------------" << endl << endl;
 	cout<< "----------------------Tile tests started------------------------------" << endl;
 	
-	/*******************************TILE TEST SUITE************************************/
+	//******************************TILE TEST SUITE***********************************
     
 	Player* tileTestPlayer; 
     
@@ -356,7 +359,7 @@ int main() {
 	
 	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
 	
-	
+	*/
 	
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
@@ -405,12 +408,9 @@ int main() {
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
-			playerNames.data(), playerNames.size());		
-	cout << endl << endl << endl << endl;										//  WE SHOULD REMOVE THIS LINE EVENTUALLY
-	
+			playerNames.data(), playerNames.size());			
 	
 	bool hasWon = false;
-	
 	while (!hasWon){
 		for( string currentPlayerName : playerNames){
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
@@ -495,6 +495,10 @@ int main() {
 								if( !currentPlayerTile->action(currentPlayer)){
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
 								}else{
+									if( currentPlayer.getRuby() == 5){
+										hasWon = true;
+										break;
+									}
 									if( currentPlayerTile->getType() != RESTAURANT)
 										currentPlayer.eat();
 									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
