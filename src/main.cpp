@@ -450,9 +450,11 @@ int main() {
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
 			int input;
+            string actionInput;
 			while(invalidInput)
 			{
 				cin >> input;
+                //cin >> actionInput; - Testing save -M
 				if ( cin.fail() )
                 {
 					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
@@ -460,6 +462,8 @@ int main() {
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
+                    //if(actionInput == "p")
+                        //cout << gameBoard; - Testing save - M
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||

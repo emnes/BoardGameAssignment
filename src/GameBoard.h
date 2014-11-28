@@ -20,6 +20,7 @@
 #include <string>
 #include <array>
 #include <algorithm>
+#include <fstream>
 #include "Tile.h"
 #include "TileFactory.h"
 
@@ -50,6 +51,9 @@ public:
 	
 	void printCurrentLocation(const string& playerName);            // Prints X where player is located.
 	const T& move(Move move, const std::string& playerName );       // Moves player.
+    
+    friend ostream& operator<<(ostream& os, const GameBoard& gameBoard);   // Save game.
+    friend istream& operator>>(istream& os, GameBoard& gameBoard);         // Load game.
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -449,5 +453,23 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 	if( i == 0 )
 		*(b + static_cast<int>(LEFT)) = false;
 }
-	
+
+// Need to change typename variables
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+ostream& operator<<(ostream& os, const GameBoard<T, J, ROW, COL>& gameBoard)
+{
+    ofstream gameBoardFile;
+    gameBoardFile.open("istanbul.txt");
+    gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
+    gameBoardFile.close();
+    os << "File saved";
+    cout << "testing save";
+    return os;
+}
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+istream& operator>>(istream& is, GameBoard<T, J, ROW, COL>& gameBoard)
+{
+    ifstream gameBoardFile("instanbul.txt");
+}
+
 #endif /* defined(__BoardGame__GameBoard__) */
