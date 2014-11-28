@@ -37,10 +37,17 @@ private:
 	array<int, 2> coordinates;
 		
 public:
-	//bool operator==(const Tile &t);
+	bool operator==(const Tile &t)
+    {
+        if ((t != nullptr))
+            if (&this == &t)
+                return true;
+        
+        return false;
+    }
 	virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
 	virtual TileType getType() = 0;													// Dynamic type of a tile, refer to the enum
-	//virtual Tile* clone();													
+    virtual Tile* clone() = 0;
 	
 	template <typename K>
 	friend ostream& operator<<(ostream& os, const Tile<J>& tile);					// Print the type and action definition of a tile
@@ -64,51 +71,56 @@ public:
 template<typename J>
 class Desert : public Tile<J>
 {
-	public:		
-		virtual TileType getType() override;
-		virtual bool action( Player& player ) override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new Desert<J>(); }
+public:
+    virtual TileType getType() override;
+    virtual bool action( Player& player ) override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new Desert<J>(); }
+    Tile<J>* clone(){return new Desert(*this); }
 };
 
 template<typename J>
 class Restaurant : public Tile<J>
 {
-	public:
-		virtual bool action( Player& player) override;
-		virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new Restaurant<J>(); }
+public:
+    virtual bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new Restaurant<J>(); }
+    Tile<J>* clone(){return new Restaurant(*this); }
 };
 
 template<typename J>
 class Casino : public Tile<J>
 {
-    public:
-        bool action( Player& player) override;
-		virtual TileType getType() override;
-		virtual string print() const;       
-        static Tile<J>* __stdcall Create() { return new Casino<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new Casino<J>(); }
+    Tile<J>* clone(){return new Casino(*this); }
 };
 
 template<typename J>
 class Palace : public Tile<J>
 {
-    public:
-        bool action( Player& player) override;
-        virtual TileType getType() override;
-    	virtual string print() const;
-        static Tile<J>* __stdcall Create() { return new Palace<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new Palace<J>(); }
+    Tile<J>* clone(){return new Palace(*this); }
 };
 
 template<typename J>
 class Jeweler : public Tile<J>
 {
-    public:
-        bool action( Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new Jeweler<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new Jeweler<J>(); }
+    Tile<J>* clone(){return new Jeweler(*this); }
 };
 
 //--------- Manufacturers ---------//
@@ -116,21 +128,23 @@ class Jeweler : public Tile<J>
 template<typename J>
 class FabricManufacturer : public Tile<J>
 {
-	public:	
-		bool action( Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;		
-		static Tile<J>* __stdcall Create() { return new FabricManufacturer<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new FabricManufacturer<J>(); }
+    Tile<J>* clone(){return new FabricManufacturer(*this); }
 };
 
 template<typename J>
 class CartManufacturer : public Tile<J>
 {
-    public:
-        bool action( Player& player) override;
-        virtual TileType getType() override;
-        virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new CartManufacturer<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new CartManufacturer<J>(); }
+    Tile<J>* clone(){return new CartManufacturer(*this); }
 };
 
 //--------- Markets ---------//
@@ -138,52 +152,57 @@ class CartManufacturer : public Tile<J>
 template<typename J>
 class SmallMarket : public Tile<J>
 {
-	public:	
-		bool action( Player& player) override;
-        virtual TileType getType() override;
-        virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new SmallMarket<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new SmallMarket<J>(); }
+    Tile<J>* clone(){return new SmallMarket(*this); }
 };
 
 template<typename J>
 class SpiceMarket : public Tile<J>
 {
-	public:
-		bool action( Player& player) override;
-		virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new SpiceMarket<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new SpiceMarket<J>(); }
+    Tile<J>* clone(){return new SpiceMarket(*this); }
 };
 
 template<typename J>
 class JewelryMarket : public Tile<J>
 {
-    public:
-		bool action( Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new JewelryMarket<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new JewelryMarket<J>(); }
+    Tile<J>* clone(){return new JewelryMarket(*this); }
 };
 
 template<typename J>
 class FabricMarket : public Tile<J>
 {
-	public:
-		bool action( Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new FabricMarket<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new FabricMarket<J>(); }
+    Tile<J>* clone(){return new FabricMarket(*this); }
 };
 
 template<typename J>
 class BlackMarket : public Tile<J>
 {
-    public:
-        BlackMarket(){int numOfGoods = rand() % 6;} 
-        bool action( Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new BlackMarket<J>(); }
+public:
+    BlackMarket(){int numOfGoods = rand() % 6;}
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new BlackMarket<J>(); }
+    Tile<J>* clone(){return new BlackMarket(*this); }
 };
 
 //--------- Merchants ---------//
@@ -191,33 +210,37 @@ class BlackMarket : public Tile<J>
 template<typename J>
 class SpiceMerchant : public Tile<J>
 {
-    public:
-        bool action(Player& player) override;
-        virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new SpiceMerchant<J>(); }
+public:
+    bool action(Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new SpiceMerchant<J>(); }
+    Tile<J>* clone(){return new SpiceMerchant(*this); }
 };
 
 template<typename J>
 class GemMerchant : public Tile<J>
 {
-	public:
-		bool action( Player& player) override;
-	    virtual TileType getType() override;
-		virtual string print() const;
-		static Tile<J>* __stdcall Create() { return new GemMerchant<J>(); }
+public:
+    bool action( Player& player) override;
+    virtual TileType getType() override;
+    virtual string print() const;
+    static Tile<J>* __stdcall Create() { return new GemMerchant<J>(); }
+    Tile<J>* clone(){return new GemMerchant(*this); }
 };
 
 template <typename J>
-void Tile<J>::removePlayer(string playerName){
+void Tile<J>::removePlayer(string playerName)
+{
 	auto removeIt = std::remove(players.begin(), players.end(), playerName);
 	players.erase(removeIt, players.end());
 }
 
-template <typename J>
-ostream& operator<<(ostream& os, const Tile<J>& tile){ //Why is this typename K? Changed to typename J because I think it's a typo
-		os << tile.print() << endl;
-	return os;
+template <typename K>
+ostream& operator<<(ostream& os, const Tile<K>& tile)
+{
+    os << tile.print() << endl;
+    return os;
 }
 
 #endif /* defined(__BoardGame__Tile__) */
