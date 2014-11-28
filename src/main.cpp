@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <array>
 #include <time.h>
+#include <limits> 
 #include "Player.h"
 #include "Tile.h"
 #include "GameBoard.h"
@@ -54,7 +55,10 @@ using namespace std;
 int main() {
 	
 	srand(time(NULL));// fix
-	/*******************************PLAYER TEST SUITE************************************/
+	
+	/*
+	
+	//******************************PLAYER TEST SUITE***********************************
     Player* testPlayer = new Player("testPlayer");
     
     cout<< "----------------------Player tests started------------------------------" << endl;
@@ -116,7 +120,7 @@ int main() {
 	cout<< "----------------------Player tests ended---------------------------------" << endl << endl;
 	cout<< "----------------------Tile tests started------------------------------" << endl;
 	
-	/*******************************TILE TEST SUITE************************************/
+	//******************************TILE TEST SUITE***********************************
     
 	Player* tileTestPlayer; 
     
@@ -355,54 +359,185 @@ int main() {
 	
 	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
 	
-	
+	*/
 	
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
-	cout << "**********************************************************************" << endl;
-	cout << "*********************************AGAME********************************" << endl;
-	cout << "**********************************************************************" << endl << endl;
+	cout << "************************************************************************" << endl;
+	cout << "***********************************AGAME********************************" << endl;
+	cout << "************************************************************************" << endl << endl;
 
+	// UI prompts for the number of players and stores it
 	int numOfPlayers;
-	cout<< "Enter the number of players:";
-	cin >> numOfPlayers;
+	bool invalidNumberOfPlayers = true;
+	cout<< "\t\t\tEnter the number of players:";
+	while(invalidNumberOfPlayers){
+		cin >> numOfPlayers;
+		if ( cin.fail() ){
+				cout<<"The number of players needs to be an integer greater than 1." << endl;
+				cout<<"\t\tPlease enter a correct number of players:" << endl;
+				cin.clear(); // Clears the input stream fail flag
+				cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+		}else{	
+			if( numOfPlayers > 1)
+				invalidNumberOfPlayers = false;
+			else {
+				cout << "At least 2 players are required to play this game." << endl;
+				cout << "Please enter a correct number of players:" << endl;
+			}
+		}	
+	}
 	
+	// UI prompts for all the names of the players and stores them
 	vector<string> playerNames;
 	for( int i = 0; i < numOfPlayers; i++){
-		cout<< "Enter the name of player " << i+1 << " : ";
-		string playerName;
-		cin >> playerName;
-		playerNames.push_back(playerName);
+		cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
+		bool invalidPlayerName = true;
+		while( invalidPlayerName){
+			string playerName;
+			cin >> playerName;	
+			if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
+				playerNames.push_back(playerName);
+				invalidPlayerName = false;
+			}else{
+				cout << "Cannot have two players with the same name." << endl;
+				cout << "Please enter another name:" << endl;
+			}
+		}
+
 	}
 	
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
-			playerNames.data(), playerNames.size());
-
-	cout << endl << endl << endl << endl;
-	cout << "Hi, ";
-	for( string currentPlayerName : playerNames){
-		Player	 currentPlayer = gameBoard->getPlayer(currentPlayerName);
-		cout<< currentPlayer << endl;
-		gameBoard->printCurrentLocation(playerNames[0]);
-		cout << "Where do you want to move next ? ";
-		Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-		int i, j;
-		int* iPtr = &i;
-		int* jPtr = &j;
-		currentPlayerTile->getCoordinate(iPtr, jPtr);
-		int moveInt;
-		cout << "Coordinates are " << i << "," << j << ")" << endl;
- 		cin.exceptions(std::istream::failbit);
- 		cin>> moveInt;
- 		Move move = static_cast<Move>(moveInt);
-		cout << "Move is :" << move; 
+			playerNames.data(), playerNames.size());			
+	
+	cout << string( 100, '\n' );
+	
+	bool hasWon = false;
+	while (!hasWon){
+		for( string currentPlayerName : playerNames){
+			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
+			cout << "Current player:" << currentPlayerName << endl;
+			cout<< currentPlayer << endl;
+			gameBoard->printCurrentLocation(currentPlayerName);
+	
+			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+			int i, j;
+			int* iPtr = &i;
+			int* jPtr = &j;
+			currentPlayerTile->getCoordinate(iPtr, jPtr);
+			array<bool, 4> validMoves = {true,true,true,true};
+			gameBoard->getValidMoves(validMoves.data(), i, j);
+			int moveInt;
+			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
+			
+			if( validMoves[UP] ){
+				cout << "0-UP\t";
+			}
+			if( validMoves[RIGHT] ){
+				cout << "1-RIGHT\t";
+			}
+			if( validMoves[DOWN] ){
+				cout << "2-DOWN\t";
+			}
+			if( validMoves[LEFT] ){
+				cout << "3-LEFT\t";
+			}
+			
+			// Current player inputting its next tile direction
+			bool invalidInput = true;
+			int input;
+			while(invalidInput)
+			{
+				cin >> input;
+				if ( cin.fail() ){
+					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
+					cin.clear(); 
+			  		cin.ignore(100, '\n'); 
+				}else{
+					Move direction = static_cast<Move>(input);
+					if( (direction == UP && validMoves[UP])	||
+							(direction == RIGHT && validMoves[RIGHT]) ||
+								(direction == DOWN && validMoves[DOWN]) ||
+									(direction == LEFT && validMoves[LEFT]) ){
+						invalidInput = false;
+						gameBoard->move(direction, currentPlayer.getName());
+						cout << string( 100, '\n' );
+						cout << "Current player:" << endl;
+						cout << currentPlayer << endl;
+						gameBoard->printCurrentLocation(currentPlayer.getName());
+						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+						if( (currentPlayerTile->getPlayers()).size() > 1){
+							cout << endl << "Other player(s) on this tile : ";
+							for( string sameTilePlayerName : currentPlayerTile->getPlayers()){
+								if (sameTilePlayerName != currentPlayer.getName())
+									cout << sameTilePlayerName << " ";
+							}	
+							cout << endl;
+							cout << "(It will cost you 1 more gold per other player on this tile to do an action.)" << endl << endl;
+						}
+						cout << *currentPlayerTile;
+					}else{
+						cout<< "Sorry, not a valid direction." << endl;  
+						cout<< "Please enter again in which direction you want to go:" << endl;
+					}
+				}
+			}
+			
+			// Current player doing action on the new tile if, applicable
+			if( currentPlayer.canAct()){
+				if( currentPlayerTile->getType() != DESERT){
+					invalidInput = true;
+					string actionInput;
+					while(invalidInput)
+					{
+						cin >> actionInput;
+						if ( cin.fail() ){
+							cout<<"Wrong input, choose Y or N" << endl;
+							cin.clear(); // Clears the input stream fail flag
+					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+						}else{
+							if( !actionInput.compare("y") || !actionInput.compare("Y") ){
+								if( !currentPlayerTile->action(currentPlayer)){
+									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
+								}else{
+									if( currentPlayer.getRuby() == 5){
+										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
+										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 
+										hasWon = true;
+										break;
+									}
+									if( currentPlayerTile->getType() != RESTAURANT)
+										currentPlayer.eat();
+									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
+										if( recipientPlayerName.compare(currentPlayerName)){
+											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
+											currentPlayer.pay(recipientPlayer);
+											gameBoard->setPlayer(recipientPlayer);				
+										}
+									}
+									gameBoard->setPlayer(currentPlayer);
+									cout << endl << "Your status after performing this action is: " << endl;
+									cout << currentPlayer << endl;	
+								}
+								invalidInput = false;
+							}else if( !actionInput.compare("n") || !actionInput.compare("N") ){
+								invalidInput = false;
+							}else{
+								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
+							}
+						}
+					}
+				}
+				cout << "Press enter to continue . . . ";
+				cin.sync();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << string( 100, '\n' );
+			}
+	
 	}
-	//gameBoard->move(DOWN, playerNames[0]);
-	//gameBoard->printCurrentLocation(playerNames[0]);
-	
-	
+}
 	
     return 0;
 }
