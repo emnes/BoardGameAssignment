@@ -54,11 +54,11 @@ using namespace std;
 
 int main() {
 	
-	srand(time(NULL));// fix
+	//srand(time(NULL));// fix
 	
 	/*
 	
-	//******************************PLAYER TEST SUITE***********************************
+	******************************PLAYER TEST SUITE***********************************
     Player* testPlayer = new Player("testPlayer");
     
     cout<< "----------------------Player tests started------------------------------" << endl;
@@ -120,7 +120,7 @@ int main() {
 	cout<< "----------------------Player tests ended---------------------------------" << endl << endl;
 	cout<< "----------------------Tile tests started------------------------------" << endl;
 	
-	//******************************TILE TEST SUITE***********************************
+	******************************TILE TEST SUITE***********************************
     
 	Player* tileTestPlayer; 
     
@@ -368,7 +368,7 @@ int main() {
 	cout << "************************************************************************" << endl << endl;
 
 	// UI prompts for the number of players and stores it
-	int numOfPlayers;
+	int numOfPlayers = 0;
 	bool invalidNumberOfPlayers = true;
 	cout<< "\t\t\tEnter the number of players:";
 	while(invalidNumberOfPlayers){
@@ -390,7 +390,8 @@ int main() {
 	
 	// UI prompts for all the names of the players and stores them
 	vector<string> playerNames;
-	for( int i = 0; i < numOfPlayers; i++){
+	for( int i = 0; i < numOfPlayers; i++)
+    {
 		cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
 		bool invalidPlayerName = true;
 		while( invalidPlayerName){
@@ -409,14 +410,16 @@ int main() {
 	
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
-		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
-			playerNames.data(), playerNames.size());			
+		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
 	
 	cout << string( 100, '\n' );
 	
 	bool hasWon = false;
-	while (!hasWon){
-		for( string currentPlayerName : playerNames){
+	while (!hasWon)
+    {
+        // Check for pause
+		for( string currentPlayerName : playerNames)
+        {
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
 			cout << "Current player:" << currentPlayerName << endl;
 			cout<< currentPlayer << endl;
@@ -432,18 +435,17 @@ int main() {
 			int moveInt;
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
-			if( validMoves[UP] ){
+			if(validMoves[UP])
 				cout << "0-UP\t";
-			}
-			if( validMoves[RIGHT] ){
+            
+			if(validMoves[RIGHT])
 				cout << "1-RIGHT\t";
-			}
-			if( validMoves[DOWN] ){
+            
+			if(validMoves[DOWN])
 				cout << "2-DOWN\t";
-			}
-			if( validMoves[LEFT] ){
+            
+			if(validMoves[LEFT])
 				cout << "3-LEFT\t";
-			}
 			
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
@@ -451,16 +453,19 @@ int main() {
 			while(invalidInput)
 			{
 				cin >> input;
-				if ( cin.fail() ){
+				if ( cin.fail() )
+                {
 					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
 					cin.clear(); 
 			  		cin.ignore(100, '\n'); 
-				}else{
+				}else
+                {
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||
 								(direction == DOWN && validMoves[DOWN]) ||
-									(direction == LEFT && validMoves[LEFT]) ){
+									(direction == LEFT && validMoves[LEFT]) )
+                    {
 						invalidInput = false;
 						gameBoard->move(direction, currentPlayer.getName());
 						cout << string( 100, '\n' );
@@ -468,9 +473,11 @@ int main() {
 						cout << currentPlayer << endl;
 						gameBoard->printCurrentLocation(currentPlayer.getName());
 						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-						if( (currentPlayerTile->getPlayers()).size() > 1){
+						if( (currentPlayerTile->getPlayers()).size() > 1)
+                        {
 							cout << endl << "Other player(s) on this tile : ";
-							for( string sameTilePlayerName : currentPlayerTile->getPlayers()){
+							for( string sameTilePlayerName : currentPlayerTile->getPlayers())
+                            {
 								if (sameTilePlayerName != currentPlayer.getName())
 									cout << sameTilePlayerName << " ";
 							}	
@@ -478,7 +485,8 @@ int main() {
 							cout << "(It will cost you 1 more gold per other player on this tile to do an action.)" << endl << endl;
 						}
 						cout << *currentPlayerTile;
-					}else{
+					}else
+                    {
 						cout<< "Sorry, not a valid direction." << endl;  
 						cout<< "Please enter again in which direction you want to go:" << endl;
 					}
@@ -486,23 +494,30 @@ int main() {
 			}
 			
 			// Current player doing action on the new tile if, applicable
-			if( currentPlayer.canAct()){
-				if( currentPlayerTile->getType() != DESERT){
+			if( currentPlayer.canAct())
+            {
+				if( currentPlayerTile->getType() != DESERT)
+                {
 					invalidInput = true;
 					string actionInput;
 					while(invalidInput)
 					{
 						cin >> actionInput;
-						if ( cin.fail() ){
+						if ( cin.fail() )
+                        {
 							cout<<"Wrong input, choose Y or N" << endl;
 							cin.clear(); // Clears the input stream fail flag
 					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
-						}else{
-							if( !actionInput.compare("y") || !actionInput.compare("Y") ){
-								if( !currentPlayerTile->action(currentPlayer)){
+						}else
+                        {
+							if( !actionInput.compare("y") || !actionInput.compare("Y") )
+                            {
+								if( !currentPlayerTile->action(currentPlayer))
+                                {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
 								}else{
-									if( currentPlayer.getRuby() == 5){
+									if( currentPlayer.getRuby() == 5)
+                                    {
 										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
 										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 
 										hasWon = true;
@@ -510,8 +525,10 @@ int main() {
 									}
 									if( currentPlayerTile->getType() != RESTAURANT)
 										currentPlayer.eat();
-									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
-										if( recipientPlayerName.compare(currentPlayerName)){
+									for(string recipientPlayerName : currentPlayerTile->getPlayers())
+                                    {
+										if( recipientPlayerName.compare(currentPlayerName))
+                                        {
 											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
 											currentPlayer.pay(recipientPlayer);
 											gameBoard->setPlayer(recipientPlayer);				
@@ -522,9 +539,11 @@ int main() {
 									cout << currentPlayer << endl;	
 								}
 								invalidInput = false;
-							}else if( !actionInput.compare("n") || !actionInput.compare("N") ){
+							}else if( !actionInput.compare("n") || !actionInput.compare("N") )
+                            {
 								invalidInput = false;
-							}else{
+							}else
+                            {
 								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
 							}
 						}
@@ -535,7 +554,6 @@ int main() {
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << string( 100, '\n' );
 			}
-	
 	}
 }
 	

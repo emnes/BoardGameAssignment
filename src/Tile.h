@@ -51,7 +51,7 @@ public:
    	void removePlayer(string playerName);											// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
-    int  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
+    size_t  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
@@ -214,8 +214,8 @@ void Tile<J>::removePlayer(string playerName){
 	players.erase(removeIt, players.end());
 }
 
-template <typename K>
-ostream& operator<<(ostream& os, const Tile<K>& tile){ 
+template <typename J>
+ostream& operator<<(ostream& os, const Tile<J>& tile){ //Why is this typename K? Changed to typename J because I think it's a typo
 		os << tile.print() << endl;
 	return os;
 }

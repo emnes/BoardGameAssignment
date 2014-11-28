@@ -8,30 +8,36 @@
 
 #include "Player.h"
 
-bool Player::pay(Player& player){
-	if( this->getGold() > 0){
+bool Player::pay(Player& player)
+{
+	if( this->getGold() > 0)
+    {
 			++(player.gold);
 			--(this->gold);
 			return true;
-	}else{
-		return false;
 	}
+    else
+		return false;
 }
 
-bool Player::incrementCartSize(){
-	if( currentCartSize < cart ){
+bool Player::incrementCartSize()
+{
+	if( currentCartSize < cart )
+    {
 		this->currentCartSize++;
 		return true;
-	}else{
-		return false;
 	}
+    else
+		return false;
 }
 
-bool operator==(const Player& playerA, const Player& playerB){
+bool operator==(const Player& playerA, const Player& playerB)
+{
 	return playerA.getName()==playerB.getName();
 }
 
-ostream& operator<<(ostream& os, const Player& player){
+ostream& operator<<(ostream& os, const Player& player)
+{
 	return os 	<< "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
 					<< player.getFood() << "\t"
 						<< player.getGold() << "\t"

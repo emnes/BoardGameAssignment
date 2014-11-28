@@ -30,30 +30,30 @@ enum Move{UP, RIGHT, DOWN, LEFT}; // Only four possible neighbours: up, down, le
 template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
 	
 private:
-	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game
-	vector<J> players;												
+	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game.
+	vector<J> players;												// Vector of all players.
 	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
 public:
-	GameBoard(string *playerNames, int playerNamesSize);			// ctor
-	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board
-	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board
-	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile
-    void addPlayer(string playerName); 								// Adds a player to the game   
-    void setPlayer(J player);
+	GameBoard(string *playerNames, size_t playerNamesSize);			// GameBoard constructor.
+	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board.
+	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board.
+	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile.
+    void addPlayer(string playerName); 								// Adds a player to the game.
+    void setPlayer(J player);                                       // Updates player -- maybe need for loading **
 
-	J getPlayer(const std::string& playerName);						// Get a Player object by player name
-	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name
-	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile
-	void getValidMoves(bool* b, int i, int j);
+	J getPlayer(const std::string& playerName);						// Get a Player object by player name.
+	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name.
+	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile.
+	void getValidMoves(bool* b, int i, int j);                      // Returns boolean array of moves a play can make. Dependant on placement of player's current tile.
 	
-	void printCurrentLocation(const string& playerName);
-	const T& move(Move move, const std::string& playerName );
+	void printCurrentLocation(const string& playerName);            // Prints X where player is located.
+	const T& move(Move move, const std::string& playerName );       // Moves player.
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
+GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize){
 	
 	array<float, 14> tileCreationRates = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		// for testing purpose. -P
     tileFactory = TileFactory<J>::Get(ROW*COL);
@@ -66,6 +66,22 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     		tileToInsert->setXCoordinate(i);
     		tileToInsert->setYCoordinate(j);
     		// for testing purpose -P
+            /*if (tileToInsert->getType() == RESTAURANT) {
+                if( !playersAreSetToStartTile ){// NOT FOR TESTING PURPOSE DON'T REMOVE THIS PART*************
+                    for (auto i = 0; i < playerNamesSize; i++){
+                        addPlayer(*(playerNames + i));							// Add players
+                        playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
+                        int row, col;
+                        int* rowPtr = &row;
+                        int* colPtr = &col;
+                        playersCurrentTile[*(playerNames + i)]->getCoordinate(rowPtr, colPtr);
+                        //cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl;
+                        tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
+                    }
+                    playersAreSetToStartTile = true;
+                }
+            }*/ // USE ABOVE FOR FINAL. Will not need switch case for one case.
+            
 			switch (tileToInsert->getType()){
     			/*case DESERT:
     				cout << "DESERT tile created" << endl;
@@ -217,6 +233,7 @@ J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
     	if (player.getName() == playerName)
     		return player;
 	}
+    throw std::out_of_range("Player does not exist.");
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -316,7 +333,7 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
 	
 	nextTile->addPlayer(playerName);
 	playersCurrentTile[playerName] = nextTile;
-	return nextTile;	
+	return nextTile;
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL> 
