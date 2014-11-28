@@ -331,10 +331,13 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 		}
 		cout << endl;
 	}
+	
+	bool showTileTypes = false; // True to show the tile types on the board GUI, otherwise they won't be shown.
+	
 	for (int j = COL-1; j > -1; j--){
 		cout<< "\t\t  ** ";
 		for (int i = 0; i < ROW; i++){
-				bool isCurrentLocation = false;				
+				bool isCurrentLocation = false;							// True if (i, j) is the current location of the player			
 				const T& aTile = getTile(i, j);
 				if( !aTile->noPlayers() ){
 					for( string tilePlayerName : aTile->getPlayers()){
@@ -343,49 +346,53 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 					}
 				}
 				if( !isCurrentLocation ){
-					switch (aTile->getType()){
-		    			case DESERT:
-		    				cout << "  +  ";
-		    				break;
-		    			case RESTAURANT:
-		    				cout << " RES ";
-		    				break;
-						case SPICEMERCHANT:
-		    				cout << " SPI ";
-		    				break;
-						case FABRICMANUFACTURER:
-		    				cout << " FAB ";
-		    				break;
-						case JEWELER:
-		    				cout << " JEW ";
-		    				break;
-						case CARTMANUFACTURER:
-		    				cout << " CAR ";
-		    				break;
-						case SMALLMARKET: 
-		    				cout << " SMM ";
-		    				break;
-						case SPICEMARKET:
-		    				cout << " SPM ";
-		    				break;
-						case JEWELRYMARKET: 
-		    				cout << " JEM ";
-		    				break;
-						case FABRICMARKET:
-		    				cout << " FAM ";
-		    				break;
-						case BLACKMARKET:
-		    				cout << " BLM ";
-		    				break;
-						case CASINO:
-		    				cout << " CAS ";
-		    				break;
-						case GEMMERCHANT:
-		    				cout << " GEM ";
-		    				break;
-						case PALACE: 
-		    				cout << " PAL ";
-		    				break;
+					if( showTileTypes ){
+						switch (aTile->getType()){
+			    			case DESERT:
+			    				cout << "  +  ";
+			    				break;
+			    			case RESTAURANT:
+			    				cout << " RES ";
+			    				break;
+							case SPICEMERCHANT:
+			    				cout << " SPI ";
+			    				break;
+							case FABRICMANUFACTURER:
+			    				cout << " FAB ";
+			    				break;
+							case JEWELER:
+			    				cout << " JEW ";
+			    				break;
+							case CARTMANUFACTURER:
+			    				cout << " CAR ";
+			    				break;
+							case SMALLMARKET: 
+			    				cout << " SMM ";
+			    				break;
+							case SPICEMARKET:
+			    				cout << " SPM ";
+			    				break;
+							case JEWELRYMARKET: 
+			    				cout << " JEM ";
+			    				break;
+							case FABRICMARKET:
+			    				cout << " FAM ";
+			    				break;
+							case BLACKMARKET:
+			    				cout << " BLM ";
+			    				break;
+							case CASINO:
+			    				cout << " CAS ";
+			    				break;
+							case GEMMERCHANT:
+			    				cout << " GEM ";
+			    				break;
+							case PALACE: 
+			    				cout << " PAL ";
+			    				break;
+						}
+					}else{
+						cout<< "  +  ";	
 					}
 				}else{
 					cout<< "  X  ";
