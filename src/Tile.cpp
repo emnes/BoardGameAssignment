@@ -228,7 +228,7 @@ template <typename J>
 bool BlackMarket<J>::action(Player& player){
 	
 	if( player.getGold() > (Tile<J>::numPlayersOnTile() - 1) && !player.cartIsFull() && player.getGold() > 0){
-		
+		array<int, 4> goodsBought = {0,0,0,0}; // indexes goes like, 0:SPICE, 1:FABRIC, 2:JEWEL, 3:RUBY
 		int numGoods = rand() % 6;
 		for( int i = 0; i < numGoods; i++){
 			if( player.incrementCartSize() ){
@@ -236,19 +236,28 @@ bool BlackMarket<J>::action(Player& player){
 				switch ( typeOfGood ){
 					case SPICE :
 						player.setSpice(player.getSpice() + 1);
+						goodsBought[0]++;
 						break;
 					case FABRIC :
 						player.setFabric(player.getFabric() + 1);
+						goodsBought[1]++;
 						break;
 					case JEWEL :
 						player.setJewel(player.getJewel() + 1);
+						goodsBought[2]++;
 						break;
 					case RUBY :
 						player.setRuby(player.getRuby() + 1);
+						goodsBought[3]++;
 						break;
 				}
 			}		
 		}
+		cout << "You just bought " << goodsBought[0] << " spice(s), " <<
+										 goodsBought[1] << " fabric tissue(s), " <<
+										 	goodsBought[2] << " jewel(s) and " <<
+										 		goodsBought[3] << " ruby(ies)." << endl;
+												 	
 		player.setGold(player.getGold() - 1);
 		return true;
 	}else{
@@ -307,17 +316,17 @@ bool Casino<J>::action(Player& player){
 			case WIN2GOLD:
 				player.setGold(player.getGold() + 1);
 				cout << "YOU WON 2 GOLD!" << endl;
-				cout << '\a'; cout << '\a';
+				cout << '\a';
 				break;
 			case WIN3GOLD:
 				player.setGold(player.getGold() + 2);
 				cout << "YOU WON 3 GOLD!" << endl;
-				cout << '\a'; cout << '\a'; cout << '\a';
+				cout << '\a'; 
 				break;
 			case WIN10GOLD:
 				player.setGold(player.getGold() + 9);
 				cout << "YOU WON 10 GOLD!!!" << endl;
-				cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a'; cout << '\a';
+				cout << '\a';
 				break;
 		}
 		return true;

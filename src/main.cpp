@@ -367,6 +367,7 @@ int main() {
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
 
+	// UI prompts for the number of players and stores it
 	int numOfPlayers;
 	bool invalidNumberOfPlayers = true;
 	cout<< "\t\t\tEnter the number of players:";
@@ -387,6 +388,7 @@ int main() {
 		}	
 	}
 	
+	// UI prompts for all the names of the players and stores them
 	vector<string> playerNames;
 	for( int i = 0; i < numOfPlayers; i++){
 		cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
@@ -443,6 +445,7 @@ int main() {
 				cout << "3-LEFT\t";
 			}
 			
+			// Current player inputting its next tile direction
 			bool invalidInput = true;
 			int input;
 			while(invalidInput)
@@ -450,8 +453,8 @@ int main() {
 				cin >> input;
 				if ( cin.fail() ){
 					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
-					cin.clear(); // Clears the input stream fail flag
-			  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
+					cin.clear(); 
+			  		cin.ignore(100, '\n'); 
 				}else{
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
@@ -481,6 +484,8 @@ int main() {
 					}
 				}
 			}
+			
+			// Current player doing action on the new tile if, applicable
 			if( currentPlayer.canAct()){
 				if( currentPlayerTile->getType() != DESERT){
 					invalidInput = true;
@@ -498,6 +503,8 @@ int main() {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
 								}else{
 									if( currentPlayer.getRuby() == 5){
+										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
+										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 
 										hasWon = true;
 										break;
 									}
