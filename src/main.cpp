@@ -500,20 +500,13 @@ int main() {
 									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
 										if( recipientPlayerName.compare(currentPlayerName)){
 											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
-											cout << "recipient gold before pay : " <<recipientPlayer.getGold() << endl;
 											currentPlayer.pay(recipientPlayer);
-											gameBoard->setPlayer(recipientPlayer);
-											cout << "recipient gold after pay : " <<recipientPlayer.getGold() << endl;				
+											gameBoard->setPlayer(recipientPlayer);				
 										}
 									}
 									gameBoard->setPlayer(currentPlayer);
-									for(string recipientPlayerName : currentPlayerTile->getPlayers()){
-										cout << "Player : " << recipientPlayerName << endl;
-										Player printPlayer = gameBoard->getPlayer(recipientPlayerName);
-										cout << printPlayer << endl;				
-									}
-									//cout << endl << "Your status after performing this action is: " << endl;
-									//cout << currentPlayer << endl;	
+									cout << endl << "Your status after performing this action is: " << endl;
+									cout << currentPlayer << endl;	
 								}
 								invalidInput = false;
 							}else if( !actionInput.compare("n") || !actionInput.compare("N") ){
