@@ -67,12 +67,12 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
     		tileToInsert->setYCoordinate(j);
     		// for testing purpose -P
 			switch (tileToInsert->getType()){
-    			case DESERT:
+    			/*case DESERT:
     				cout << "DESERT tile created" << endl;
     				tileCreationRates.at(DESERT)++;
-    				break;
+    				break; */
     			case RESTAURANT:
-    				cout << "RESTAURANT tile created" << endl;
+    				//cout << "RESTAURANT tile created" << endl;
     				if( !playersAreSetToStartTile ){// NOT FOR TESTING PURPOSE DON'T REMOVE THIS PART*************
     					for (auto i = 0; i < playerNamesSize; i++){
 						    addPlayer(*(playerNames + i));							// Add players 
@@ -81,14 +81,14 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
 						    int* rowPtr = &row;
 						    int* colPtr = &col;					
 							playersCurrentTile[*(playerNames + i)]->getCoordinate(rowPtr, colPtr);
-							cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl; 
+							//cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl; 
 							tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
 						}
 						playersAreSetToStartTile = true;
 					}
-    				tileCreationRates.at(RESTAURANT)++;
+    				//tileCreationRates.at(RESTAURANT)++;
     				break;
-				case SPICEMERCHANT:
+				/*case SPICEMERCHANT:
     				cout << "SPICEMERCHANT tile created" << endl;
     				tileCreationRates.at(SPICEMERCHANT)++;
     				break;
@@ -135,12 +135,13 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
 				case PALACE: 
     				cout << "PALACE tile created" << endl;
     				tileCreationRates.at(PALACE)++;
-    				break;
+    				break; */
 			}
     						
     		add(tileToInsert, i, j); // Add tile to board
     	}
-    }	
+    }		
+    		/*
     		for (int i = 0; i<14; i++){
 				tileCreationRates.at(i) = tileCreationRates.at(i)/(static_cast<double>(ROW*COL))*100;
 			}
@@ -163,7 +164,9 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, int playerNamesSize){
 			cout<< "GemMerchant\t\t" << tileCreationRates.at(GEMMERCHANT) << "%" << endl;
 			cout<< "Palace\t\t\t" << tileCreationRates.at(PALACE) << "%" << endl;  
 			
-			cout<< "Tile Creation is a success :)" << endl;
+			cout<< "Tile Creation is a success" << endl;
+			
+			*/
 }
 
 /*

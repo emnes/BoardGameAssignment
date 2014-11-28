@@ -49,9 +49,11 @@ TileFactory<J>::TileFactory(int _nTiles)
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   	shuffle (randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
 	
+	/*
 	for( TileType tileTypeA : randomTiles){
 		cout<< tileTypeA;
 	}
+	*/
 	
 	Register(DESERT, &Desert<J>::Create);
 	Register(RESTAURANT, &Restaurant<J>::Create);

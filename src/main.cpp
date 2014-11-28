@@ -363,18 +363,18 @@ int main() {
 	
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
-	cout << "**********************************************************************" << endl;
-	cout << "*********************************AGAME********************************" << endl;
-	cout << "**********************************************************************" << endl << endl;
+	cout << "************************************************************************" << endl;
+	cout << "***********************************AGAME********************************" << endl;
+	cout << "************************************************************************" << endl << endl;
 
 	int numOfPlayers;
 	bool invalidNumberOfPlayers = true;
-	cout<< "Enter the number of players:";
+	cout<< "\t\t\tEnter the number of players:";
 	while(invalidNumberOfPlayers){
 		cin >> numOfPlayers;
 		if ( cin.fail() ){
 				cout<<"The number of players needs to be an integer greater than 1." << endl;
-				cout<<"Please enter a correct number of players:" << endl;
+				cout<<"\t\tPlease enter a correct number of players:" << endl;
 				cin.clear(); // Clears the input stream fail flag
 				cin.ignore(100, '\n'); // Ignores any characters left in the stream	
 		}else{	
@@ -389,7 +389,7 @@ int main() {
 	
 	vector<string> playerNames;
 	for( int i = 0; i < numOfPlayers; i++){
-		cout<< "Enter the name of player " << i+1 << " : ";
+		cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
 		bool invalidPlayerName = true;
 		while( invalidPlayerName){
 			string playerName;
@@ -409,6 +409,8 @@ int main() {
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(
 			playerNames.data(), playerNames.size());			
+	
+	cout << string( 100, '\n' );
 	
 	bool hasWon = false;
 	while (!hasWon){
