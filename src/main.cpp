@@ -360,7 +360,7 @@ int main() {
 	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
 	
 	*/
-	
+    
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
 	cout << "************************************************************************" << endl;
@@ -411,9 +411,13 @@ int main() {
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
-	
-	cout << string( 100, '\n' );
-	
+    ofstream gameBoardFile;
+    gameBoardFile.open("istanbul.txt");
+    for (Player p: gameBoard->players) {
+        gameBoardFile << p;
+    }
+    //gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
+    gameBoardFile.close();
 	bool hasWon = false;
 	while (!hasWon)
     {

@@ -30,7 +30,7 @@ enum Move{UP, RIGHT, DOWN, LEFT}; // Only four possible neighbours: up, down, le
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>class GameBoard {
 	
-private:
+public:
 	array<array<T, ROW>, COL> board;								// Hold all the tiles for the current game.
 	vector<J> players;												// Vector of all players.
 	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
@@ -460,7 +460,10 @@ ostream& operator<<(ostream& os, const GameBoard<T, J, ROW, COL>& gameBoard)
 {
     ofstream gameBoardFile;
     gameBoardFile.open("istanbul.txt");
-    gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
+    for (Player p: GameBoard<T, J, ROW, COL>::players) {
+        gameBoardFile << p;
+    }
+    //gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
     gameBoardFile.close();
     os << "File saved";
     cout << "testing save";
