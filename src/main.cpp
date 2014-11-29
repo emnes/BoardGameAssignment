@@ -55,8 +55,16 @@ GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 
 void saveGame()
 {
-    ofstream gameBoardFile("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
-    gameBoardFile << gameBoard;
+    ofstream gameBoardFile;
+    gameBoardFile.clear();
+    gameBoardFile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    if (gameBoardFile.is_open()) {
+        gameBoardFile << gameBoard;
+    }
+    else
+    {
+        cout << "Error opening file" << endl;
+    }
     gameBoardFile.close();
 }
 
@@ -460,8 +468,8 @@ int main()
             string actionInput;
 			while(invalidInput)
 			{
-				cin >> input;
-                //cin >> actionInput; - Testing save -M
+				//cin >> input;
+                cin >> actionInput;
 				if ( cin.fail() )
                 {
 					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
@@ -469,8 +477,8 @@ int main()
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
-                    //if(actionInput == "p")
-                        //cout << gameBoard; - Testing save - M
+                    if(actionInput == "p")
+                        saveGame();
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||
