@@ -59,7 +59,10 @@ void saveGame()
     gameBoardFile.clear();
     gameBoardFile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     if (gameBoardFile.is_open()) {
-        gameBoardFile << gameBoard;
+        //gameBoardFile << gameBoard;
+        gameBoardFile << *(gameBoard);
+        cout << gameBoard;
+
     }
     else
     {

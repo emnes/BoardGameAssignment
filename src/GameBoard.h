@@ -53,9 +53,9 @@ public:
 	
 	void printCurrentLocation(const string& playerName);            // Prints X where player is located.
 	const T& move(Move move, const std::string& playerName );       // Moves player.
-    
-    friend ostream& operator<<(ostream& os, const GameBoard& gameBoard);   // Save game.
-    friend istream& operator>>(istream& os, GameBoard& gameBoard);         // Load game.
+    template<typename U, typename L, unsigned int R, unsigned int C>
+    friend ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard);   // Save game.
+    friend istream& operator>>(istream& os, GameBoard<T, J, ROW, COL>& gameBoard);         // Load game.
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -458,19 +458,17 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 
 // Need to change typename variables
 // WORK ON THIS TOMORROW. Need gameBoard to save players into text file when 'p' is entered....
-// Look into: template operators. Why was gameBoard's operator not being called? Complaining about template mismatch.
-template<typename T, typename J, unsigned int ROW, unsigned int COL>
-ostream& operator<<(ostream& os, const GameBoard<T, J, ROW, COL>& gameBoard)
+// Look into: template operators. Why was gameBoard's operator not being called?
+template<typename U, typename L, unsigned int R, unsigned int C>
+ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
-//    ofstream gameBoardFile;
-//    gameBoardFile.open("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     for (Player p: gameBoard.players)
     {
         os << p;
     }
+    os << "TEST";
     //or Maybe - gameBoardFile << gameBoard.players
     //then do tiles... gameBoard.board;
-//    gameBoardFile.close();
     return os;
 }
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
