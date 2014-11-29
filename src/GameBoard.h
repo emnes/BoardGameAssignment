@@ -462,16 +462,15 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 ostream& operator<<(ostream& os, const GameBoard<T, J, ROW, COL>& gameBoard)
 {
-    ofstream gameBoardFile;
-    gameBoardFile.open("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+//    ofstream gameBoardFile;
+//    gameBoardFile.open("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     for (Player p: gameBoard.players)
     {
-        gameBoardFile << p;
         os << p;
     }
     //or Maybe - gameBoardFile << gameBoard.players
     //then do tiles... gameBoard.board;
-    gameBoardFile.close();
+//    gameBoardFile.close();
     return os;
 }
 template<typename T, typename J, unsigned int ROW, unsigned int COL>

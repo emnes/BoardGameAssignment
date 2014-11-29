@@ -16,6 +16,7 @@
 #include "GameBoard.h"
 
 using std::cin;
+GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 
 /*
 	bool takeTurn( 
@@ -52,7 +53,15 @@ using std::cin;
 	} 
 	*/
 
-int main() {
+void saveGame()
+{
+    ofstream gameBoardFile("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    gameBoardFile << gameBoard;
+    gameBoardFile.close();
+}
+
+int main()
+{
 	
 	//srand(time(NULL));// fix
 	
@@ -409,7 +418,7 @@ int main() {
 	}
 	
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
-	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
+    gameBoard =
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
 
 	bool hasWon = false;
