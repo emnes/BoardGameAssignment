@@ -55,7 +55,8 @@ public:
 	const T& move(Move move, const std::string& playerName );       // Moves player.
     template<typename U, typename L, unsigned int R, unsigned int C>
     friend ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard);   // Save game.
-    friend istream& operator>>(istream& os, GameBoard<T, J, ROW, COL>& gameBoard);         // Load game.
+    template<typename U, typename L, unsigned int R, unsigned int C>
+    friend istream& operator>>(istream& os, GameBoard<U, L, R, C>& gameBoard);         // Load game.
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -464,17 +465,22 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
     for (Player p: gameBoard.players)
     {
-        os << p;
+        os << p << endl;
     }
-    os << "TEST";
-    //or Maybe - gameBoardFile << gameBoard.players
+
     //then do tiles... gameBoard.board;
     return os;
 }
-template<typename T, typename J, unsigned int ROW, unsigned int COL>
-istream& operator>>(istream& is, GameBoard<T, J, ROW, COL>& gameBoard)
+template<typename U, typename L, unsigned int R, unsigned int C>
+istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
 {
-    //ifstream gameBoardFile("instanbul.txt");
+    for (Player p: gameBoard.players)
+    {
+        is >> p;
+        
+        cout << p;
+    }
+    return is;
 }
 
 #endif /* defined(__BoardGame__GameBoard__) */

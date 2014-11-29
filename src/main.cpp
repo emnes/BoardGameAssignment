@@ -55,21 +55,35 @@ GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 
 void saveGame()
 {
-    ofstream gameBoardFile;
-    gameBoardFile.clear();
-    gameBoardFile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
-    if (gameBoardFile.is_open()) {
-        //gameBoardFile << gameBoard;
-        gameBoardFile << *(gameBoard);
-        cout << gameBoard;
-
+    ofstream outfile;
+    outfile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    if (outfile.is_open()) {
+        outfile << *(gameBoard);
     }
     else
     {
         cout << "Error opening file" << endl;
     }
-    gameBoardFile.close();
+    outfile.clear();
+    outfile.close();
 }
+
+void loadGame()
+{
+    ifstream infile;
+    infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    if (infile.is_open())
+    {
+        infile >> *(gameBoard);
+    }
+    else
+    {
+        cout << "Error opening file" << endl;
+    }
+    infile.clear();
+    infile.close();
+}
+
 
 int main()
 {
@@ -482,6 +496,8 @@ int main()
                 {
                     if(actionInput == "p")
                         saveGame();
+                    if(actionInput == "l")
+                        loadGame();
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||
