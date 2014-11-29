@@ -39,11 +39,11 @@ bool operator==(const Player& playerA, const Player& playerB)
 // Save friendly insertion operator.
 ostream& operator<<(ostream& os, const Player& player)
 {
-	return os << player.getName() player.getFood() << player.getGold() << player.getSpice() << player.getFabric() << player.getJewel() << player.getRuby() << player.getCartCapacity() << player.getCartSize() << endl;
+	return os << player.getName() << player.getGold() << player.getFood() << player.getRuby() << player.getSpice() << player.getFabric() << player.getJewel() << player.getNumVisitsGemMerchant() << player.getCartCapacity() << player.getCartSize() << endl;
 }
 
-// Load friendly extraction operator.
+// Load friendly extraction operator. (Might not use in final).
 istream& operator>>(istream& is, Player& player)
 {
-    
+    return is >> player.name >> player.gold >> player.food >> player.ruby >> player.spice >> player.fabric >> player.jewel >> player.numVisitsGemMerchant >> player.cart >> player.currentCartSize;
 }

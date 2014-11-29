@@ -58,7 +58,7 @@ public:
     unsigned int getJewel() const {return jewel;}
     unsigned int getCartCapacity() const {return cart;}
     unsigned int getCartSize() const {return currentCartSize;}
-    unsigned int getNumVisitsGemMerchant() {return numVisitsGemMerchant;} // Used once -M
+    unsigned int getNumVisitsGemMerchant() const {return numVisitsGemMerchant;} // Used once (except for in insertion operator) -M
     
     // Setters
     void setFood(unsigned int _food){food = _food;}
@@ -70,7 +70,7 @@ public:
     void setCartCapacity(unsigned int _cart){cart = _cart;}
     void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
     
-    void incrementVisitsGemMerchant(){numVisitsGemMerchant++;} // Never called. Do we need it? If it is not called numVisitsGemMerchant stays 0 which makes the variable pointless. -M
+    void incrementVisitsGemMerchant(){numVisitsGemMerchant++;} // Never called. Do we need it? If it is not called numVisitsGemMerchant stays 0 which makes the variable pointless? -M
     
     // Functions
     bool canAct() const{return food>0;}
