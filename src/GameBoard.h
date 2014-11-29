@@ -467,18 +467,44 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
     {
         os << p << endl;
     }
-
-    //then do tiles... gameBoard.board;
+    
+    for (auto column : gameBoard.board)
+    {
+        for (auto tile : column)
+        {
+            os << *(tile);
+        }
+    }
     return os;
 }
 template<typename U, typename L, unsigned int R, unsigned int C>
 istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
 {
+    // is >> numOfPlayers
+    // loop for numOfPlayers and then pass names and size into gameboard
+    // set the properties of each player
+    string _numOfPlayers;
+    is >> _numOfPlayers;
+    int numOfPlayers = std::stoi(_numOfPlayers);
+    
+    string* playerNames[numOfPlayers];
+    for (int i = 0; i < numOfPlayers; ++i)
+    {
+        is >> *(playerNames[i]);
+    }
+    
+    gameBoard = new GameBoard<>(playerNames, numOfPlayers);
     for (Player p: gameBoard.players)
     {
         is >> p;
-        
         cout << p;
+    }
+    for (auto column : gameBoard.board)
+    {
+        for (auto tile : column)
+        {
+            is >> *(tile);
+        }
     }
     return is;
 }

@@ -17,7 +17,7 @@
 
 using std::cin;
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-
+enum GameState {PAUSED, UNPAUSED};
 /*
 	bool takeTurn( 
 		GameBoard<Tile<Player>*,Player*,6,6>& gameBoard, const std::string& playerName ) { 
@@ -394,58 +394,63 @@ int main()
 	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
 	
 	*/
-    
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
 	cout << "************************************************************************" << endl;
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
-
-	// UI prompts for the number of players and stores it
-	int numOfPlayers = 0;
-	bool invalidNumberOfPlayers = true;
-	cout<< "\t\t\tEnter the number of players:";
-	while(invalidNumberOfPlayers){
-		cin >> numOfPlayers;
-		if ( cin.fail() ){
-				cout<<"The number of players needs to be an integer greater than 1." << endl;
-				cout<<"\t\tPlease enter a correct number of players:" << endl;
-				cin.clear(); // Clears the input stream fail flag
-				cin.ignore(100, '\n'); // Ignores any characters left in the stream	
-		}else{	
-			if( numOfPlayers > 1)
-				invalidNumberOfPlayers = false;
-			else {
-				cout << "At least 2 players are required to play this game." << endl;
-				cout << "Please enter a correct number of players:" << endl;
-			}
-		}	
-	}
-	
-	// UI prompts for all the names of the players and stores them
-	vector<string> playerNames;
-	for( int i = 0; i < numOfPlayers; i++)
+    if (GameState = PAUSED)
     {
-		cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
-		bool invalidPlayerName = true;
-		while( invalidPlayerName){
-			string playerName;
-			cin >> playerName;	
-			if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
-				playerNames.push_back(playerName);
-				invalidPlayerName = false;
-			}else{
-				cout << "Cannot have two players with the same name." << endl;
-				cout << "Please enter another name:" << endl;
-			}
-		}
-
-	}
-	
-	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
-    gameBoard =
-		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
-
+        loadGame();
+        GameState = UNPAUSED;
+    }
+    else
+    {
+        // UI prompts for the number of players and stores it
+        int numOfPlayers = 0;
+        bool invalidNumberOfPlayers = true;
+        cout<< "\t\t\tEnter the number of players:";
+        while(invalidNumberOfPlayers){
+            cin >> numOfPlayers;
+            if ( cin.fail() ){
+                cout<<"The number of players needs to be an integer greater than 1." << endl;
+                cout<<"\t\tPlease enter a correct number of players:" << endl;
+                cin.clear(); // Clears the input stream fail flag
+                cin.ignore(100, '\n'); // Ignores any characters left in the stream
+            }else{
+                if( numOfPlayers > 1)
+                    invalidNumberOfPlayers = false;
+                else {
+                    cout << "At least 2 players are required to play this game." << endl;
+                    cout << "Please enter a correct number of players:" << endl;
+                }
+            }
+        }
+        
+        // UI prompts for all the names of the players and stores them
+        vector<string> playerNames;
+        for( int i = 0; i < numOfPlayers; i++)
+        {
+            cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
+            bool invalidPlayerName = true;
+            while( invalidPlayerName){
+                string playerName;
+                cin >> playerName;
+                if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
+                    playerNames.push_back(playerName);
+                    invalidPlayerName = false;
+                }else{
+                    cout << "Cannot have two players with the same name." << endl;
+                    cout << "Please enter another name:" << endl;
+                }
+            }
+            
+        }
+        
+        // Initialize a a 6x6 board with 4 players of type Player and their respective names.
+        gameBoard =
+        new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
+    }
 	bool hasWon = false;
 	while (!hasWon)
     {
