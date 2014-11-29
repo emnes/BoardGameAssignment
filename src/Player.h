@@ -43,6 +43,7 @@ private:
     // Functions
     friend ostream& operator<<(ostream& os, const Player& player);
     friend istream& operator>>(istream& is, Player& player);
+    
     friend bool operator==(const Player& playerA, const Player& playerB);
     
 public:

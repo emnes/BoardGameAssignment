@@ -411,13 +411,7 @@ int main() {
 	// Initialize a a 6x6 board with 4 players of type Player and their respective names.
 	GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard = 
 		new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
-    ofstream gameBoardFile;
-    gameBoardFile.open("istanbul.txt");
-    for (Player p: gameBoard->players) {
-        gameBoardFile << p;
-    }
-    //gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
-    gameBoardFile.close();
+
 	bool hasWon = false;
 	while (!hasWon)
     {
@@ -436,7 +430,7 @@ int main() {
 			currentPlayerTile->getCoordinate(iPtr, jPtr);
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), i, j);
-			int moveInt;
+			int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if(validMoves[UP])

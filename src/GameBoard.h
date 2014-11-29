@@ -457,24 +457,27 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 }
 
 // Need to change typename variables
+// WORK ON THIS TOMORROW. Need gameBoard to save players into text file when 'p' is entered....
+// Look into: template operators. Why was gameBoard's operator not being called? Complaining about template mismatch.
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 ostream& operator<<(ostream& os, const GameBoard<T, J, ROW, COL>& gameBoard)
 {
     ofstream gameBoardFile;
-    gameBoardFile.open("istanbul.txt");
-    for (Player p: GameBoard<T, J, ROW, COL>::players) {
+    gameBoardFile.open("Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    for (Player p: gameBoard.players)
+    {
         gameBoardFile << p;
+        os << p;
     }
-    //gameBoardFile << GameBoard<T, J, ROW, COL>::players << GameBoard<T, J, ROW, COL>::board;
+    //or Maybe - gameBoardFile << gameBoard.players
+    //then do tiles... gameBoard.board;
     gameBoardFile.close();
-    os << "File saved";
-    cout << "testing save";
     return os;
 }
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 istream& operator>>(istream& is, GameBoard<T, J, ROW, COL>& gameBoard)
 {
-    ifstream gameBoardFile("instanbul.txt");
+    //ifstream gameBoardFile("instanbul.txt");
 }
 
 #endif /* defined(__BoardGame__GameBoard__) */
