@@ -17,7 +17,7 @@
 #include "Tile.h"
 #include <map>
 
-using namespace std;
+using std::map;
 
 template < class J >
 class TileFactory

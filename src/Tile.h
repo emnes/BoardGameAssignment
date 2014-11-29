@@ -15,7 +15,8 @@
 #include <string>
 #include <algorithm>
 
-using namespace std;
+using std::vector;
+using std::array;
 
 enum Goods
 {

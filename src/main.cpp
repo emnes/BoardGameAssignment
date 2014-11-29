@@ -11,11 +11,11 @@
 #include <array>
 #include <time.h>
 #include <limits> 
-#include "Player.h"
-#include "Tile.h"
+//#include "Player.h"
+//#include "Tile.h" --- included through GameBoard.
 #include "GameBoard.h"
 
-using namespace std;
+using std::cin;
 
 /*
 	bool takeTurn( 
@@ -559,7 +559,7 @@ int main() {
 				}
 				cout << "Press enter to continue . . . ";
 				cin.sync();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << string( 100, '\n' );
 			}
 	}

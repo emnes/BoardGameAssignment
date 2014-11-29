@@ -21,10 +21,12 @@
 #include <array>
 #include <algorithm>
 #include <fstream>
-#include "Tile.h"
+//#include "Tile.h" -- included through TileFactory
 #include "TileFactory.h"
 
-using namespace std;
+using std::ofstream;
+using std::ifstream;
+
 enum Move{UP, RIGHT, DOWN, LEFT}; // Only four possible neighbours: up, down, left, right
 
 

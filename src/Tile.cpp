@@ -8,9 +8,6 @@
 
 #include "Tile.h"
 
-using namespace std;
-
-
 template <typename J>
 bool Desert<J>::action(Player& player){
 	return false;

@@ -17,8 +17,6 @@
 #include <random>       // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
 
-using namespace std;
-
 template< class J>
 Tile <J>* TileFactory<J>::next()
 {		
