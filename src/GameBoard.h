@@ -39,7 +39,7 @@ public:
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
 public:
-	GameBoard(istream&);											// GameBoard constructor for loading from file.
+	GameBoard();													// GameBoard constructor for loading from file.
 	GameBoard(string *playerNames, size_t playerNamesSize);			// GameBoard constructor.
 	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board.
 	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board.
@@ -61,53 +61,8 @@ public:
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(istream& inFine){
-	
-	// I putted the aldorighms to laod fom file here, maube it should be done in the main loop, maybe not, we have to explore this.
-	
-	TileFactory<J>* tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton
-	
-	// Get the number of players from file
-	int numOfPlayers; // init here
-	
-	
-	
-	if( true/* first token is "Player" */)
-	{
-		for( int i = 0; i < numOfPlayers; i++)
-		{
-			
-			// Somehow start to read a player from file.
-			string playerName;  // init from file
-			addPlayer(playerName);
-			
-			// Create the actual Player object from file
-			// Player player; -
-            Player player(playerName);
-			// init all its attributes from file
-			
-			setPlayer(player); // override the dummy player that was created before with the one created from file
-		}
-	}else if( true/* first token is Tile */)
-	{
-		// Read and init these from file
-		TileType tileType;
-		int xCoord;
-		int yCoord;
-		
-		Tile<J>* tileToInsert = tileFactory->CreateTile(tileType);
-		tileToInsert->setXCoordinate(xCoord);
-    	tileToInsert->setYCoordinate(yCoord);
-    	
-    	if (true/* we read there are some players on that tile */)
-		{    	
-			// init this from file
-			string tilePlayerName;
-	    	playersCurrentTile[tilePlayerName] = tileToInsert;
-	    	tileToInsert->addPlayer(tilePlayerName);
-    	}
-    	add(tileToInsert, xCoord, yCoord); // Add tile to board
-	}		
+GameBoard<T, J, ROW, COL>::GameBoard(){
+	TileFactory<J>* tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton	
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -546,7 +501,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     
     // How will we change each property?
     
-    gameBoard = new GameBoard<U, L, R, C>(is);
+    gameBoard = new GameBoard<U, L, R, C>();
     //Update each player
     
     for (Player p: gameBoard.players)
