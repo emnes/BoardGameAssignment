@@ -614,7 +614,7 @@ int main()
 									}
 									gameBoard->setPlayer(currentPlayer);
 									cout << endl << "Your status after performing this action is: " << endl;
-									cout << currentPlayer << endl;	
+									currentPlayer.print();	
 								}
 								invalidInput = false;
 							}else if( !actionInput.compare("n") || !actionInput.compare("N") )
