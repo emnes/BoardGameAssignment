@@ -74,7 +74,7 @@ void saveGame()
     outfile.close();
 }
 
-void loadGame()
+bool loadGame()
 {
     ifstream infile;
     infile.open("istanbul.txt");
@@ -83,13 +83,17 @@ void loadGame()
         //infile >> *(gameBoard);
         //infile >> currentPlayerIndex;
         cout << "Game loaded.";
+        infile.clear();
+        infile.close();
+        return true;
     }
     else
     {
         cout << "Error opening file" << endl;
+        infile.clear();
+        infile.close();
+        return false;
     }
-    infile.clear();
-    infile.close();
 }
 
 void createGame()
@@ -457,18 +461,21 @@ int main()
 	cout << "************************************************************************" << endl << endl;
     
     bool started = true;
-    cout << "Would you like to start a new game or load previous game?" << endl;
-    cout << "0-NEW\t" << "1-LOAD\t" << endl;
-    cout << "Enter: ";
-    int gameChoice;
-    cin >> gameChoice;
-    if (gameChoice == 0)
+    while(!started)
     {
-        createGame();
-    }
-    else
-    {
-        loadGame();
+        cout << "Would you like to start a new game or load previous game?" << endl;
+        cout << "0-NEW\t" << "1-LOAD\t" << endl;
+        cout << "Enter: ";
+        int gameChoice;
+        cin >> gameChoice;
+        if (gameChoice == 0)
+        {
+            createGame();
+        }
+        else
+        {
+            loadGame();
+        }
     }
 	bool hasWon = false;
 	while (!hasWon)
