@@ -490,8 +490,8 @@ int main()
             }
         }
         
-        for(string currentPlayerName : playerNames)
-        {
+        int currentPlayerIndex = 0;
+        
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
         {
@@ -503,12 +503,12 @@ int main()
 			gameBoard->printCurrentLocation(currentPlayerName);
 		
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-			int i, j;
-			int* iPtr = &i;
-			int* jPtr = &j;
-			currentPlayerTile->getCoordinate(iPtr, jPtr);
+			int xCoord, yCoord;
+			int* xCoordPtr = &xCoord;
+			int* yCoordPtr = &yCoord;
+			currentPlayerTile->getCoordinate(xCoordPtr, yCoordPtr);
 			array<bool, 4> validMoves = {true,true,true,true};
-			gameBoard->getValidMoves(validMoves.data(), i, j);
+			gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
 			int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			

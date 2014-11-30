@@ -362,7 +362,7 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 		cout << endl;
 	}
 	
-	bool showTileTypes = false; // True to show the tile types on the board GUI, otherwise they won't be shown.
+	bool showTileTypes = true; // True to show the tile types on the board GUI, otherwise they won't be shown.
 	
 	for (int j = COL-1; j > -1; j--){
 		cout<< "\t\t  ** ";
