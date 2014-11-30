@@ -64,7 +64,7 @@ void saveGame()
     {
         outfile << *(gameBoard);
         outfile << currentPlayerIndex;
-        cout << "Game saved.";
+        cout << "Game saved." << endl;
     }
     else
     {
@@ -77,12 +77,12 @@ void saveGame()
 bool loadGame()
 {
     ifstream infile;
-    infile.open("istanbul.txt");
+    infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     if (infile.is_open())
     {
         //infile >> *(gameBoard);
         //infile >> currentPlayerIndex;
-        cout << "Game loaded.";
+        cout << "Game loaded." << endl;
         infile.clear();
         infile.close();
         return true;
@@ -99,6 +99,7 @@ bool loadGame()
 void createGame()
 {
     // UI prompts for the number of players and stores it
+    currentPlayerIndex = 0;
     int numOfPlayers = 0;
     bool invalidNumberOfPlayers = true;
     cout<< "\t\t\tEnter the number of players:";
@@ -460,8 +461,8 @@ int main()
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
     
-    bool started = true;
-    while(!started)
+    bool startedGame = false;
+    while(!startedGame)
     {
         cout << "Would you like to start a new game or load previous game?" << endl;
         cout << "0-NEW\t" << "1-LOAD\t" << endl;
@@ -470,11 +471,13 @@ int main()
         cin >> gameChoice;
         if (gameChoice == 0)
         {
+            startedGame = true;
             createGame();
         }
         else
         {
-            loadGame();
+            if(loadGame())
+            startedGame = true;
         }
     }
 	bool hasWon = false;
@@ -501,8 +504,9 @@ int main()
             }
         }*/
         
-        currentPlayerIndex = 0;
-        
+        if (playerNames.size() == 0) { // DEBUGGING purposes
+            cout << "NO Players. ERROR " << endl; sleep(5);
+        }
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
         {
