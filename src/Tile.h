@@ -259,7 +259,10 @@ ostream& operator<<(ostream& os, const Tile<K>& tile)
     os << tile.getType() << " " << tile.coordinates[0] << " " << tile.coordinates[1];
     for(auto p : tile.getPlayers())
     {
-        os << " " << "<playername>" << " " << p << " " << "</playername>";
+        os << " " << "Player" << " " << p;
+    }
+    if (tile.getType() == GEMMERCHANT) {
+       // os << " " << tile.getRubyPrice();
     }
     return os;
 }
@@ -288,7 +291,7 @@ istream& operator>>(istream& is, Tile<K>& tile)
      
     
     return is;
-}*/ //not needed
+}*/
 
 
 #endif /* defined(__BoardGame__Tile__) */

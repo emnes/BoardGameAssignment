@@ -66,7 +66,6 @@ istream& operator>>(istream& is, Player& player)
     is >> player.spice;
     is >> player.fabric;
     is >> player.jewel;
-    is >> player.numVisitsGemMerchant;
     is >> player.cart;
     is >> player.currentCartSize;
     

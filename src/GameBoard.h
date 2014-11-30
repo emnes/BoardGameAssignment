@@ -519,25 +519,50 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
         {
             streamLine >> token;
             Player tempPlayer(token);
+            streamLine >> tempPlayer;
+            
             while (streamLine >> token)
             {
-                streamLine >> tempPlayer;
-                // edit players
                 if (token == "</player>" )
                 {
                     gameBoard.setPlayer(tempPlayer);
+                    for (Player p: gameBoard.players)
+                        cout << p;
                     break;
                 }
             }
         }
         else if (token == "<tile>")
         {
+            /*// Reading main attributes
+            streamLine >> token;
+            Tile<J> tempTile;
+            tempTile.setType();
+            int xCoord;
+            int yCoord;
+            streamLine >> xCoord;
+            streamLine >> yCoord;
+            
+            // Optional attributes
             while (streamLine >> token)
             {
-                //read tiles
-                //add to gameboard
-                if (token == "</tile>" ) break;
-            }
+                if (token == "Player")
+                {
+                    streamLine >> token; // get name
+                    tempTile.addPlayer(token);
+                }
+                if (token == "RubyPrice")
+                {
+                    int rubyPrice;
+                    streamLine >> rubyPrice; //get ruby
+                    tempTile.setRubyPrice(rubyPrice);
+                }
+                if (token == "</tile>" )
+                {
+                    gameBoard.add(tempTile, xCoord, yCoord);
+                    break;
+                }
+            }*/
         }
     }
     // read current player index

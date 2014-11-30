@@ -32,8 +32,6 @@ private:
     unsigned int fabric = 1;
     unsigned int jewel = 1;
     
-    // Function related variables
-    unsigned int numVisitsGemMerchant = 0;
     //Tile& currentTile;
     
     // Cart
@@ -70,7 +68,6 @@ public:
     void setCartCapacity(unsigned int _cart){cart = _cart;}
     void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
     
-    void incrementVisitsGemMerchant(){numVisitsGemMerchant++;} // Never called. Do we need it? If it is not called numVisitsGemMerchant stays 0 which makes the variable pointless? -M
 	void print() const;
 	
     // Functions
