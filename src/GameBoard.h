@@ -80,7 +80,8 @@ GameBoard<T, J, ROW, COL>::GameBoard(){
 			addPlayer(playerName);
 			
 			// Create the actual Player object from file
-			Player player;
+			// Player player; -
+            Player player(playerName);
 			// init all its attributes from file
 			
 			setPlayer(player); // override the dummy player that was created before with the one created from file

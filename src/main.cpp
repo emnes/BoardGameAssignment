@@ -21,6 +21,7 @@ enum GameState {PLAYING, PAUSED};
 // UNPAUSE
 GameState currentGameState = PLAYING;
 vector<string> playerNames;
+int currentPlayerIndex;
 /*
 	bool takeTurn( 
 		GameBoard<Tile<Player>*,Player*,6,6>& gameBoard, const std::string& playerName ) { 
@@ -63,6 +64,7 @@ void saveGame()
     if (outfile.is_open())
     {
         outfile << *(gameBoard);
+        outfile << currentPlayerIndex;
         cout << "Game saved.";
     }
     else
@@ -80,6 +82,7 @@ void loadGame()
     if (infile.is_open())
     {
         //infile >> *(gameBoard);
+        //infile >> currentPlayerIndex;
         cout << "Game loaded.";
     }
     else
@@ -93,6 +96,7 @@ void loadGame()
 void createGame()
 {
     // UI prompts for the number of players and stores it
+    currentPlayerIndex = 0;
     int numOfPlayers = 0;
     bool invalidNumberOfPlayers = true;
     cout<< "\t\t\tEnter the number of players:";
@@ -125,7 +129,9 @@ void createGame()
             if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
                 playerNames.push_back(playerName);
                 invalidPlayerName = false;
-            }else{
+            }
+            else
+            {
                 cout << "Cannot have two players with the same name." << endl;
                 cout << "Please enter another name:" << endl;
             }
@@ -489,22 +495,24 @@ int main()
                 }
             }*/
         }
-        
-        for(string currentPlayerName : playerNames)
+        // currentPlayerIndex holds whose turn it is (useful for a save)
+        for (int i = currentPlayerIndex; i < playerNames.size(); ++currentPlayerIndex)
         {
+            string currentPlayerName = playerNames[currentPlayerIndex];
+ 
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
 			cout << "Current player:" << currentPlayerName << endl;
-			cout<< currentPlayer << endl;
+            currentPlayer.print();
 			gameBoard->printCurrentLocation(currentPlayerName);
 		
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-			int i, j;
-			int* iPtr = &i;
-			int* jPtr = &j;
-			currentPlayerTile->getCoordinate(iPtr, jPtr);
+			int row, col;
+			//int* rowPtr = &row;
+			//int* colPtr = &col;
+			currentPlayerTile->getCoordinate(&row, &col);
 			array<bool, 4> validMoves = {true,true,true,true};
-			gameBoard->getValidMoves(validMoves.data(), i, j);
-			int moveInt; // delete because not used? - M
+			gameBoard->getValidMoves(validMoves.data(), row, col);
+			//int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if(validMoves[UP])
@@ -518,7 +526,7 @@ int main()
             
 			if(validMoves[LEFT])
 				cout << "3-LEFT\t";
-            cout << "4-PAUSE\t";
+            cout << "4-SAVE AND EXIT\t";
 			
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
@@ -528,18 +536,11 @@ int main()
 				cin >> input;
 				if ( cin.fail() )
                 {
-					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
+					cout<<"Only integers are a valid choice, input your choice again:" << endl;
 					cin.clear(); 
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
-                    if(input == 4)
-                    {
-                        saveGame();
-                        //currentGameState = PAUSED;
-                        //break;
-                    }
-                    
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||
@@ -565,7 +566,15 @@ int main()
 							cout << "(It will cost you 1 more gold per other player on this tile to do an action.)" << endl << endl;
 						}
 						currentPlayerTile->print();
-					}else
+					}
+                    else if(input == 4)
+                    {
+                        invalidInput = false;
+                        saveGame();
+                        //currentGameState = PAUSED;
+                        //break;
+                    }
+                    else
                     {
 						cout<< "Sorry, not a valid direction." << endl;  
 						cout<< "Please enter again in which direction you want to go:" << endl;
@@ -588,14 +597,17 @@ int main()
 							cout<<"Wrong input, choose Y or N" << endl;
 							cin.clear(); // Clears the input stream fail flag
 					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
-						}else
+						}
+                        else
                         {
 							if( !actionInput.compare("y") || !actionInput.compare("Y") )
                             {
 								if( !currentPlayerTile->action(currentPlayer))
                                 {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
-								}else{
+								}
+                                else
+                                {
 									if( currentPlayer.getRuby() == 5)
                                     {
 										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
@@ -603,11 +615,11 @@ int main()
 										hasWon = true;
 										break;
 									}
-									if( currentPlayerTile->getType() != RESTAURANT)
+									if(currentPlayerTile->getType() != RESTAURANT)
 										currentPlayer.eat();
 									for(string recipientPlayerName : currentPlayerTile->getPlayers())
                                     {
-										if( recipientPlayerName.compare(currentPlayerName))
+										if(recipientPlayerName.compare(currentPlayerName))
                                         {
 											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
 											currentPlayer.pay(recipientPlayer);
@@ -619,10 +631,12 @@ int main()
 									cout << currentPlayer << endl;	
 								}
 								invalidInput = false;
-							}else if( !actionInput.compare("n") || !actionInput.compare("N") )
+							}
+                            else if(!actionInput.compare("n") || !actionInput.compare("N"))
                             {
 								invalidInput = false;
-							}else
+							}
+                            else
                             {
 								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
 							}
@@ -633,6 +647,7 @@ int main()
 				cin.sync();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << string( 100, '\n' );
+                currentPlayerIndex = 0; // After loop completes make sure next turn starts from first player
 			}
 	}
 }

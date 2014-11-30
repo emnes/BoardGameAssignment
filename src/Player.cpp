@@ -38,9 +38,9 @@ bool operator==(const Player& playerA, const Player& playerB)
 
 void Player::print() const
 {
-    cout << "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
-    << getFood() << "\t"
+    cout << "Gold\tFood\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
     << getGold() << "\t"
+    << getFood() << "\t"
     << getSpice() << "\t"
     << getFabric() << "\t"
     << getJewel() << "\t"
@@ -53,7 +53,7 @@ void Player::print() const
 ostream& operator<<(ostream& os, const Player& player)
 {
     // You can add a print function for the UI here or in main
-    return os << player.getName() << " " << player.getGold() << " " << player.getFood() << " " << player.getRuby() << " " << player.getSpice() << " " << player.getFabric() << " " << player.getJewel() << " " << player.getNumVisitsGemMerchant() << " " << player.getCartCapacity() << " " << player.getCartSize();
+    return os << player.getName() << " " << player.getGold() << " " << player.getFood() << " " << player.getRuby() << " " << player.getSpice() << " " << player.getFabric() << " " << player.getJewel() << " " << player.getNumVisitsGemMerchant() << " " << player.getCartCapacity() << " " << player.getCartSize() << endl;
 }
 
 // Load friendly extraction operator. (Might not use in final).
