@@ -474,9 +474,9 @@ int main()
             
             bool paused = true;
             string input;
-            cout << "Game Paused. Enter 'U' to unpause.";
+            cout << "Game Paused. Saving game then exit";
             cin >> input;
-            while (paused)
+            /*while (paused)
             {
                 if (input == "u" || input == "U")
                 {
@@ -487,7 +487,7 @@ int main()
                 {
                     cout << "Invalid input. Enter 'U' to unpause.";
                 }
-            }
+            }*/
         }
         
         for(string currentPlayerName : playerNames)

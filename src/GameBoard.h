@@ -464,18 +464,18 @@ template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
     os << gameBoard.players.size() << endl;
-    
+    os << "PlayerNames";
     for (Player p: gameBoard.players)
-    {
-        os << p.getName() << endl;
-    }
+         os << " " << p.getName();
+    os << endl;
+    for (Player p: gameBoard.players)
+        os << "Player" << " " << p << endl;
 
-    
     for (auto column : gameBoard.board)
     {
         for (auto tile : column)
         {
-            os << *(tile);
+            os << "Tile " << *(tile) << endl;
         }
     }
     return os;
@@ -492,7 +492,6 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     int numOfPlayers = std::stoi(_numOfPlayers);
 
     string* playerNames[numOfPlayers];
-    
     
     // How will we change each property?
     
