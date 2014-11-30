@@ -243,7 +243,7 @@ void Tile<J>::removePlayer(string playerName)
 template <typename K>
 ostream& operator<<(ostream& os, const Tile<K>& tile)
 {
-    os << tile.coordinates[0] << " " << tile.coordinates[1] << " " << tile.getType() << " ";
+    os << tile.getType() << " " << tile.coordinates[0] << " " << tile.coordinates[1] << " ";
     if(tile.getPlayers().size() != 0)
     {
         for(auto p : tile.getPlayers())
