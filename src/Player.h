@@ -41,6 +41,7 @@ private:
     unsigned int currentCartSize = 3; 	// Keeps track of the current number of goods in the cart. -P
     
     // Functions
+    void print() const;
     friend ostream& operator<<(ostream& os, const Player& player);
     friend istream& operator>>(istream& is, Player& player);
     
@@ -79,7 +80,6 @@ public:
     bool pay(Player& player);
     bool incrementCartSize();
     bool cartIsFull(){return currentCartSize == cart;}
-    void print() const;
 };
 
 #endif /* defined(__BoardGame__Player__) */
