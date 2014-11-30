@@ -463,6 +463,8 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
+    os << gameBoard.players.size() << endl;
+    
     for (Player p: gameBoard.players)
     {
         os << p << endl;
@@ -483,18 +485,17 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     // is >> numOfPlayers
     // loop for numOfPlayers and then pass names and size into gameboard
     // set the properties of each player
+    
     string _numOfPlayers;
     is >> _numOfPlayers;
     int numOfPlayers = std::stoi(_numOfPlayers);
     
     string* playerNames[numOfPlayers];
-    for (int i = 0; i < numOfPlayers; ++i)
-    {
-        is >> *(playerNames[i]);
-    }
+    
+    
     // How will we change each property?
     
-    //gameBoard = new GameBoard<U, L, R, C>(playerNames, numOfPlayers);
+    gameBoard = new GameBoard<U, L, R, C>("", 0);
     //Update each player
     
     for (Player p: gameBoard.players)

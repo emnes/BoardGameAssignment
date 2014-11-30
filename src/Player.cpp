@@ -40,16 +40,13 @@ bool operator==(const Player& playerA, const Player& playerB)
 ostream& operator<<(ostream& os, const Player& player)
 {
     // You can add a print function for the UI here or in main
-	return os << player.getName() << "\n" << player.getGold() << "\n" << player.getFood() << "\n" << player.getRuby() << "\n" << player.getSpice() << "\n" << player.getFabric() << "\n" << player.getJewel() << "\n" << player.getNumVisitsGemMerchant() << "\n" << player.getCartCapacity() << "\n" << player.getCartSize() << "\n" << endl;
+	return os << player.getName() << "\n" << player.getGold() << "\n" << player.getFood() << "\n" << player.getRuby() << "\n" << player.getSpice() << "\n" << player.getFabric() << "\n" << player.getJewel() << "\n" << player.getNumVisitsGemMerchant() << "\n" << player.getCartCapacity() << "\n" << player.getCartSize() << "\n" << "end player" << endl;
 }
 
 // Load friendly extraction operator. (Might not use in final).
 
-/*
- istream& operator>>(istream& is, Player& player)
+istream& operator>>(istream& is, Player& player)
 {
-    /*return is >> player.name >> player.gold >> player.food >> player.ruby >> player.spice >> player.fabric >> player.jewel >> player.numVisitsGemMerchant >> player.cart >> player.currentCartSize;
-    is >> player.name;
     is >> player.gold;
     is >> player.food;
     is >> player.ruby;
@@ -61,4 +58,4 @@ ostream& operator<<(ostream& os, const Player& player)
     is >> player.currentCartSize;
     
     return is;
-}*/
+}

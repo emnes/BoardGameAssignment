@@ -518,12 +518,11 @@ int main()
             
 			if(validMoves[LEFT])
 				cout << "3-LEFT\t";
-            cout << "P-PAUSE\t";
+            cout << "4-PAUSE\t";
 			
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
 			int input;
-            string actionInput;
 			while(invalidInput)
 			{
 				cin >> input;
@@ -534,8 +533,12 @@ int main()
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
-                    if(actionInput == "p" || actionInput == "P")
-                        currentGameState = PAUSED;
+                    if(input == 4)
+                    {
+                        saveGame();
+                        //currentGameState = PAUSED;
+                        //break;
+                    }
                     
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
