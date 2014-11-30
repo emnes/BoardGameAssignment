@@ -468,12 +468,10 @@ int main()
 	*/
 	
 	char cCurrentPath[FILENAME_MAX];
-
 	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
      {
      return errno;
      }
-
 	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
 
 	cout << ("The current working directory is %s", cCurrentPath) << endl;
