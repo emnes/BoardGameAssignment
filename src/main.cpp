@@ -15,6 +15,15 @@
 //#include "Tile.h" --- included through GameBoard.
 #include "GameBoard.h"
 
+#include <stdio.h>  /* defines FILENAME_MAX */
+#ifdef WINDOWS
+    #include <direct.h>
+    #define GetCurrentDir _getcwd
+#else
+    #include <unistd.h>
+    #define GetCurrentDir getcwd
+ #endif
+
 using std::cin;
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 //enum GameState {PLAYING, PAUSED};
@@ -148,7 +157,6 @@ void createGame()
 
 int main()
 {
-    
 	//srand(time(NULL));// fix
 	
 	/*
@@ -455,6 +463,18 @@ int main()
 	cout<< "Testing the creation of a 6x6 board with 4 players" << endl << endl;
 	
 	*/
+	
+	char cCurrentPath[FILENAME_MAX];
+
+	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+     {
+     return errno;
+     }
+
+	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+
+	cout << ("The current working directory is %s", cCurrentPath) << endl;
+	
 	cout << "CSI2372 Final Project" << endl;
 	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
 	cout << "************************************************************************" << endl;
