@@ -41,7 +41,6 @@ private:
     unsigned int currentCartSize = 3; 	// Keeps track of the current number of goods in the cart. -P
     
     // Functions
-    void print() const;
     friend ostream& operator<<(ostream& os, const Player& player);
     friend istream& operator>>(istream& is, Player& player);
     
@@ -73,7 +72,8 @@ public:
     void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
     
     void incrementVisitsGemMerchant(){numVisitsGemMerchant++;} // Never called. Do we need it? If it is not called numVisitsGemMerchant stays 0 which makes the variable pointless? -M
-    
+	void print() const;
+	
     // Functions
     bool canAct() const{return food>0;}
     void eat() {if(canAct())--food;}

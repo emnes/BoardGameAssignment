@@ -499,7 +499,7 @@ int main()
  
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
 			cout << "Current player:" << currentPlayerName << endl;
-			cout<< currentPlayer << endl;
+			currentPlayer.print();
 			gameBoard->printCurrentLocation(currentPlayerName);
 		
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
@@ -555,7 +555,7 @@ int main()
 						gameBoard->move(direction, currentPlayer.getName());
 						cout << string( 100, '\n' );
 						cout << "Current player:" << endl;
-						cout << currentPlayer << endl;
+						currentPlayer.print();
 						gameBoard->printCurrentLocation(currentPlayer.getName());
 						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 						currentPlayerTile->print();
