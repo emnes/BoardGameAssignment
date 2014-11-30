@@ -63,7 +63,17 @@ public:
    	void removePlayer(string playerName);											// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
-    int  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
+    /* Returns the number of other players on same tile 
+     * than the current player.
+     */
+    int numOtherPlayers(){
+		int numPlayersOnTile = players.size();
+		int numOtherPlayersOnTile = 0;
+		if( numPlayersOnTile > 1)
+			numOtherPlayersOnTile = numPlayersOnTile - 1;
+		return numOtherPlayersOnTile;
+	}
+	
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
