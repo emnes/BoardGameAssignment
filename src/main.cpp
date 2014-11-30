@@ -80,8 +80,11 @@ bool loadGame()
     infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     if (infile.is_open())
     {
-        //infile >> *(gameBoard);
-        //infile >> currentPlayerIndex;
+        gameBoard =
+        new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard();
+        infile >> *(gameBoard);
+        infile >> currentPlayerIndex;
+        cout << currentPlayerIndex;
         cout << "Game loaded." << endl;
         infile.clear();
         infile.close();
