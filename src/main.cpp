@@ -506,30 +506,18 @@ int main()
 	bool hasWon = false;
 	while (!hasWon)
     {
-        /*if (currentGameState == PAUSED)
-        {
-            saveGame();
-            bool paused = true;
-            string input;
-            cout << "Game Paused. Enter 'U' to unpause.";
-            cin >> input;
-            while (paused)
-            {
-                if (input == "u" || input == "U")
-                {
-                    currentGameState = PLAYING;
-                    paused = false;
-                }
-                else
-                {
-                    cout << "Invalid input. Enter 'U' to unpause.";
-                }
-            }
-        }*/
         
-        if (playerNames.size() == 0) { // DEBUGGING purposes
+        if (playerNames.size() == 0) // DEBUGGING purposes
+        {
             cout << "NO Players. ERROR " << endl; sleep(5);
         }
+        
+        /*if (pause)
+        {
+            saveGame();
+            exit(0);
+        }*/
+
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
         {
@@ -596,8 +584,7 @@ int main()
                         invalidInput = false;
                         saveGame();
                         exit(0);
-                        //currentGameState = PAUSED;
-                        //break;
+                        break;
                     }
                     else
                     {
