@@ -456,17 +456,20 @@ int main()
 	cout << "************************************************************************" << endl;
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
-    // GET THE FIRST LINE OF TEXT FILE
-    // IF PAUSED THEN LOAD ELSE CREATE NEW GAME
     
-    if (currentGameState == PAUSED)
-    {
-        loadGame();
-    }
-    // Setup Game
-    else
+    
+    cout << "Would you like to start a new game or load previous game?" << endl;
+    cout << "0-NEW\t" << "1-LOAD\t" << endl;
+    cout << "Enter: " << endl;
+    int gameChoice;
+    cin >> gameChoice;
+    if (gameChoice == 0)
     {
         createGame();
+    }
+    else
+    {
+        loadGame();
     }
 	bool hasWon = false;
 	while (!hasWon)
