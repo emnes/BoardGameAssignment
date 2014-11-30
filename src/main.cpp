@@ -460,7 +460,7 @@ int main()
     
     cout << "Would you like to start a new game or load previous game?" << endl;
     cout << "0-NEW\t" << "1-LOAD\t" << endl;
-    cout << "Enter: " << endl;
+    cout << "Enter: ";
     int gameChoice;
     cin >> gameChoice;
     if (gameChoice == 0)
@@ -474,11 +474,10 @@ int main()
 	bool hasWon = false;
 	while (!hasWon)
     {
-        if (currentGameState == PAUSED)
+        /*if (currentGameState == PAUSED)
         {
             saveGame();
-            // exit
-            /*bool paused = true;
+            bool paused = true;
             string input;
             cout << "Game Paused. Enter 'U' to unpause.";
             cin >> input;
@@ -493,8 +492,8 @@ int main()
                 {
                     cout << "Invalid input. Enter 'U' to unpause.";
                 }
-            }*/
-        }
+            }
+        }*/
         
         currentPlayerIndex = 0;
         
@@ -529,7 +528,7 @@ int main()
             
 			if(validMoves[LEFT])
 				cout << "3-LEFT\t";
-            cout << "4-PAUSE\t";
+            cout << "4-SAVE AND EXIT\t";
 			
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
@@ -563,6 +562,7 @@ int main()
                     {
                         invalidInput = false;
                         saveGame();
+                        exit(0);
                         //currentGameState = PAUSED;
                         //break;
                     }
