@@ -65,11 +65,12 @@ void saveGame()
     {
         outfile << *(gameBoard);
         outfile << currentPlayerIndex;
+        // outfile << *(gameBoard);
         cout << "Game saved.";
     }
     else
     {
-        cout << "Error opening file." << endl;
+        cout << "Error opening file" << endl;
     }
     outfile.clear();
     outfile.close();
@@ -480,9 +481,9 @@ int main()
             
             bool paused = true;
             string input;
-            cout << "Game Paused. Saving game then exit";
+            cout << "Game Paused. Enter 'U' to unpause.";
             cin >> input;
-            /*while (paused)
+            while (paused)
             {
                 if (input == "u" || input == "U")
                 {
@@ -493,7 +494,7 @@ int main()
                 {
                     cout << "Invalid input. Enter 'U' to unpause.";
                 }
-            }*/
+            }
         }
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = currentPlayerIndex; i < playerNames.size(); ++currentPlayerIndex)

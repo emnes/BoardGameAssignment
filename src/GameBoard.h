@@ -39,7 +39,7 @@ public:
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
 
 public:
-	GameBoard();													// GameBoard constructor for loading from file.
+	GameBoard(istream&);											// GameBoard constructor for loading from file.
 	GameBoard(string *playerNames, size_t playerNamesSize);			// GameBoard constructor.
 	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board.
 	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board.
@@ -61,7 +61,7 @@ public:
 };
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(){
+GameBoard<T, J, ROW, COL>::GameBoard(istream& inFine){
 	
 	// I putted the aldorighms to laod fom file here, maube it should be done in the main loop, maybe not, we have to explore this.
 	
@@ -69,6 +69,8 @@ GameBoard<T, J, ROW, COL>::GameBoard(){
 	
 	// Get the number of players from file
 	int numOfPlayers; // init here
+	
+	
 	
 	if( true/* first token is "Player" */)
 	{
@@ -544,7 +546,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     
     // How will we change each property?
     
-    gameBoard = new GameBoard<U, L, R, C>("", 0);
+    gameBoard = new GameBoard<U, L, R, C>(is);
     //Update each player
     
     for (Player p: gameBoard.players)
