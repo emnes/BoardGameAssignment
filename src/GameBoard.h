@@ -21,6 +21,7 @@
 #include <array>
 #include <algorithm>
 #include <fstream>
+#include <sstream>
 //#include "Tile.h" -- included through TileFactory
 #include "TileFactory.h"
 
@@ -470,18 +471,18 @@ template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
     os << gameBoard.players.size() << endl;
-    os << "PlayerNames";
+
     for (Player p: gameBoard.players)
-         os << " " << p.getName();
-    os << endl;
+        os << "<playername>" << " " << p.getName() << " " << "</playername>" << endl;
+    
     for (Player p: gameBoard.players)
-        os << "Player" << " " << p << endl;
+        os << "<player>" << " " << p << " " << "</player>" << endl;
 
     for (auto column : gameBoard.board)
     {
         for (auto tile : column)
         {
-            os << "Tile " << *(tile) << endl;
+            os << "<tile>" << " " << *(tile) << " " << "</tile>" << endl;
         }
     }
     return os;
@@ -489,22 +490,51 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 template<typename U, typename L, unsigned int R, unsigned int C>
 istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
 {
-    // is >> numOfPlayers
-    // loop for numOfPlayers and then pass names and size into gameboard
-    // set the properties of each player
-    
+    gameBoard = new GameBoard<U, L, R, C>();
+    // Get player name
     string _numOfPlayers;
     is >> _numOfPlayers;
     int numOfPlayers = std::stoi(_numOfPlayers);
 
     string* playerNames[numOfPlayers];
+    string line;
     
-    // How will we change each property?
+    while (std::getline(is, line))
+    {
+        std::istringstream streamLine(line);
+        string token;
+        streamLine >> token;
+        if (token == "<playername>")
+        {
+            while (streamLine >> token)
+            {
+                // read player names
+                // add to gameboard
+                if (token == "</playername>" ) break;
+            }
+        }
+        else if (token == "<player>")
+        {
+            while (streamLine >> token)
+            {
+                // read player
+                // edit players
+                if (token == "</player>" ) break;
+            }
+        }
+        else if (token == "<tile>")
+        {
+            while (streamLine >> token)
+            {
+                //read tiles
+                //add to gameboard
+                if (token == "</tile>" ) break;
+            }
+        }
+    }
+    // read current player index
     
-    gameBoard = new GameBoard<U, L, R, C>();
-    //Update each player
-    
-    for (Player p: gameBoard.players)
+    /*for (Player p: gameBoard.players)
     {
         is >> p;
         cout << p;
@@ -516,7 +546,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
         {
             is >> *(tile);
         }
-    }
+    }*/
     return is;
 }
 

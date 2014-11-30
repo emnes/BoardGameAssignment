@@ -40,7 +40,7 @@ bool operator==(const Player& playerA, const Player& playerB)
 ostream& operator<<(ostream& os, const Player& player)
 {
     // You can add a print function for the UI here or in main
-	return os << player.getName() << "\n" << player.getGold() << "\n" << player.getFood() << "\n" << player.getRuby() << "\n" << player.getSpice() << "\n" << player.getFabric() << "\n" << player.getJewel() << "\n" << player.getNumVisitsGemMerchant() << "\n" << player.getCartCapacity() << "\n" << player.getCartSize() << "\n" << "end player" << endl;
+    return os << player.getName() << " " << player.getGold() << " " << player.getFood() << " " << player.getRuby() << " " << player.getSpice() << " " << player.getFabric() << " " << player.getJewel() << " " << player.getNumVisitsGemMerchant() << " " << player.getCartCapacity() << " " << player.getCartSize();
 }
 
 void Player::print() const

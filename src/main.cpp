@@ -21,6 +21,7 @@ enum GameState {PLAYING, PAUSED};
 // UNPAUSE
 GameState currentGameState = PLAYING;
 vector<string> playerNames;
+int currentPlayerIndex;
 /*
 	bool takeTurn( 
 		GameBoard<Tile<Player>*,Player*,6,6>& gameBoard, const std::string& playerName ) { 
@@ -62,7 +63,8 @@ void saveGame()
     outfile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     if (outfile.is_open())
     {
-        // outfile << *(gameBoard);
+        outfile << *(gameBoard);
+        outfile << currentPlayerIndex;
         cout << "Game saved.";
     }
     else
@@ -80,6 +82,7 @@ void loadGame()
     if (infile.is_open())
     {
         //infile >> *(gameBoard);
+        //infile >> currentPlayerIndex;
         cout << "Game loaded.";
     }
     else
@@ -471,8 +474,8 @@ int main()
         if (currentGameState == PAUSED)
         {
             saveGame();
-            
-            bool paused = true;
+            // exit
+            /*bool paused = true;
             string input;
             cout << "Game Paused. Enter 'U' to unpause.";
             cin >> input;
@@ -487,10 +490,10 @@ int main()
                 {
                     cout << "Invalid input. Enter 'U' to unpause.";
                 }
-            }
+            }*/
         }
         
-        int currentPlayerIndex = 0;
+        currentPlayerIndex = 0;
         
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
@@ -504,12 +507,12 @@ int main()
 		
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 			int xCoord, yCoord;
-			int* xCoordPtr = &xCoord;
-			int* yCoordPtr = &yCoord;
-			currentPlayerTile->getCoordinate(xCoordPtr, yCoordPtr);
+			//int* xCoordPtr = &xCoord;
+			//int* yCoordPtr = &yCoord;
+			currentPlayerTile->getCoordinate(&xCoord, &yCoord);
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
-			int moveInt; // delete because not used? - M
+			//int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if(validMoves[UP])
@@ -533,23 +536,16 @@ int main()
 				cin >> input;
 				if ( cin.fail() )
                 {
-					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
+					cout<<"Only integer is a valid choice, input your choice again:" << endl;
 					cin.clear(); 
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
-                    if(input == 4)
-                    {
-                        saveGame();
-                        //currentGameState = PAUSED;
-                        //break;
-                    }
-                    
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||
 								(direction == DOWN && validMoves[DOWN]) ||
-									(direction == LEFT && validMoves[LEFT]) )
+									(direction == LEFT && validMoves[LEFT]))
                     {
 						invalidInput = false;
 						gameBoard->move(direction, currentPlayer.getName());
@@ -559,10 +555,18 @@ int main()
 						gameBoard->printCurrentLocation(currentPlayer.getName());
 						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 						currentPlayerTile->print();
-					}else
+					}
+                    else if(input == 4)
                     {
-						cout<< "Sorry, not a valid direction." << endl;  
-						cout<< "Please enter again in which direction you want to go:" << endl;
+                        invalidInput = false;
+                        saveGame();
+                        //currentGameState = PAUSED;
+                        //break;
+                    }
+                    else
+                    {
+						cout<< "Sorry, not a valid input" << endl;
+						cout<< "Please enter again:" << endl;
 					}
 				}
 			}
@@ -627,6 +631,8 @@ int main()
 				cin.sync();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << string( 100, '\n' );
+                
+                currentPlayerIndex = 0; // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
 			}
 	}
 }
