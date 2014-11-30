@@ -61,7 +61,7 @@ public:
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize){
-	
+
 	array<float, 14> tileCreationRates = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		// for testing purpose. -P
     tileFactory = TileFactory<J>::Get(ROW*COL);
 	
@@ -467,8 +467,9 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
     
     for (Player p: gameBoard.players)
     {
-        os << p << endl;
+        os << p.getName() << endl;
     }
+
     
     for (auto column : gameBoard.board)
     {
@@ -489,7 +490,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     string _numOfPlayers;
     is >> _numOfPlayers;
     int numOfPlayers = std::stoi(_numOfPlayers);
-    
+
     string* playerNames[numOfPlayers];
     
     

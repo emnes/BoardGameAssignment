@@ -67,7 +67,7 @@ void saveGame()
     }
     else
     {
-        cout << "Error opening file" << endl;
+        cout << "Error opening file." << endl;
     }
     outfile.clear();
     outfile.close();
