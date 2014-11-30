@@ -497,9 +497,9 @@ int main()
             }
         }
         // currentPlayerIndex holds whose turn it is (useful for a save)
-        for (int i = currentPlayerIndex; i < playerNames.size(); ++currentPlayerIndex)
+        for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
         {
-            string currentPlayerName = playerNames[currentPlayerIndex];
+            string currentPlayerName = playerNames[i];
  
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
 			cout << "Current player:" << currentPlayerName << endl;
