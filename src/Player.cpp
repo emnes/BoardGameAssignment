@@ -36,6 +36,19 @@ bool operator==(const Player& playerA, const Player& playerB)
 	return playerA.getName()==playerB.getName();
 }
 
+void Player::print() const
+{
+    cout << "Food\tGold\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
+    << getFood() << "\t"
+    << getGold() << "\t"
+    << getSpice() << "\t"
+    << getFabric() << "\t"
+    << getJewel() << "\t"
+    << getRuby() << "\t"
+    << getCartCapacity() << "\t\t"
+    << getCartSize() << endl;
+}
+
 // Save friendly insertion operator.
 ostream& operator<<(ostream& os, const Player& player)
 {

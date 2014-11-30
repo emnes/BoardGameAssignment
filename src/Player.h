@@ -79,6 +79,7 @@ public:
     bool pay(Player& player);
     bool incrementCartSize();
     bool cartIsFull(){return currentCartSize == cart;}
+    void print() const;
 };
 
 #endif /* defined(__BoardGame__Player__) */
