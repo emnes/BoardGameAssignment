@@ -471,9 +471,11 @@ template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
     os << gameBoard.players.size() << endl;
-
+    os << "Player-names ";
     for (Player p: gameBoard.players)
-        os << "<playername>" << " " << p.getName() << " " << "</playername>" << endl;
+        os << p.getName() << " ";
+    
+    os << endl;
     
     for (Player p: gameBoard.players)
         os << "<player>" << " " << p << " " << "</player>" << endl;
@@ -490,36 +492,42 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 template<typename U, typename L, unsigned int R, unsigned int C>
 istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
 {
-    gameBoard = new GameBoard<U, L, R, C>();
     // Get player name
-    string _numOfPlayers;
-    is >> _numOfPlayers;
-    int numOfPlayers = std::stoi(_numOfPlayers);
-
-    string* playerNames[numOfPlayers];
     string line;
+    is >> line;
+    std::istringstream streamLine(line);
+    
+    int numOfPlayers;
+    streamLine >> numOfPlayers;
     
     while (std::getline(is, line))
     {
         std::istringstream streamLine(line);
         string token;
         streamLine >> token;
-        if (token == "<playername>")
+        if (token == "Player-names")
         {
-            while (streamLine >> token)
+            for (int i = 0; i < numOfPlayers; ++i)
             {
-                // read player names
-                // add to gameboard
-                if (token == "</playername>" ) break;
+                if (streamLine >> token)
+                {
+                    gameBoard.addPlayer(token);
+                }
             }
         }
         else if (token == "<player>")
         {
+            streamLine >> token;
+            Player tempPlayer(token);
             while (streamLine >> token)
             {
-                // read player
+                streamLine >> tempPlayer;
                 // edit players
-                if (token == "</player>" ) break;
+                if (token == "</player>" )
+                {
+                    gameBoard.setPlayer(tempPlayer);
+                    break;
+                }
             }
         }
         else if (token == "<tile>")
