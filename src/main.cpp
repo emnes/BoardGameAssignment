@@ -17,9 +17,8 @@
 
 using std::cin;
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-enum GameState {PLAYING, PAUSED};
-// UNPAUSE
-GameState currentGameState = PLAYING;
+//enum GameState {PLAYING, PAUSED};
+//GameState currentGameState = PLAYING;
 vector<string> playerNames;
 int currentPlayerIndex;
 /*
@@ -78,7 +77,7 @@ void saveGame()
 void loadGame()
 {
     ifstream infile;
-    infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    infile.open("istanbul.txt");
     if (infile.is_open())
     {
         //infile >> *(gameBoard);
@@ -457,7 +456,7 @@ int main()
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
     
-    
+    bool started = true;
     cout << "Would you like to start a new game or load previous game?" << endl;
     cout << "0-NEW\t" << "1-LOAD\t" << endl;
     cout << "Enter: ";
