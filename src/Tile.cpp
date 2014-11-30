@@ -17,8 +17,8 @@ template <typename J>
 TileType Desert<J>::getType() const { return DESERT;}
 
 template <typename J>
-string Desert<J>::print() const {
-	return "Desert : You cannot perform any action.";
+void Desert<J>::print() const {
+	cout << "Desert : You cannot perform any action." << endl;
 }
 
 template <typename J>
@@ -31,8 +31,8 @@ template <typename J>
 TileType Restaurant<J>::getType() const{return RESTAURANT;};
 
 template <typename J>
-string Restaurant<J>::print() const {
-	return "Restaurant : Replenish food items to 10? (Y/N)";
+void Restaurant<J>::print() const {
+	cout << "Restaurant : Replenish food items to 10? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -57,8 +57,8 @@ template <typename J>
 TileType SpiceMerchant<J>::getType() const { return SPICEMERCHANT;}
 
 template <typename J>
-string SpiceMerchant<J>::print() const {
-	return "Spice Merchant : Purchase 3 sacks of spices for 2 pieces of gold? (Y/N)";
+void SpiceMerchant<J>::print() const {
+	cout << "Spice Merchant : Purchase 3 sacks of spices for 2 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -83,8 +83,8 @@ template <typename J>
 TileType FabricManufacturer<J>::getType() const { return FABRICMANUFACTURER;}
 
 template <typename J>
-string FabricManufacturer<J>::print() const {
-	return "Fabric Manufacturer :   Purchase 3 rolls of fabric tissues for 2 pieces of gold? (Y/N)";
+void FabricManufacturer<J>::print() const {
+	cout << "Fabric Manufacturer :   Purchase 3 rolls of fabric tissues for 2 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -108,8 +108,8 @@ template <typename J>
 TileType Jeweler<J>::getType() const { return JEWELER;}
 
 template <typename J>
-string Jeweler<J>::print() const {
-	return "Fabric Manufacturer : Purchase 3 pieces of jewelry for 2 pieces of gold? (Y/N)";
+void Jeweler<J>::print() const {
+	cout << "Fabric Manufacturer : Purchase 3 pieces of jewelry for 2 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -129,8 +129,8 @@ template <typename J>
 TileType CartManufacturer<J>::getType() const { return CARTMANUFACTURER;}
 
 template <typename J>
-string CartManufacturer<J>::print() const {
-	return "Cart Manufacturer : Increase cart capacity by 3 for 7 pieces of gold? (Y/N)";
+void CartManufacturer<J>::print() const {
+	cout << "Cart Manufacturer : Increase cart capacity by 3 for 7 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -155,8 +155,8 @@ template <typename J>
 TileType SmallMarket<J>::getType() const { return SMALLMARKET;}
 
 template <typename J>
-string SmallMarket<J>::print() const {
-	return "Small Market : Sell 1 roll of fabric, 1 jewel and 1 sack of spices for 8 pieces of gold? (Y/N)";
+void SmallMarket<J>::print() const {
+	cout << "Small Market : Sell 1 roll of fabric, 1 jewel and 1 sack of spices for 8 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -176,8 +176,8 @@ template <typename J>
 TileType SpiceMarket<J>::getType() const { return SPICEMARKET;}
 
 template <typename J>
-string SpiceMarket<J>::print() const {
-	return "Spice Market : Sell 3 sacks of spices for 6 pieces of gold? (Y/N)";
+void SpiceMarket<J>::print() const {
+	cout << "Spice Market : Sell 3 sacks of spices for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -197,8 +197,8 @@ template <typename J>
 TileType JewelryMarket<J>::getType() const { return JEWELRYMARKET;}
 
 template <typename J>
-string JewelryMarket<J>::print() const {
-	return "Jewelry Market : Sell 3 pieces of jewelry for 6 pieces of gold? (Y/N)";
+void JewelryMarket<J>::print() const {
+	cout << "Jewelry Market : Sell 3 pieces of jewelry for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -218,8 +218,8 @@ template <typename J>
 TileType FabricMarket<J>::getType() const { return FABRICMARKET;}
 
 template <typename J>
-string FabricMarket<J>::print() const {
-	return "Fabric Market : Sell 3 rolls of fabrics for 6 pieces of gold? (Y/N)";
+void FabricMarket<J>::print() const {
+	cout << "Fabric Market : Sell 3 rolls of fabrics for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -264,8 +264,8 @@ bool BlackMarket<J>::action(Player& player){
 }
 
 template <typename J>
-string BlackMarket<J>::print() const {
-	return "Black Market : Get between 0 and 5 goods at random for 1 piece of gold? (Y/N)";
+void BlackMarket<J>::print() const {
+	cout << "Black Market : Get between 0 and 5 goods at random for 1 piece of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -337,8 +337,8 @@ template <typename J>
 TileType Casino<J>::getType() const { return CASINO;}
 
 template <typename J>
-string Casino<J>::print() const {
-	return "Casino : Gamble for 1 piece of gold? (Y/N)";
+void Casino<J>::print() const {
+	cout << "Casino : Gamble for 1 piece of gold? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -358,8 +358,8 @@ template <typename J>
 TileType GemMerchant<J>::getType() const { return GEMMERCHANT;}
 
 template <typename J>
-string GemMerchant<J>::print() const {
-	return "GemMerchant : Buy a ruby for 12 pieces of gold + numbers of times you've bought here? (Y/N)";
+void GemMerchant<J>::print() const {
+	cout << "GemMerchant : Buy a ruby for 12 pieces of gold + numbers of times you've bought here? (Y/N)" << endl;
 }
 
 template <typename J>
@@ -382,8 +382,8 @@ template <typename J>
 TileType Palace<J>::getType() const { return PALACE;}
 
 template <typename J>
-string Palace<J>::print() const {
-	return "Palace : Exchange 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices for a ruby? (Y/N)";
+void Palace<J>::print() const {
+	cout << "Palace : Exchange 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices for a ruby? (Y/N)" << endl;
 }
 
 template class Desert<Player>;

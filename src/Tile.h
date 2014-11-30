@@ -49,6 +49,7 @@ public:
 	virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
 	virtual TileType getType() const = 0;													// Dynamic type of a tile, refer to the enum
     virtual Tile* clone() = 0;
+	virtual void print() const= 0;														// Prints the action prompt for a tile of a certain type
 	
 	template <typename K>
 	friend ostream& operator<<(ostream& os, const Tile<K>& tile);					// Print the type and action definition of a tile
@@ -66,7 +67,6 @@ public:
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
-    virtual string print() const= 0;
     
     typedef Tile<J>* (__stdcall *CreateTileFn)(void); 								// Create function pointer type definition.
 };
@@ -78,7 +78,7 @@ class Desert : public Tile<J>
 public:
     virtual TileType getType() const override;
     virtual bool action( Player& player ) override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new Desert<J>(); }
     Tile<J>* clone(){return new Desert(*this); }
 };
@@ -89,7 +89,7 @@ class Restaurant : public Tile<J>
 public:
     virtual bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new Restaurant<J>(); }
     Tile<J>* clone(){return new Restaurant(*this); }
 };
@@ -100,7 +100,7 @@ class Casino : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new Casino<J>(); }
     Tile<J>* clone(){return new Casino(*this); }
 };
@@ -111,7 +111,7 @@ class Palace : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new Palace<J>(); }
     Tile<J>* clone(){return new Palace(*this); }
 };
@@ -122,7 +122,7 @@ class Jeweler : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new Jeweler<J>(); }
     Tile<J>* clone(){return new Jeweler(*this); }
 };
@@ -135,7 +135,7 @@ class FabricManufacturer : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new FabricManufacturer<J>(); }
     Tile<J>* clone(){return new FabricManufacturer(*this); }
 };
@@ -146,7 +146,7 @@ class CartManufacturer : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new CartManufacturer<J>(); }
     Tile<J>* clone(){return new CartManufacturer(*this); }
 };
@@ -159,7 +159,7 @@ class SmallMarket : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new SmallMarket<J>(); }
     Tile<J>* clone(){return new SmallMarket(*this); }
 };
@@ -170,7 +170,7 @@ class SpiceMarket : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new SpiceMarket<J>(); }
     Tile<J>* clone(){return new SpiceMarket(*this); }
 };
@@ -181,7 +181,7 @@ class JewelryMarket : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new JewelryMarket<J>(); }
     Tile<J>* clone(){return new JewelryMarket(*this); }
 };
@@ -192,7 +192,7 @@ class FabricMarket : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new FabricMarket<J>(); }
     Tile<J>* clone(){return new FabricMarket(*this); }
 };
@@ -204,7 +204,7 @@ public:
     BlackMarket(){int numOfGoods = rand() % 6;}
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new BlackMarket<J>(); }
     Tile<J>* clone(){return new BlackMarket(*this); }
 };
@@ -217,7 +217,7 @@ class SpiceMerchant : public Tile<J>
 public:
     bool action(Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new SpiceMerchant<J>(); }
     Tile<J>* clone(){return new SpiceMerchant(*this); }
 };
@@ -228,7 +228,7 @@ class GemMerchant : public Tile<J>
 public:
     bool action( Player& player) override;
     virtual TileType getType() const override;
-    virtual string print() const;
+    virtual void print() const;
     static Tile<J>* __stdcall Create() { return new GemMerchant<J>(); }
     Tile<J>* clone(){return new GemMerchant(*this); }
 };

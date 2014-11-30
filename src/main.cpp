@@ -496,7 +496,7 @@ int main()
 			cout << "Current player:" << currentPlayerName << endl;
 			cout<< currentPlayer << endl;
 			gameBoard->printCurrentLocation(currentPlayerName);
-	
+		
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 			int i, j;
 			int* iPtr = &i;
@@ -564,7 +564,7 @@ int main()
 							cout << endl;
 							cout << "(It will cost you 1 more gold per other player on this tile to do an action.)" << endl << endl;
 						}
-						cout << *currentPlayerTile;
+						currentPlayerTile->print();
 					}else
                     {
 						cout<< "Sorry, not a valid direction." << endl;  
