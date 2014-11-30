@@ -235,7 +235,10 @@ public:
 template<typename J>
 class GemMerchant : public Tile<J>
 {
+private:
+	unsigned int rubyPrice = 12;
 public:
+	void increaseRubyPrice(){++rubyPrice;}
     bool action( Player& player) override;
     virtual TileType getType() const override;
     virtual void print() const;

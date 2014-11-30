@@ -357,11 +357,12 @@ void Casino<J>::print() const {
 
 template <typename J>
 bool GemMerchant<J>::action(Player& player){
-	unsigned int rubyPrice = 12 + player.getNumVisitsGemMerchant();
-	if( (player.getGold() > (rubyPrice-1) ) && !player.cartIsFull()){
+	if( (static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + rubyPrice)) && 
+			!player.cartIsFull()){
 		player.setGold(player.getGold() - rubyPrice);
 		player.setRuby(player.getRuby() + 1);
 		player.incrementCartSize();
+		increaseRubyPrice();
 		return true;
 	}else{
 		return false;

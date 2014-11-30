@@ -59,7 +59,6 @@ public:
     unsigned int getJewel() const {return jewel;}
     unsigned int getCartCapacity() const {return cart;}
     unsigned int getCartSize() const {return currentCartSize;}
-    unsigned int getNumVisitsGemMerchant() const {return numVisitsGemMerchant;} // Used once (except for in insertion operator) -M
     
     // Setters
     void setFood(unsigned int _food){food = _food;}
