@@ -23,8 +23,14 @@ void Desert<J>::print() const {
 
 template <typename J>
 bool Restaurant<J>::action(Player& player){
-	player.setFood(10);
-	return true;
+	if( static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers() )
+	{
+		player.setFood(10);
+		return true;
+	}else
+	{
+		return false;
+	}
 }
 
 template <typename J>
@@ -36,10 +42,9 @@ void Restaurant<J>::print() const {
 }
 
 template <typename J>
-bool SpiceMerchant<J>::action(Player& player){
-	
-	if( player.getGold() > 1 &&
-			static_cast<int>(player.getGold()) > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+bool SpiceMerchant<J>::action(Player& player){	
+		
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 2) &&
 				!player.cartIsFull())
 	{
 		player.setGold(player.getGold()-2);
@@ -65,8 +70,7 @@ void SpiceMerchant<J>::print() const {
 template <typename J>
 bool FabricManufacturer<J>::action(Player& player){
 	
-	if( player.getGold() > 1 &&
-			static_cast<int>(player.getGold()) > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 2) &&
 				!player.cartIsFull())
 	{
 		player.setGold(player.getGold()-2);
@@ -92,8 +96,7 @@ void FabricManufacturer<J>::print() const {
 template <typename J>
 bool Jeweler<J>::action(Player& player){
 	
-	if( player.getGold() > 1 &&
-			static_cast<int>(player.getGold()) > (1 + Tile<J>::numPlayersOnTile() - 1) &&
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 2) &&
 				!player.cartIsFull())
 	{
 		player.setGold(player.getGold()-2);
@@ -118,8 +121,7 @@ void Jeweler<J>::print() const {
 template <typename J>
 bool CartManufacturer<J>::action(Player& player){
 
-	if( player.getGold() > 6 && 
-			static_cast<int>(player.getGold()) > (6 + Tile<J>::numPlayersOnTile() - 1))
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 7) )
 	{				
 		player.setCartCapacity(player.getCartCapacity() + 3 );
 		player.setGold(player.getGold() - 6);
@@ -142,7 +144,7 @@ bool SmallMarket<J>::action(Player& player){
 	if( player.getFabric() > 0 &&
 			player.getJewel() > 0 &&
 				player.getSpice() > 0 &&
-				 static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 2))
+				 static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers() )
 	{				 	
 		player.setFabric(player.getFabric() - 1);
 		player.setJewel(player.getJewel() - 1);
@@ -167,7 +169,7 @@ template <typename J>
 bool SpiceMarket<J>::action(Player& player){
 	
 	if( player.getSpice() > 2 && 
-		static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 2))
+		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{			
 		player.setSpice(player.getSpice() - 3);
 		player.setCartSize(player.getCartSize() - 3);
@@ -190,7 +192,7 @@ template <typename J>
 bool JewelryMarket<J>::action(Player& player){
 	
 	if( player.getJewel() > 2 && 
-		static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 2))
+		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{			
 		player.setJewel(player.getJewel() - 3);
 		player.setCartSize(player.getCartSize() - 3);
@@ -213,7 +215,7 @@ template <typename J>
 bool FabricMarket<J>::action(Player& player){
 	
 	if( player.getFabric() > 2 && 
-		static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 2))
+		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{
 		player.setFabric(player.getFabric() - 3);
 		player.setCartSize(player.getCartSize() - 3);
@@ -235,8 +237,8 @@ void FabricMarket<J>::print() const {
 template <typename J>
 bool BlackMarket<J>::action(Player& player){
 	
-	if( static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 1) &&
-			!player.cartIsFull() && player.getGold() > 0)
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 1) &&
+			!player.cartIsFull() )
 	{
 		array<int, 4> goodsBought = {0,0,0,0}; // indexes goes like, 0:SPICE, 1:FABRIC, 2:JEWEL, 3:RUBY
 		int numGoods = rand() % 6;
@@ -288,8 +290,7 @@ bool Casino<J>::action(Player& player){
 
 // Using roulette selection algorithm to achieve weighted randomness
 	
-	if( static_cast<int>(player.getGold()) > (Tile<J>::numPlayersOnTile() - 1) &&
-			player.getGold() > 0)
+	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 1))
 	{		
 		enum Prizes{WIN10GOLD, WIN3GOLD, WIN2GOLD, LOOSE};
 		
@@ -379,7 +380,8 @@ template <typename J>
 bool Palace<J>::action(Player& player){
 	if( player.getFabric() > 4 &&
 			player.getJewel() > 4 &&
-				player.getSpice() > 4){
+				player.getSpice() > 4 && 
+				 static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers()){
 		player.setFabric(player.getFabric() - 5);
 		player.setJewel(player.getJewel() - 5);
 		player.setSpice(player.getSpice() - 5);
