@@ -48,7 +48,7 @@ ostream& operator<<(ostream& os, const Player& player)
 /*
  istream& operator>>(istream& is, Player& player)
 {
-    /*return is >> player.name >> player.gold >> player.food >> player.ruby >> player.spice >> player.fabric >> player.jewel >> player.numVisitsGemMerchant >> player.cart >> player.currentCartSize;*/
+    /*return is >> player.name >> player.gold >> player.food >> player.ruby >> player.spice >> player.fabric >> player.jewel >> player.numVisitsGemMerchant >> player.cart >> player.currentCartSize;
     is >> player.name;
     is >> player.gold;
     is >> player.food;
@@ -61,4 +61,4 @@ ostream& operator<<(ostream& os, const Player& player)
     is >> player.currentCartSize;
     
     return is;
-}*/ // NO longer needed 
+}*/

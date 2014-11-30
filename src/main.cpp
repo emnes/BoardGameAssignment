@@ -17,7 +17,10 @@
 
 using std::cin;
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-enum GameState {PAUSED, UNPAUSED};
+enum GameState {PLAYING, PAUSED};
+// UNPAUSE
+GameState currentGameState = PLAYING;
+vector<string> playerNames;
 /*
 	bool takeTurn( 
 		GameBoard<Tile<Player>*,Player*,6,6>& gameBoard, const std::string& playerName ) { 
@@ -57,8 +60,10 @@ void saveGame()
 {
     ofstream outfile;
     outfile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
-    if (outfile.is_open()) {
+    if (outfile.is_open())
+    {
         outfile << *(gameBoard);
+        cout << "Game saved.";
     }
     else
     {
@@ -74,7 +79,8 @@ void loadGame()
     infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
     if (infile.is_open())
     {
-        infile >> *(gameBoard);
+        //infile >> *(gameBoard);
+        cout << "Game loaded.";
     }
     else
     {
@@ -84,10 +90,58 @@ void loadGame()
     infile.close();
 }
 
+void createGame()
+{
+    // UI prompts for the number of players and stores it
+    int numOfPlayers = 0;
+    bool invalidNumberOfPlayers = true;
+    cout<< "\t\t\tEnter the number of players:";
+    while(invalidNumberOfPlayers){
+        cin >> numOfPlayers;
+        if ( cin.fail() ){
+            cout<<"The number of players needs to be an integer greater than 1." << endl;
+            cout<<"\t\tPlease enter a correct number of players:" << endl;
+            cin.clear(); // Clears the input stream fail flag
+            cin.ignore(100, '\n'); // Ignores any characters left in the stream
+        }else{
+            if( numOfPlayers > 1)
+                invalidNumberOfPlayers = false;
+            else {
+                cout << "At least 2 players are required to play this game." << endl;
+                cout << "Please enter a correct number of players:" << endl;
+            }
+        }
+    }
+    
+    // UI prompts for all the names of the players and stores them
+    //vector<string> playerNames; moved to the top
+    for( int i = 0; i < numOfPlayers; i++)
+    {
+        cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
+        bool invalidPlayerName = true;
+        while( invalidPlayerName){
+            string playerName;
+            cin >> playerName;
+            if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
+                playerNames.push_back(playerName);
+                invalidPlayerName = false;
+            }else{
+                cout << "Cannot have two players with the same name." << endl;
+                cout << "Please enter another name:" << endl;
+            }
+        }
+        
+    }
+    
+    // Initialize a a 6x6 board with 4 players of type Player and their respective names.
+    gameBoard =
+    new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
+}
+
 
 int main()
 {
-	
+    
 	//srand(time(NULL));// fix
 	
 	/*
@@ -399,63 +453,44 @@ int main()
 	cout << "************************************************************************" << endl;
 	cout << "***********************************AGAME********************************" << endl;
 	cout << "************************************************************************" << endl << endl;
-    if (GameState = PAUSED)
+    // GET THE FIRST LINE OF TEXT FILE
+    // IF PAUSED THEN LOAD ELSE CREATE NEW GAME
+    
+    if (currentGameState == PAUSED)
     {
         loadGame();
-        GameState = UNPAUSED;
     }
+    // Setup Game
     else
     {
-        // UI prompts for the number of players and stores it
-        int numOfPlayers = 0;
-        bool invalidNumberOfPlayers = true;
-        cout<< "\t\t\tEnter the number of players:";
-        while(invalidNumberOfPlayers){
-            cin >> numOfPlayers;
-            if ( cin.fail() ){
-                cout<<"The number of players needs to be an integer greater than 1." << endl;
-                cout<<"\t\tPlease enter a correct number of players:" << endl;
-                cin.clear(); // Clears the input stream fail flag
-                cin.ignore(100, '\n'); // Ignores any characters left in the stream
-            }else{
-                if( numOfPlayers > 1)
-                    invalidNumberOfPlayers = false;
-                else {
-                    cout << "At least 2 players are required to play this game." << endl;
-                    cout << "Please enter a correct number of players:" << endl;
-                }
-            }
-        }
-        
-        // UI prompts for all the names of the players and stores them
-        vector<string> playerNames;
-        for( int i = 0; i < numOfPlayers; i++)
-        {
-            cout<< "\t\t\tEnter the name of player " << i+1 << " : ";
-            bool invalidPlayerName = true;
-            while( invalidPlayerName){
-                string playerName;
-                cin >> playerName;
-                if ( find(playerNames.begin(), playerNames.end(), playerName) == playerNames.end()){
-                    playerNames.push_back(playerName);
-                    invalidPlayerName = false;
-                }else{
-                    cout << "Cannot have two players with the same name." << endl;
-                    cout << "Please enter another name:" << endl;
-                }
-            }
-            
-        }
-        
-        // Initialize a a 6x6 board with 4 players of type Player and their respective names.
-        gameBoard =
-        new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
+        createGame();
     }
 	bool hasWon = false;
 	while (!hasWon)
     {
-        // Check for pause
-		for( string currentPlayerName : playerNames)
+        if (currentGameState == PAUSED)
+        {
+            saveGame();
+            
+            bool paused = true;
+            string input;
+            cout << "Game Paused. Enter 'U' to unpause.";
+            cin >> input;
+            while (paused)
+            {
+                if (input == "u" || input == "U")
+                {
+                    currentGameState = PLAYING;
+                    paused = false;
+                }
+                else
+                {
+                    cout << "Invalid input. Enter 'U' to unpause.";
+                }
+            }
+        }
+        
+        for(string currentPlayerName : playerNames)
         {
 			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
 			cout << "Current player:" << currentPlayerName << endl;
@@ -483,6 +518,7 @@ int main()
             
 			if(validMoves[LEFT])
 				cout << "3-LEFT\t";
+            cout << "P-PAUSE\t";
 			
 			// Current player inputting its next tile direction
 			bool invalidInput = true;
@@ -490,8 +526,7 @@ int main()
             string actionInput;
 			while(invalidInput)
 			{
-				//cin >> input;
-                cin >> actionInput;
+				cin >> input;
 				if ( cin.fail() )
                 {
 					cout<<"Anything that is not an integer is not a valid choice, input your direction again:" << endl;
@@ -499,10 +534,9 @@ int main()
 			  		cin.ignore(100, '\n'); 
 				}else
                 {
-                    if(actionInput == "p")
-                        saveGame();
-                    if(actionInput == "l")
-                        loadGame();
+                    if(actionInput == "p" || actionInput == "P")
+                        currentGameState = PAUSED;
+                    
 					Move direction = static_cast<Move>(input);
 					if( (direction == UP && validMoves[UP])	||
 							(direction == RIGHT && validMoves[RIGHT]) ||

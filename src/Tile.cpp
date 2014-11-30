@@ -14,7 +14,7 @@ bool Desert<J>::action(Player& player){
 }
 
 template <typename J>
-TileType Desert<J>::getType() { return DESERT;}
+TileType Desert<J>::getType() const { return DESERT;}
 
 template <typename J>
 string Desert<J>::print() const {
@@ -28,7 +28,7 @@ bool Restaurant<J>::action(Player& player){
 }
 
 template <typename J>
-TileType Restaurant<J>::getType(){return RESTAURANT;};
+TileType Restaurant<J>::getType() const{return RESTAURANT;};
 
 template <typename J>
 string Restaurant<J>::print() const {
@@ -54,7 +54,7 @@ bool SpiceMerchant<J>::action(Player& player){
 }
 
 template <typename J>
-TileType SpiceMerchant<J>::getType() { return SPICEMERCHANT;}
+TileType SpiceMerchant<J>::getType() const { return SPICEMERCHANT;}
 
 template <typename J>
 string SpiceMerchant<J>::print() const {
@@ -80,7 +80,7 @@ bool FabricManufacturer<J>::action(Player& player){
 }
 
 template <typename J>
-TileType FabricManufacturer<J>::getType() { return FABRICMANUFACTURER;}
+TileType FabricManufacturer<J>::getType() const { return FABRICMANUFACTURER;}
 
 template <typename J>
 string FabricManufacturer<J>::print() const {
@@ -105,7 +105,7 @@ bool Jeweler<J>::action(Player& player){
 	}
 }
 template <typename J>
-TileType Jeweler<J>::getType() { return JEWELER;}
+TileType Jeweler<J>::getType() const { return JEWELER;}
 
 template <typename J>
 string Jeweler<J>::print() const {
@@ -126,7 +126,7 @@ bool CartManufacturer<J>::action(Player& player){
 }
 
 template <typename J>
-TileType CartManufacturer<J>::getType() { return CARTMANUFACTURER;}
+TileType CartManufacturer<J>::getType() const { return CARTMANUFACTURER;}
 
 template <typename J>
 string CartManufacturer<J>::print() const {
@@ -152,7 +152,7 @@ bool SmallMarket<J>::action(Player& player){
 }
 
 template <typename J>
-TileType SmallMarket<J>::getType() { return SMALLMARKET;}
+TileType SmallMarket<J>::getType() const { return SMALLMARKET;}
 
 template <typename J>
 string SmallMarket<J>::print() const {
@@ -173,7 +173,7 @@ bool SpiceMarket<J>::action(Player& player){
 }
 
 template <typename J>
-TileType SpiceMarket<J>::getType() { return SPICEMARKET;}
+TileType SpiceMarket<J>::getType() const { return SPICEMARKET;}
 
 template <typename J>
 string SpiceMarket<J>::print() const {
@@ -194,7 +194,7 @@ bool JewelryMarket<J>::action(Player& player){
 }
 
 template <typename J>
-TileType JewelryMarket<J>::getType() { return JEWELRYMARKET;}
+TileType JewelryMarket<J>::getType() const { return JEWELRYMARKET;}
 
 template <typename J>
 string JewelryMarket<J>::print() const {
@@ -215,7 +215,7 @@ bool FabricMarket<J>::action(Player& player){
 }
 
 template <typename J>
-TileType FabricMarket<J>::getType() { return FABRICMARKET;}
+TileType FabricMarket<J>::getType() const { return FABRICMARKET;}
 
 template <typename J>
 string FabricMarket<J>::print() const {
@@ -269,7 +269,7 @@ string BlackMarket<J>::print() const {
 }
 
 template <typename J>
-TileType BlackMarket<J>::getType() { return BLACKMARKET;}
+TileType BlackMarket<J>::getType() const { return BLACKMARKET;}
 
 template <typename J>
 bool Casino<J>::action(Player& player){
@@ -334,7 +334,7 @@ bool Casino<J>::action(Player& player){
 }
 
 template <typename J>
-TileType Casino<J>::getType() { return CASINO;}
+TileType Casino<J>::getType() const { return CASINO;}
 
 template <typename J>
 string Casino<J>::print() const {
@@ -355,7 +355,7 @@ bool GemMerchant<J>::action(Player& player){
 }
 
 template <typename J>
-TileType GemMerchant<J>::getType() { return GEMMERCHANT;}
+TileType GemMerchant<J>::getType() const { return GEMMERCHANT;}
 
 template <typename J>
 string GemMerchant<J>::print() const {
@@ -379,7 +379,7 @@ bool Palace<J>::action(Player& player){
 }
 
 template <typename J>
-TileType Palace<J>::getType() { return PALACE;}
+TileType Palace<J>::getType() const { return PALACE;}
 
 template <typename J>
 string Palace<J>::print() const {

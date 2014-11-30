@@ -492,13 +492,17 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
     {
         is >> *(playerNames[i]);
     }
+    // How will we change each property?
     
-    gameBoard = new GameBoard<>(playerNames, numOfPlayers);
+    //gameBoard = new GameBoard<U, L, R, C>(playerNames, numOfPlayers);
+    //Update each player
+    
     for (Player p: gameBoard.players)
     {
         is >> p;
         cout << p;
     }
+    
     for (auto column : gameBoard.board)
     {
         for (auto tile : column)

@@ -76,7 +76,7 @@ template<typename J>
 class Desert : public Tile<J>
 {
 public:
-    virtual TileType getType() override;
+    virtual TileType getType() const override;
     virtual bool action( Player& player ) override;
     virtual string print() const;
     static Tile<J>* __stdcall Create() { return new Desert<J>(); }
@@ -88,7 +88,7 @@ class Restaurant : public Tile<J>
 {
 public:
     virtual bool action( Player& player) override;
-    virtual TileType getType() override;
+    virtual TileType getType() const override;
     virtual string print() const;
     static Tile<J>* __stdcall Create() { return new Restaurant<J>(); }
     Tile<J>* clone(){return new Restaurant(*this); }
@@ -99,7 +99,7 @@ class Casino : public Tile<J>
 {
 public:
     bool action( Player& player) override;
-    virtual TileType getType() override;
+    virtual TileType getType() const override;
     virtual string print() const;
     static Tile<J>* __stdcall Create() { return new Casino<J>(); }
     Tile<J>* clone(){return new Casino(*this); }
@@ -110,7 +110,7 @@ class Palace : public Tile<J>
 {
 public:
     bool action( Player& player) override;
-    virtual TileType getType() override;
+    virtual TileType getType() const override;
     virtual string print() const;
     static Tile<J>* __stdcall Create() { return new Palace<J>(); }
     Tile<J>* clone(){return new Palace(*this); }
@@ -121,7 +121,7 @@ class Jeweler : public Tile<J>
 {
 public:
     bool action( Player& player) override;
-    virtual TileType getType() override;
+    virtual TileType getType() const override;
     virtual string print() const;
     static Tile<J>* __stdcall Create() { return new Jeweler<J>(); }
     Tile<J>* clone(){return new Jeweler(*this); }
