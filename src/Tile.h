@@ -63,7 +63,7 @@ public:
    	void removePlayer(string playerName);											// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
-    size_t  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
+    int  numPlayersOnTile(){return players.size();}									// Total number of players present on this tile.
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
     void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
@@ -243,14 +243,12 @@ void Tile<J>::removePlayer(string playerName)
 template <typename K>
 ostream& operator<<(ostream& os, const Tile<K>& tile)
 {
-    os << tile.getType() << " " << tile.coordinates[0] << " " << tile.coordinates[1] << " ";
-    if(tile.getPlayers().size() != 0)
+    os << tile.coordinates[0] << "," << tile.coordinates[1] << "\n" << tile.getType() << "\n";
+    for(auto p : tile.getPlayers())
     {
-        for(auto p : tile.getPlayers())
-        {
-            os << "Player " << p << " ";
-        }
+        os << p;
     }
+    os << "\n" << endl;
     return os;
 }
 
