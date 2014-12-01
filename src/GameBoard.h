@@ -37,7 +37,7 @@ public:
     vector<J> players;												// Vector of all players.
     map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
     TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
-    int currentPlayerIndex = 0;											// index of the current player in the players vector
+    int currentPlayerIndex = 0;                                     // Index of the current player in the players vector
     
 public:
     GameBoard();													// GameBoard constructor for loading from file.
@@ -64,11 +64,21 @@ public:
     friend istream& operator>>(istream& os, GameBoard<U, L, R, C>& gameBoard);         // Load game.
 };
 
+/*
+ *  Default constructor for the use of loading a game.
+ *  Creates TileFactory and then players, tiles are added to the instance.
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(){
     tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton
 }
 
+/*
+ *  Main constructor used for initial setup.
+ *  Loops through tiles from tile factory.
+ *  Looks for a restaurant tile and adds player to board and restaurant tile.
+ *
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize){
     tileFactory = TileFactory<J>::Get(ROW*COL);
@@ -95,6 +105,9 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize
     }
 }
 
+/*
+ *  GameBoard destructor. Deletes every tile in board.
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::~GameBoard()
 {
@@ -216,10 +229,6 @@ void GameBoard<T, J, ROW, COL>::getCoordinate(const T &tile, int *row, int *col)
 /*
  * Moves a player to a different tile.
  *
- * @param move
- *		type of Move
- * @param playerName
- *		name of the player to move
  */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
@@ -252,6 +261,9 @@ const T& GameBoard<T, J, ROW, COL>::move(Move move, const string& playerName ){
     return nextTile;
 }
 
+/*
+ *  Prints board to console and indicates where the player is.
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
     cout<< endl;
@@ -353,32 +365,46 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
     }
 }
 
+/*
+ *  Gets tile's existing neighbours and sets which move directions are valid.
+ */
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
-    
+
+    // Tile is at top of board
     if ( j == COL - 1)
         *(b + static_cast<int>(UP)) = false;
+    // Tile is at right of board
     if ( i == ROW - 1)
         *(b + static_cast<int>(RIGHT)) = false;
+    // Tile is at bottom of board
     if( j == 0 )
         *(b + static_cast<int>(DOWN)) = false;
+    // Tile is at left of board
     if( i == 0 )
         *(b + static_cast<int>(LEFT)) = false;
 }
 
+/*
+ *  Saves game.
+ */
 template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
+    // Save number of players
     os << gameBoard.players.size() << endl;
+    // Save player's names
     os << "Player-names ";
     for (Player p: gameBoard.players)
         os << p.getName() << " ";
     
     os << endl;
     
+    // Save each player
     for (Player p: gameBoard.players)
         os << "<player>" << " " << p << " " << "</player>" << endl;
     
+    // Save each tile
     for (auto column : gameBoard.board)
     {
         for (auto tile : column)
@@ -387,14 +413,19 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
         }
     }
     
+    // Save whose turn it currently is
     os << "CurrentPlayerIndex " << gameBoard.getCurrentPlayerIndex();
     
     return os;
 }
+
+/*
+ *  Loads game.
+ */
 template<typename U, typename L, unsigned int R, unsigned int C>
 istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
 {
-    // Get player name
+    // Get number of players
     string line;
     is >> line;
     std::istringstream streamLine(line);
@@ -407,6 +438,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
         std::istringstream streamLine(line);
         string token;
         streamLine >> token;
+        // Get each player's name and add to board.
         if (token == "Player-names")
         {
             for (int i = 0; i < numOfPlayers; ++i)
@@ -417,6 +449,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                 }
             }
         }
+        // Get player's attributes. If end of player then update board's version.
         else if (token == "<player>")
         {
             streamLine >> token;
@@ -432,6 +465,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                 }
             }
         }
+        // Read tile.
         else if (token == "<tile>")
         {
             //Reading main attributes
@@ -447,12 +481,14 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
             // Optional attributes
             while (streamLine >> token)
             {
+                // If the tile has players, load them.
                 if (token == "Player")
                 {
                     streamLine >> token; // get name
                     tileToInsert->addPlayer(token);
                     gameBoard.playersCurrentTile[token] = tileToInsert;
                 }
+                // GemMerchant has special attribute which should be loaded.
                 if (token == "RubyPrice")
                 {
                     int rubyPrice;
@@ -462,16 +498,19 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                         gemMerchant->setRubyPrice(rubyPrice);
                     }
                 }
+                // Once all info is loaded then add to board.
                 if (token == "</tile>" )
                 {
                     gameBoard.add(tileToInsert, xCoord, yCoord);
                     break;
                 }
             }
-        }else if ( token == "CurrentPlayerIndex")
+        }
+        // Load whose turn it is.
+        else if ( token == "CurrentPlayerIndex")
         {
-            streamLine >> token;
-            int currentPlayerIndex = atoi( token.c_str());
+            int currentPlayerIndex;
+            streamLine >> currentPlayerIndex;
             gameBoard.setCurrentPlayerIndex(currentPlayerIndex);
         }
     }

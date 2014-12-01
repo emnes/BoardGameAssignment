@@ -26,7 +26,7 @@ Tile <J>* TileFactory<J>::next()
     return CreateTile(tileType);
 }
 
-/*
+/**
  * Tile factory constructor.  Register the types of tiles here.
  */
 template < class J >
@@ -64,7 +64,7 @@ TileFactory<J>::TileFactory(int _nTiles)
     Register(PALACE, &Palace<J>::Create);
 }
 
-/*
+/**
  * Creates a mapping between tile types and their create functions.
  */
 template <class J>
@@ -73,7 +73,7 @@ void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
     m_FactoryMap[tileType] = pfnCreate;
 }
 
-/*
+/**
  * Returns a new instance of the given tile type.
  */
 template <class J>
