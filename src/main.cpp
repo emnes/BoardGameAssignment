@@ -15,7 +15,7 @@
 #include "GameBoard.h"
 #include <stdio.h>
 
-#ifdef WINDOWS /* defines FILENAME_MAX */
+#ifdef WINDOWS 										// Conditionnal inclusions dependent on operating system type
     #include <direct.h>
     #define GetCurrentDir _getcwd
 #else
@@ -25,8 +25,8 @@
 
 using std::cin;
 
-GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-vector<string> playerNames;
+GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;	// Object that holds the state of the game
+vector<string> playerNames;							// Simply hold all the names of the players
 string workingDirectoryPath;						// Current working directory path
 
 /*
@@ -182,16 +182,18 @@ int main()
     bool hasWon = false;
     while (!hasWon)
     {
-        // currentPlayerIndex holds whose turn it is (useful for a save)
+        // currentPlayerIndex holds whose turn it is (useful for a saving & loading)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
             string currentPlayerName = playerNames[i];
             
+            // print the UI
             Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
             cout << "Current player:" << currentPlayerName << endl;
             currentPlayer.print();
             gameBoard->printCurrentLocation(currentPlayerName);
             
+            // prompt for move
             Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
             int xCoord, yCoord;
             currentPlayerTile->getCoordinate(&xCoord, &yCoord);
@@ -286,7 +288,9 @@ int main()
                                     }
                                     if( currentPlayerTile->getType() != RESTAURANT)
                                         currentPlayer.eat();
-                                    for(string recipientPlayerName : currentPlayerTile->getPlayers())
+                                    
+									// paying other players on tile, if applicable
+									for(string recipientPlayerName : currentPlayerTile->getPlayers())
                                     {
                                         if( recipientPlayerName.compare(currentPlayerName))
                                         {
@@ -295,6 +299,7 @@ int main()
                                             gameBoard->setPlayer(recipientPlayer);				
                                         }
                                     }
+                                    //print the status of the player after performing the action
                                     gameBoard->setPlayer(currentPlayer);
                                     cout << endl << "Your status after performing this action is: " << endl;
                                     currentPlayer.print();	
@@ -317,6 +322,7 @@ int main()
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 cout << string( 100, '\n' );
             }
+            // update currentPlayerIndex here is crucial for loading and saving
             gameBoard->setCurrentPlayerIndex(gameBoard->getCurrentPlayerIndex() + 1);
             if( gameBoard->getCurrentPlayerIndex() == playerNames.size() )
                 gameBoard->setCurrentPlayerIndex(0); // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
