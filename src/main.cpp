@@ -5,6 +5,13 @@
 //  Created by Mazhar Shar & Patrice Boulet on 28/10/2014.
 //  Copyright (c) 2014 Mazhar Shar & Patrice Boulet. All rights reserved.
 //
+//  Here is implemented the main loop of the game.  One can
+//  choose to load the latest saved game or to start a new game.
+//  The first player that gets 5 rubies wins.  Each action costs
+//  1 food item and when other players are on the same tile a player
+//  pay 1 gold to each of the other players to perform an action.  When
+//  player has no more food he an move but cannot do any action.
+//
 
 #include <iostream>
 #include <unistd.h>
