@@ -68,8 +68,8 @@ public:
     void setCartCapacity(unsigned int _cart){cart = _cart;}
     void setCartSize(unsigned int _cartSize){currentCartSize = _cartSize;}
     
-	void print() const;
-	
+    void print() const;
+    
     // Functions
     bool canAct() const{return food>0;}
     void eat() {if(canAct())--food;}

@@ -10,25 +10,25 @@
 #include <unistd.h>
 #include <array>
 #include <time.h>
-#include <limits> 
+#include <limits>
 //#include "Player.h"
 //#include "Tile.h" --- included through GameBoard.
 #include "GameBoard.h"
 
 #include <stdio.h>  /* defines FILENAME_MAX */
 #ifdef WINDOWS
-    #include <direct.h>
-    #define GetCurrentDir _getcwd
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #else
-    #include <unistd.h>
-    #define GetCurrentDir getcwd
- #endif
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
 
 using std::cin;
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 //enum GameState {PLAYING, PAUSED};
 //GameState currentGameState = PLAYING;
-vector<string> playerNames;							
+vector<string> playerNames;
 string workingDirectoryPath;						// Current working directory path
 
 void saveGame()
@@ -126,23 +126,23 @@ void playerWon(const string& playerName)
 }
 int main()
 {
-	// Fetch the current working directory
-	char cCurrentPath[FILENAME_MAX];
-	
-	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-     {
-     return errno;
-     }
-	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; 
-	workingDirectoryPath = cCurrentPath;
-	std::replace(workingDirectoryPath.begin(), workingDirectoryPath.end(), '\\', '/');
-	
-	
-	cout << "CSI2372 Final Project" << endl;
-	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
-	cout << "************************************************************************" << endl;
-	cout << "***********************************AGAME********************************" << endl;
-	cout << "************************************************************************" << endl << endl;
+    // Fetch the current working directory
+    char cCurrentPath[FILENAME_MAX];
+    
+    if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+    {
+        return errno;
+    }
+    cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
+    workingDirectoryPath = cCurrentPath;
+    std::replace(workingDirectoryPath.begin(), workingDirectoryPath.end(), '\\', '/');
+    
+    
+    cout << "CSI2372 Final Project" << endl;
+    cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
+    cout << "************************************************************************" << endl;
+    cout << "***********************************AGAME********************************" << endl;
+    cout << "************************************************************************" << endl << endl;
     
     bool startedGame = false;
     while(!startedGame)
@@ -160,81 +160,81 @@ int main()
         else
         {
             if(loadGame()){
-            	for( Player p : gameBoard->players){
-        			playerNames.push_back(p.getName());
-				}
-		        startedGame = true;
-			}
+                for( Player p : gameBoard->players){
+                    playerNames.push_back(p.getName());
+                }
+                startedGame = true;
+            }
         }
     }
-	bool hasWon = false;
-	while (!hasWon)
+    bool hasWon = false;
+    while (!hasWon)
     {
         
         /*if (pause)
-        {
-            saveGame(cCurrentPath);
-            exit(0);
-        }*/
-
+         {
+         saveGame(cCurrentPath);
+         exit(0);
+         }*/
+        
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
             string currentPlayerName = playerNames[i];
- 
-			Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
-			cout << "Current player:" << currentPlayerName << endl;
-			currentPlayer.print();
-			gameBoard->printCurrentLocation(currentPlayerName);
-			
-			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-			int xCoord, yCoord;
-			currentPlayerTile->getCoordinate(&xCoord, &yCoord);
-			array<bool, 4> validMoves = {true,true,true,true};
-			gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
-			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
-			
-			if(validMoves[UP])
-				cout << "0-UP\t";
             
-			if(validMoves[RIGHT])
-				cout << "1-RIGHT\t";
+            Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
+            cout << "Current player:" << currentPlayerName << endl;
+            currentPlayer.print();
+            gameBoard->printCurrentLocation(currentPlayerName);
             
-			if(validMoves[DOWN])
-				cout << "2-DOWN\t";
+            Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+            int xCoord, yCoord;
+            currentPlayerTile->getCoordinate(&xCoord, &yCoord);
+            array<bool, 4> validMoves = {true,true,true,true};
+            gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
+            cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
             
-			if(validMoves[LEFT])
-				cout << "3-LEFT\t";
+            if(validMoves[UP])
+                cout << "0-UP\t";
+            
+            if(validMoves[RIGHT])
+                cout << "1-RIGHT\t";
+            
+            if(validMoves[DOWN])
+                cout << "2-DOWN\t";
+            
+            if(validMoves[LEFT])
+                cout << "3-LEFT\t";
             cout << "4-SAVE AND EXIT\t";
-			
-			// Current player inputting its next tile direction
-			bool invalidInput = true;
-			int input;
-			while(invalidInput)
-			{
-				cin >> input;
-				if ( cin.fail() )
+            
+            // Current player inputting its next tile direction
+            bool invalidInput = true;
+            int input;
+            while(invalidInput)
+            {
+                cin >> input;
+                if ( cin.fail() )
                 {
-					cout<<"Only integer is a valid choice, input your choice again:" << endl;
-					cin.clear(); 
-			  		cin.ignore(100, '\n'); 
-				}else
+                    cout<<"Only integer is a valid choice, input your choice again:" << endl;
+                    cin.clear();
+                    cin.ignore(100, '\n');
+                }else
                 {
-					Move direction = static_cast<Move>(input);
-					if( (direction == UP && validMoves[UP])	||
-							(direction == RIGHT && validMoves[RIGHT]) ||
-								(direction == DOWN && validMoves[DOWN]) ||
-									(direction == LEFT && validMoves[LEFT]))
+                    Move direction = static_cast<Move>(input);
+                    if( (direction == UP && validMoves[UP])	||
+                       (direction == RIGHT && validMoves[RIGHT]) ||
+                       (direction == DOWN && validMoves[DOWN]) ||
+                       (direction == LEFT && validMoves[LEFT]))
                     {
-						invalidInput = false;
-						gameBoard->move(direction, currentPlayer.getName());
-						cout << string( 100, '\n' );
-						cout << "Current player:" << endl;
-						currentPlayer.print();
-						gameBoard->printCurrentLocation(currentPlayer.getName());
-						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
-						currentPlayerTile->print();
-					}
+                        invalidInput = false;
+                        gameBoard->move(direction, currentPlayer.getName());
+                        cout << string( 100, '\n' );
+                        cout << "Current player:" << endl;
+                        currentPlayer.print();
+                        gameBoard->printCurrentLocation(currentPlayer.getName());
+                        currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
+                        currentPlayerTile->print();
+                    }
                     else if(input == 4)
                     {
                         invalidInput = false;
@@ -244,80 +244,80 @@ int main()
                     }
                     else
                     {
-						cout<< "Sorry, not a valid input" << endl;
-						cout<< "Please enter again:" << endl;
-					}
-				}
-			}
-			
-			// Current player doing action on the new tile if, applicable
-			if( currentPlayer.canAct())
+                        cout<< "Sorry, not a valid input" << endl;
+                        cout<< "Please enter again:" << endl;
+                    }
+                }
+            }
+            
+            // Current player doing action on the new tile if, applicable
+            if( currentPlayer.canAct())
             {
-				if( currentPlayerTile->getType() != DESERT)
+                if( currentPlayerTile->getType() != DESERT)
                 {
-					invalidInput = true;
-					string actionInput;
-					while(invalidInput)
-					{
-						cin >> actionInput;
-						if ( cin.fail() )
+                    invalidInput = true;
+                    string actionInput;
+                    while(invalidInput)
+                    {
+                        cin >> actionInput;
+                        if ( cin.fail() )
                         {
-							cout<<"Wrong input, choose Y or N" << endl;
-							cin.clear(); // Clears the input stream fail flag
-					  		cin.ignore(100, '\n'); // Ignores any characters left in the stream	
-						}else
+                            cout<<"Wrong input, choose Y or N" << endl;
+                            cin.clear(); // Clears the input stream fail flag
+                            cin.ignore(100, '\n'); // Ignores any characters left in the stream
+                        }else
                         {
-							if( !actionInput.compare("y") || !actionInput.compare("Y") )
+                            if( !actionInput.compare("y") || !actionInput.compare("Y") )
                             {
-								if( !currentPlayerTile->action(currentPlayer))
+                                if( !currentPlayerTile->action(currentPlayer))
                                 {
-									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
-								}
+                                    cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
+                                }
                                 else
                                 {
-									if( currentPlayer.getRuby() >= 5)
+                                    if( currentPlayer.getRuby() >= 5)
                                     {
                                         playerWon(currentPlayerName);
                                     }
-									if( currentPlayerTile->getType() != RESTAURANT)
-										currentPlayer.eat();
-									for(string recipientPlayerName : currentPlayerTile->getPlayers())
+                                    if( currentPlayerTile->getType() != RESTAURANT)
+                                        currentPlayer.eat();
+                                    for(string recipientPlayerName : currentPlayerTile->getPlayers())
                                     {
-										if( recipientPlayerName.compare(currentPlayerName))
+                                        if( recipientPlayerName.compare(currentPlayerName))
                                         {
-											Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
-											currentPlayer.pay(recipientPlayer);
-											gameBoard->setPlayer(recipientPlayer);				
-										}
-									}
-									gameBoard->setPlayer(currentPlayer);
-									cout << endl << "Your status after performing this action is: " << endl;
-									currentPlayer.print();	
-								}
-								invalidInput = false;
-							}
+                                            Player recipientPlayer = gameBoard->getPlayer(recipientPlayerName);
+                                            currentPlayer.pay(recipientPlayer);
+                                            gameBoard->setPlayer(recipientPlayer);				
+                                        }
+                                    }
+                                    gameBoard->setPlayer(currentPlayer);
+                                    cout << endl << "Your status after performing this action is: " << endl;
+                                    currentPlayer.print();	
+                                }
+                                invalidInput = false;
+                            }
                             else if( !actionInput.compare("n") || !actionInput.compare("N") )
                             {
-								invalidInput = false;
-							}
+                                invalidInput = false;
+                            }
                             else
                             {
-								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
-							}
-						}
-					}
-				}
-				cout << "Press enter to continue . . . ";
-				cin.sync();
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				cout << string( 100, '\n' );
-			}
-		gameBoard->setCurrentPlayerIndex(gameBoard->getCurrentPlayerIndex() + 1);
-		if( gameBoard->getCurrentPlayerIndex() == playerNames.size() )
-			gameBoard->setCurrentPlayerIndex(0); // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
-	}
-}
-	
+                                cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
+                            }
+                        }
+                    }
+                }
+                cout << "Press enter to continue . . . ";
+                cin.sync();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cout << string( 100, '\n' );
+            }
+            gameBoard->setCurrentPlayerIndex(gameBoard->getCurrentPlayerIndex() + 1);
+            if( gameBoard->getCurrentPlayerIndex() == playerNames.size() )
+                gameBoard->setCurrentPlayerIndex(0); // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
+        }
+    }
+    
     return 0;
 }
 
