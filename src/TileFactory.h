@@ -22,23 +22,27 @@ using std::map;
 template < class J >
 class TileFactory
 {
-
+    
 public:
-		typedef Tile<J>* (*CreateTileFn)(void); 
-		typedef map<TileType, CreateTileFn>  FactoryMap;
-		
-        static TileFactory* Get(int _nTiles)
-        {
-            static TileFactory instance(_nTiles);
-            return &instance;
-        }
-        Tile<J>* next();
-        
-    	void Register(const TileType &tileType, CreateTileFn pfnCreate);
-    	Tile<J>* CreateTile(const TileType &tileType);
-    	
+    typedef Tile<J>* (*CreateTileFn)(void);
+    typedef map<TileType, CreateTileFn>  FactoryMap;
+    
+    static TileFactory* Get(int _nTiles)
+    {
+        static TileFactory instance(_nTiles);
+        return &instance;
+    }
+    ~TileFactory()
+    {
+        m_FactoryMap.clear();
+    }
+    Tile<J>* next();
+    
+    void Register(const TileType &tileType, CreateTileFn pfnCreate);
+    Tile<J>* CreateTile(const TileType &tileType);
+    
 private:
-	vector<TileType> randomTiles;		     // Holds the remaining types of tile to be created randomly
+    vector<TileType> randomTiles;		     // Holds the remaining types of tile to be created randomly
     TileFactory<J> (int _nTiles);
     TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }
     

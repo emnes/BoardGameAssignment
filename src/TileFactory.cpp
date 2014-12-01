@@ -20,48 +20,48 @@
 
 template< class J>
 Tile <J>* TileFactory<J>::next()
-{		
-		TileType tileType = randomTiles.back();
-		randomTiles.pop_back();
-		return CreateTile(tileType);
+{
+    TileType tileType = randomTiles.back();
+    randomTiles.pop_back();
+    return CreateTile(tileType);
 }
 
-/* 
+/*
  * Tile factory constructor.  Register the types of tiles here.
  */
 template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
-	int numTilesToCreate = _nTiles;							
-	int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
-	for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
-		for ( int j = 1; j < 14; j++){
-			randomTiles.push_back(static_cast<TileType>(j));
-			numTilesToCreate--;
-		}
-	}
-	while( numTilesToCreate > 0){
-		randomTiles.push_back(DESERT);
-		numTilesToCreate--;
-	}
-	
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    int numTilesToCreate = _nTiles;
+    int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
+    for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
+        for ( int j = 1; j < 14; j++){
+            randomTiles.push_back(static_cast<TileType>(j));
+            numTilesToCreate--;
+        }
+    }
+    while( numTilesToCreate > 0){
+        randomTiles.push_back(DESERT);
+        numTilesToCreate--;
+    }
+    
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     shuffle(randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
-	
-	Register(DESERT, &Desert<J>::Create);
-	Register(RESTAURANT, &Restaurant<J>::Create);
-	Register(SPICEMERCHANT, &SpiceMerchant<J>::Create);
-	Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create);
-	Register(JEWELER, &Jeweler<J>::Create);
-	Register(CARTMANUFACTURER, CartManufacturer<J>::Create);
-	Register(SMALLMARKET, &SmallMarket<J>::Create);
-	Register(SPICEMARKET, &SpiceMarket<J>::Create);
-	Register(JEWELRYMARKET, &JewelryMarket<J>::Create);
-	Register(FABRICMARKET, &FabricMarket<J>::Create);
-	Register(BLACKMARKET, &BlackMarket<J>::Create);
-	Register(CASINO, &Casino<J>::Create);
-	Register(GEMMERCHANT, &GemMerchant<J>::Create);
-	Register(PALACE, &Palace<J>::Create);
+    
+    Register(DESERT, &Desert<J>::Create);
+    Register(RESTAURANT, &Restaurant<J>::Create);
+    Register(SPICEMERCHANT, &SpiceMerchant<J>::Create);
+    Register(FABRICMANUFACTURER, &FabricManufacturer<J>::Create);
+    Register(JEWELER, &Jeweler<J>::Create);
+    Register(CARTMANUFACTURER, CartManufacturer<J>::Create);
+    Register(SMALLMARKET, &SmallMarket<J>::Create);
+    Register(SPICEMARKET, &SpiceMarket<J>::Create);
+    Register(JEWELRYMARKET, &JewelryMarket<J>::Create);
+    Register(FABRICMARKET, &FabricMarket<J>::Create);
+    Register(BLACKMARKET, &BlackMarket<J>::Create);
+    Register(CASINO, &Casino<J>::Create);
+    Register(GEMMERCHANT, &GemMerchant<J>::Create);
+    Register(PALACE, &Palace<J>::Create);
 }
 
 /*
@@ -70,7 +70,7 @@ TileFactory<J>::TileFactory(int _nTiles)
 template <class J>
 void TileFactory<J>::Register(const TileType &tileType, CreateTileFn pfnCreate)
 {
-   m_FactoryMap[tileType] = pfnCreate;
+    m_FactoryMap[tileType] = pfnCreate;
 }
 
 /*

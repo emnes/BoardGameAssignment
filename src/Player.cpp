@@ -10,41 +10,41 @@
 
 bool Player::pay(Player& player)
 {
-	if( this->getGold() > 0)
+    if( this->getGold() > 0)
     {
-			++(player.gold);
-			--(this->gold);
-			return true;
-	}
+        ++(player.gold);
+        --(this->gold);
+        return true;
+    }
     else
-		return false;
+        return false;
 }
 
 bool Player::incrementCartSize()
 {
-	if( currentCartSize < cart )
+    if( currentCartSize < cart )
     {
-		this->currentCartSize++;
-		return true;
-	}
+        this->currentCartSize++;
+        return true;
+    }
     else
-		return false;
+        return false;
 }
 
 bool operator==(const Player& playerA, const Player& playerB)
 {
-	return playerA.getName()==playerB.getName();
+    return playerA.getName()==playerB.getName();
 }
 
 // Save friendly insertion operator.
 ostream& operator<<(ostream& os, const Player& player)
 {
     // You can add a print function for the UI here or in main
-    return os << player.getName() << " " << player.getGold() << " " 
-					<< player.getFood() << " " << player.getRuby() << " " 
-						<< player.getSpice() << " " << player.getFabric() << " " 
-							<< player.getJewel() << " " << player.getCartCapacity() << " " 
-								<< player.getCartSize();
+    return os << player.getName() << " " << player.getGold() << " "
+    << player.getFood() << " " << player.getRuby() << " "
+    << player.getSpice() << " " << player.getFabric() << " "
+    << player.getJewel() << " " << player.getCartCapacity() << " "
+    << player.getCartSize();
 }
 
 void Player::print() const
