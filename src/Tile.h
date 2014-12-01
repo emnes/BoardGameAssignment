@@ -238,6 +238,7 @@ class GemMerchant : public Tile<J>
 private:
 	unsigned int rubyPrice = 12;
 public:
+	void setRubyPrice(unsigned int _rubyPrice){rubyPrice = _rubyPrice;}
 	void increaseRubyPrice(){++rubyPrice;}
     bool action( Player& player) override;
     virtual TileType getType() const override;
@@ -256,14 +257,12 @@ void Tile<J>::removePlayer(string playerName)
 template <typename K>
 ostream& operator<<(ostream& os, const Tile<K>& tile)
 {
-    os << tile.getType() << " " << tile.coordinates[0] << " " << tile.coordinates[1];
+    os << tile.coordinates[0] << "," << tile.coordinates[1] << "\n" << tile.getType() << "\n";
     for(auto p : tile.getPlayers())
     {
-        os << " " << "Player" << " " << p;
+        os << p;
     }
-    if (tile.getType() == GEMMERCHANT) {
-       // os << " " << tile.getRubyPrice();
-    }
+    os << "\n" << endl;
     return os;
 }
 
@@ -291,7 +290,7 @@ istream& operator>>(istream& is, Tile<K>& tile)
      
     
     return is;
-}*/
+}*/ //not needed
 
 
 #endif /* defined(__BoardGame__Tile__) */
