@@ -27,18 +27,18 @@ enum Goods
 };
 
 enum TileType{DESERT, RESTAURANT, SPICEMERCHANT, FABRICMANUFACTURER, JEWELER,
-				CARTMANUFACTURER, SMALLMARKET, SPICEMARKET, JEWELRYMARKET,
-    FABRICMARKET, BLACKMARKET, CASINO, GEMMERCHANT, PALACE };
+				CARTMANUFACTURER, SMALLMARKET, SPICEMARKET, JEWELRYMARKET, 
+					FABRICMARKET, BLACKMARKET, CASINO, GEMMERCHANT, PALACE }; 
 
-template<typename J>
+template<typename J>  
 class Tile
 {
 private:
-    vector<string> players;
-    array<int, 2> coordinates;
-    
+	vector<string> players;
+	array<int, 2> coordinates;
+		
 public:
-    bool operator==(const Tile &t)
+	bool operator==(const Tile &t)
     {
         if ((t != nullptr))
             if (&this == &t)
@@ -46,24 +46,24 @@ public:
         
         return false;
     }
-    virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
-    virtual TileType getType() const = 0;											// Dynamic type of a tile, refer to the enum
+	virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
+	virtual TileType getType() const = 0;											// Dynamic type of a tile, refer to the enum
     virtual Tile* clone() = 0;
-    virtual void print() const= 0;													// Prints the action prompt for a tile of a certain type
-    
-    template <typename K>
-    friend ostream& operator<<(ostream& os, const Tile<K>& tile);					// Print the type and action definition of a tile
+	virtual void print() const= 0;													// Prints the action prompt for a tile of a certain type
+	
+	template <typename K>
+	friend ostream& operator<<(ostream& os, const Tile<K>& tile);					// Print the type and action definition of a tile
     
     template <typename K>
     friend istream& operator>>(istream& is, Tile<K>& tile);
-    
-    vector<string> getPlayers() const{return players;}								// Returns a vector of the player names
-    
+	
+	vector<string> getPlayers() const{return players;}								// Returns a vector of the player names
+   
    	void addPlayer( const string& playerName){players.push_back(playerName);}		// Adds a player to the tile's current player list
    	void removePlayer(string playerName);											// Removes a player to the tile's current players list
     bool noPlayers(){return players.size() == 0;}
     
-    /* Returns the number of other players on same tile
+    /* Returns the number of other players on same tile 
      * than the current player.
      */
     int numOtherPlayers()
@@ -74,9 +74,8 @@ public:
             numOtherPlayersOnTile = numPlayersOnTile - 1;
         return numOtherPlayersOnTile;
     }
-    
     void getCoordinate(int *row, int *col){ *row = coordinates[0]; *col = coordinates[1]; }	// Returns the tile's coordinates.
-    void setXCoordinate(int xCoord){coordinates[0] = xCoord;}
+    void setXCoordinate(int xCoord){coordinates[0] = xCoord;}						
     void setYCoordinate(int yCoord){coordinates[1] = yCoord;}
     
     typedef Tile<J>* (__stdcall *CreateTileFn)(void); 								// Create function pointer type definition.
@@ -237,7 +236,7 @@ template<typename J>
 class GemMerchant : public Tile<J>
 {
 private:
-    unsigned int rubyPrice = 12;
+	unsigned int rubyPrice = 12;
 public:
 	void increaseRubyPrice(){++rubyPrice;}
 	void setRubyPrice(int _rubyPrice){rubyPrice = _rubyPrice;}
@@ -252,8 +251,8 @@ public:
 template <typename J>
 void Tile<J>::removePlayer(string playerName)
 {
-    auto removeIt = std::remove(players.begin(), players.end(), playerName);
-    players.erase(removeIt, players.end());
+	auto removeIt = std::remove(players.begin(), players.end(), playerName);
+	players.erase(removeIt, players.end());
 }
 
 template <typename K>

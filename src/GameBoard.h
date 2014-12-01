@@ -98,9 +98,6 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::~GameBoard()
 {
-    //if(tileFactory)
-        //delete tileFactory;
-
     for(auto row : board)
         for (auto tile : row)
             delete tile;
