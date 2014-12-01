@@ -236,7 +236,7 @@ template<typename J>
 class GemMerchant : public Tile<J>
 {
 private:
-	unsigned int rubyPrice = 12;
+	int rubyPrice = 12;
 public:
 	void increaseRubyPrice(){++rubyPrice;}
 	void setRubyPrice(int _rubyPrice){rubyPrice = _rubyPrice;}
