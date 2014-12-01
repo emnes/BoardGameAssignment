@@ -240,7 +240,7 @@ private:
 public:
 	void increaseRubyPrice(){++rubyPrice;}
 	void setRubyPrice(int _rubyPrice){rubyPrice = _rubyPrice;}
-	int getRubyPrice(){return rubyPrice;}
+	int getRubyPrice() const {return rubyPrice;}
     bool action( Player& player) override;
     virtual TileType getType() const override;
     virtual void print() const;

@@ -11,26 +11,27 @@
 #include <array>
 #include <time.h>
 #include <limits> 
-//#include "Player.h"
-//#include "Tile.h" --- included through GameBoard.
 #include "GameBoard.h"
+#include <stdio.h>  								/* defines FILENAME_MAX */
 
-#include <stdio.h>  /* defines FILENAME_MAX */
 #ifdef WINDOWS
     #include <direct.h>
     #define GetCurrentDir _getcwd
 #else
     #include <unistd.h>
     #define GetCurrentDir getcwd
- #endif
+#endif
 
 using std::cin;
+
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-//enum GameState {PLAYING, PAUSED};
-//GameState currentGameState = PLAYING;
 vector<string> playerNames;							
 string workingDirectoryPath;						// Current working directory path
 
+/*
+ * Saves the game state and data
+ * to file.
+ */
 void saveGame()
 {
     ofstream outfile;
@@ -48,6 +49,10 @@ void saveGame()
     outfile.close();
 }
 
+/* 
+ * Loads a saved game state and
+ * data from file.
+ */
 bool loadGame()
 {
     ifstream infile;
@@ -70,6 +75,9 @@ bool loadGame()
     }
 }
 
+/*
+ * Creates a new game.
+ */
 void createGame()
 {
     // UI prompts for the number of players and stores it
@@ -121,13 +129,14 @@ void createGame()
 
 int main()
 {
-	// Fetch the current working directory
+	// Fetch the current working directory path
 	char cCurrentPath[FILENAME_MAX];
 	
 	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-     {
+    {
      return errno;
-     }
+    }
+    
 	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; 
 	workingDirectoryPath = cCurrentPath;
 	std::replace(workingDirectoryPath.begin(), workingDirectoryPath.end(), '\\', '/');
@@ -165,13 +174,6 @@ int main()
 	bool hasWon = false;
 	while (!hasWon)
     {
-        
-        /*if (pause)
-        {
-            saveGame(cCurrentPath);
-            exit(0);
-        }*/
-
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
@@ -268,7 +270,7 @@ int main()
                                 {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
 								}else{
-									if( currentPlayer.getRuby() >= 5)
+									if( currentPlayer.getRuby() == 5)
                                     {
 										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
 										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 

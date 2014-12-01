@@ -9,52 +9,41 @@
 #include "Tile.h"
 
 template <typename J>
-bool Desert<J>::action(Player& player)
-{
+bool Desert<J>::action(Player& player){
 	return false;
 }
 
 template <typename J>
-TileType Desert<J>::getType() const
-{
-    return DESERT;
-}
+TileType Desert<J>::getType() const { return DESERT;}
 
 template <typename J>
-void Desert<J>::print() const
-{
+void Desert<J>::print() const {
 	cout << "Desert : You cannot perform any action." << endl;
 }
 
 template <typename J>
-bool Restaurant<J>::action(Player& player)
-{
+bool Restaurant<J>::action(Player& player){
 	if( static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers() )
 	{
 		player.setFood(10);
 		return true;
-	}
-    else
+	}else
 	{
 		return false;
 	}
 }
 
 template <typename J>
-TileType Restaurant<J>::getType() const
-{
-    return RESTAURANT;
-};
+TileType Restaurant<J>::getType() const{return RESTAURANT;};
 
 template <typename J>
-void Restaurant<J>::print() const
-{
+void Restaurant<J>::print() const {
 	cout << "Restaurant : Replenish food items to 10? (Y/N)" << endl;
 }
 
 template <typename J>
-bool SpiceMerchant<J>::action(Player& player)
-{
+bool SpiceMerchant<J>::action(Player& player){	
+		
 	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 2) &&
 				!player.cartIsFull())
 	{
@@ -125,8 +114,7 @@ template <typename J>
 TileType Jeweler<J>::getType() const { return JEWELER;}
 
 template <typename J>
-void Jeweler<J>::print() const
-{
+void Jeweler<J>::print() const {
 	cout << "Fabric Manufacturer : Purchase 3 pieces of jewelry for 2 pieces of gold? (Y/N)" << endl;
 }
 
@@ -147,8 +135,7 @@ template <typename J>
 TileType CartManufacturer<J>::getType() const { return CARTMANUFACTURER;}
 
 template <typename J>
-void CartManufacturer<J>::print() const
-{
+void CartManufacturer<J>::print() const {
 	cout << "Cart Manufacturer : Increase cart capacity by 3 for 7 pieces of gold? (Y/N)" << endl;
 }
 
@@ -179,8 +166,8 @@ void SmallMarket<J>::print() const {
 }
 
 template <typename J>
-bool SpiceMarket<J>::action(Player& player)
-{
+bool SpiceMarket<J>::action(Player& player){
+	
 	if( player.getSpice() > 2 && 
 		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{			
@@ -194,20 +181,16 @@ bool SpiceMarket<J>::action(Player& player)
 }
 
 template <typename J>
-TileType SpiceMarket<J>::getType() const
-{
-    return SPICEMARKET;
-}
+TileType SpiceMarket<J>::getType() const { return SPICEMARKET;}
 
 template <typename J>
-void SpiceMarket<J>::print() const
-{
+void SpiceMarket<J>::print() const {
 	cout << "Spice Market : Sell 3 sacks of spices for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-bool JewelryMarket<J>::action(Player& player)
-{
+bool JewelryMarket<J>::action(Player& player){
+	
 	if( player.getJewel() > 2 && 
 		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{			
@@ -215,28 +198,22 @@ bool JewelryMarket<J>::action(Player& player)
 		player.setCartSize(player.getCartSize() - 3);
 		player.setGold(player.getGold() + 6);
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
 
 template <typename J>
-TileType JewelryMarket<J>::getType() const
-{
-    return JEWELRYMARKET;
-}
+TileType JewelryMarket<J>::getType() const { return JEWELRYMARKET;}
 
 template <typename J>
-void JewelryMarket<J>::print() const
-{
+void JewelryMarket<J>::print() const {
 	cout << "Jewelry Market : Sell 3 pieces of jewelry for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-bool FabricMarket<J>::action(Player& player)
-{
+bool FabricMarket<J>::action(Player& player){
+	
 	if( player.getFabric() > 2 && 
 		static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers())
 	{
@@ -244,28 +221,22 @@ bool FabricMarket<J>::action(Player& player)
 		player.setCartSize(player.getCartSize() - 3);
 		player.setGold(player.getGold() + 6);
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
 
 template <typename J>
-TileType FabricMarket<J>::getType() const
-{
-    return FABRICMARKET;
-}
+TileType FabricMarket<J>::getType() const { return FABRICMARKET;}
 
 template <typename J>
-void FabricMarket<J>::print() const
-{
+void FabricMarket<J>::print() const {
 	cout << "Fabric Market : Sell 3 rolls of fabrics for 6 pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-bool BlackMarket<J>::action(Player& player)
-{
+bool BlackMarket<J>::action(Player& player){
+	
 	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 1) &&
 			!player.cartIsFull() )
 	{
@@ -301,28 +272,22 @@ bool BlackMarket<J>::action(Player& player)
 												 	
 		player.setGold(player.getGold() - 1);
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
 
 template <typename J>
-void BlackMarket<J>::print() const
-{
+void BlackMarket<J>::print() const {
 	cout << "Black Market : Get between 0 and 5 goods at random for 1 piece of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-TileType BlackMarket<J>::getType() const
-{
-    return BLACKMARKET;
-}
+TileType BlackMarket<J>::getType() const { return BLACKMARKET;}
 
 template <typename J>
-bool Casino<J>::action(Player& player)
-{
+bool Casino<J>::action(Player& player){
+
 // Using roulette selection algorithm to achieve weighted randomness
 	
 	if( static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + 1))
@@ -377,9 +342,7 @@ bool Casino<J>::action(Player& player)
 				break;
 		}
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
@@ -388,14 +351,12 @@ template <typename J>
 TileType Casino<J>::getType() const { return CASINO;}
 
 template <typename J>
-void Casino<J>::print() const
-{
+void Casino<J>::print() const {
 	cout << "Casino : Gamble for 1 piece of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-bool GemMerchant<J>::action(Player& player)
-{
+bool GemMerchant<J>::action(Player& player){
 	if( (static_cast<int>(player.getGold()) >= (Tile<J>::numOtherPlayers() + rubyPrice)) && 
 			!player.cartIsFull()){
 		player.setGold(player.getGold() - rubyPrice);
@@ -403,27 +364,21 @@ bool GemMerchant<J>::action(Player& player)
 		player.incrementCartSize();
 		increaseRubyPrice();
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
 
 template <typename J>
-TileType GemMerchant<J>::getType() const {
-    return GEMMERCHANT;
+TileType GemMerchant<J>::getType() const { return GEMMERCHANT;}
+
+template <typename J>
+void GemMerchant<J>::print() const {
+	cout << "GemMerchant : Buy a ruby for " << GemMerchant<J>::getRubyPrice() << " pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
-void GemMerchant<J>::print() const
-{
-	cout << "GemMerchant : Buy a ruby for 12 pieces of gold + numbers of times bought here? (Y/N)" << endl;
-}
-
-template <typename J>
-bool Palace<J>::action(Player& player)
-{
+bool Palace<J>::action(Player& player){
 	if( player.getFabric() > 4 &&
 			player.getJewel() > 4 &&
 				player.getSpice() > 4 && 
@@ -434,21 +389,16 @@ bool Palace<J>::action(Player& player)
 		player.setRuby(player.getRuby() + 1);
 		player.setCartSize(player.getCartSize() - 14);
 		return true;
-	}
-    else
-    {
+	}else{
 		return false;
 	}
 }
 
 template <typename J>
-TileType Palace<J>::getType() const{
-    return PALACE;
-}
+TileType Palace<J>::getType() const { return PALACE;}
 
 template <typename J>
-void Palace<J>::print() const
-{
+void Palace<J>::print() const {
 	cout << "Palace : Exchange 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices for a ruby? (Y/N)" << endl;
 }
 
