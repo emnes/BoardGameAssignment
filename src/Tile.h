@@ -265,7 +265,7 @@ ostream& operator<<(ostream& os, const Tile<K>& tile)
     }
     if (tile.getType() == GEMMERCHANT) {
     	const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile);   	 	
-    	os << " " << gemMerchant.getRubyPrice();
+    	os << " RubyPrice " << gemMerchant.getRubyPrice();
     }
     return os;
 }
