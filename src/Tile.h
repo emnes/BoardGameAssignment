@@ -66,7 +66,8 @@ public:
     /* Returns the number of other players on same tile
      * than the current player.
      */
-    int numOtherPlayers(){
+    int numOtherPlayers()
+    {
         int numPlayersOnTile = players.size();
         int numOtherPlayersOnTile = 0;
         if( numPlayersOnTile > 1)
