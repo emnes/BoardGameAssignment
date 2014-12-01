@@ -238,9 +238,9 @@ class GemMerchant : public Tile<J>
 private:
     unsigned int rubyPrice = 12;
 public:
-    void increaseRubyPrice(){++rubyPrice;}
-    void setRubyPrice(int _rubyPrice){rubyPrice = _rubyPrice;}
-    int getRubyPrice(){return rubyPrice;}
+	void increaseRubyPrice(){++rubyPrice;}
+	void setRubyPrice(int _rubyPrice){rubyPrice = _rubyPrice;}
+	int getRubyPrice() const {return rubyPrice;}
     bool action( Player& player) override;
     virtual TileType getType() const override;
     virtual void print() const;
@@ -263,12 +263,10 @@ ostream& operator<<(ostream& os, const Tile<K>& tile)
     {
         os << " " << "Player" << " " << p;
     }
-    //if (tile.getType() == GEMMERCHANT) {
-    //	if(const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile))
-   	// 	{
-    //    	os << " " << tile.getRubyPrice();
-    // 	}
-    //}
+    if (tile.getType() == GEMMERCHANT) {
+    	const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile);   	 	
+    	os << " RubyPrice " << gemMerchant.getRubyPrice();
+    }
     return os;
 }
 

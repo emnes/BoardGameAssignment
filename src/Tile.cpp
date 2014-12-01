@@ -15,10 +15,7 @@ bool Desert<J>::action(Player& player)
 }
 
 template <typename J>
-TileType Desert<J>::getType() const
-{
-    return DESERT;
-}
+TileType Desert<J>::getType() const { return DESERT;}
 
 template <typename J>
 void Desert<J>::print() const
@@ -41,10 +38,7 @@ bool Restaurant<J>::action(Player& player)
 }
 
 template <typename J>
-TileType Restaurant<J>::getType() const
-{
-    return RESTAURANT;
-};
+TileType Restaurant<J>::getType() const{return RESTAURANT;};
 
 template <typename J>
 void Restaurant<J>::print() const
@@ -194,10 +188,7 @@ bool SpiceMarket<J>::action(Player& player)
 }
 
 template <typename J>
-TileType SpiceMarket<J>::getType() const
-{
-    return SPICEMARKET;
-}
+TileType SpiceMarket<J>::getType() const { return SPICEMARKET;}
 
 template <typename J>
 void SpiceMarket<J>::print() const
@@ -223,10 +214,7 @@ bool JewelryMarket<J>::action(Player& player)
 }
 
 template <typename J>
-TileType JewelryMarket<J>::getType() const
-{
-    return JEWELRYMARKET;
-}
+TileType JewelryMarket<J>::getType() const { return JEWELRYMARKET;}
 
 template <typename J>
 void JewelryMarket<J>::print() const
@@ -250,12 +238,8 @@ bool FabricMarket<J>::action(Player& player)
         return false;
     }
 }
-
 template <typename J>
-TileType FabricMarket<J>::getType() const
-{
-    return FABRICMARKET;
-}
+TileType FabricMarket<J>::getType() const { return FABRICMARKET;}
 
 template <typename J>
 void FabricMarket<J>::print() const
@@ -315,10 +299,7 @@ void BlackMarket<J>::print() const
 }
 
 template <typename J>
-TileType BlackMarket<J>::getType() const
-{
-    return BLACKMARKET;
-}
+TileType BlackMarket<J>::getType() const { return BLACKMARKET;}
 
 template <typename J>
 bool Casino<J>::action(Player& player)
@@ -411,11 +392,10 @@ bool GemMerchant<J>::action(Player& player)
 }
 
 template <typename J>
-TileType GemMerchant<J>::getType() const {
-    return GEMMERCHANT;
-}
+TileType GemMerchant<J>::getType() const { return GEMMERCHANT;}
 
 template <typename J>
+    
 void GemMerchant<J>::print() const
 {
     cout << "GemMerchant : Buy a ruby for 12 pieces of gold + numbers of times bought here? (Y/N)" << endl;
@@ -423,33 +403,28 @@ void GemMerchant<J>::print() const
 
 template <typename J>
 bool Palace<J>::action(Player& player)
-{
-    if( player.getFabric() > 4 &&
-       player.getJewel() > 4 &&
-       player.getSpice() > 4 && 
-       static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers()){
-        player.setFabric(player.getFabric() - 5);
-        player.setJewel(player.getJewel() - 5);
-        player.setSpice(player.getSpice() - 5);
-        player.setRuby(player.getRuby() + 1);
-        player.setCartSize(player.getCartSize() - 14);
-        return true;
-    }
-    else
     {
-        return false;
-    }
+	if( player.getFabric() > 4 &&
+			player.getJewel() > 4 &&
+				player.getSpice() > 4 && 
+				 static_cast<int>(player.getGold()) >= Tile<J>::numOtherPlayers()){
+		player.setFabric(player.getFabric() - 5);
+		player.setJewel(player.getJewel() - 5);
+		player.setSpice(player.getSpice() - 5);
+		player.setRuby(player.getRuby() + 1);
+		player.setCartSize(player.getCartSize() - 14);
+		return true;
+	}else{
+		return false;
+	}
 }
 
 template <typename J>
-TileType Palace<J>::getType() const{
-    return PALACE;
-}
+TileType Palace<J>::getType() const { return PALACE;}
 
 template <typename J>
-void Palace<J>::print() const
-{
-    cout << "Palace : Exchange 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices for a ruby? (Y/N)" << endl;
+void Palace<J>::print() const {
+	cout << "Palace : Exchange 5 rolls of fabrics, 5 pieces of jewelry and 5 sacks of spices for a ruby? (Y/N)" << endl;
 }
 
 template class Desert<Player>;

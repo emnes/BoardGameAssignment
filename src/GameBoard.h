@@ -98,14 +98,11 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::~GameBoard()
 {
-    
-    if(tileFactory)
-        delete tileFactory;
-    
-    if(board)
-        for(auto row : board)
-            for (auto tile : row)
-                delete tile;
+    delete tileFactory;
+
+    for(auto row : board)
+        for (auto tile : row)
+            delete tile;
 }
 /*
  * Adds referenced tile to board.

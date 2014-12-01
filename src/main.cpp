@@ -11,26 +11,28 @@
 #include <array>
 #include <time.h>
 #include <limits>
-//#include "Player.h"
-//#include "Tile.h" --- included through GameBoard.
+#include <limits>
 #include "GameBoard.h"
+#include <stdio.h>
 
-#include <stdio.h>  /* defines FILENAME_MAX */
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
+#ifdef WINDOWS /* defines FILENAME_MAX */
+    #include <direct.h>
+    #define GetCurrentDir _getcwd
 #else
-#include <unistd.h>
-#define GetCurrentDir getcwd
+    #include <unistd.h>
+    #define GetCurrentDir getcwd
 #endif
 
 using std::cin;
+
 GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-//enum GameState {PLAYING, PAUSED};
-//GameState currentGameState = PLAYING;
 vector<string> playerNames;
 string workingDirectoryPath;						// Current working directory path
 
+/*
+ * Saves the game state and data
+ * to file.
+ */
 void saveGame()
 {
     ofstream outfile;
@@ -48,6 +50,10 @@ void saveGame()
     outfile.close();
 }
 
+/* 
+ * Loads a saved game state and
+ * data from file.
+ */
 bool loadGame()
 {
     ifstream infile;
@@ -70,6 +76,9 @@ bool loadGame()
     }
 }
 
+/*
+ * Creates a new game.
+ */
 void createGame()
 {
     // UI prompts for the number of players and stores it
@@ -125,25 +134,27 @@ void playerWon(const string& playerName)
     delete gameBoard;
     exit(0);
 }
+    
 int main()
 {
-    // Fetch the current working directory
-    char cCurrentPath[FILENAME_MAX];
-    
-    if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+	// Fetch the current working directory path
+	char cCurrentPath[FILENAME_MAX];
+	
+	if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
     {
-        return errno;
+     return errno;
     }
-    cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
-    workingDirectoryPath = cCurrentPath;
-    std::replace(workingDirectoryPath.begin(), workingDirectoryPath.end(), '\\', '/');
     
-    
-    cout << "CSI2372 Final Project" << endl;
-    cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
-    cout << "************************************************************************" << endl;
-    cout << "***********************************AGAME********************************" << endl;
-    cout << "************************************************************************" << endl << endl;
+	cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; 
+	workingDirectoryPath = cCurrentPath;
+	std::replace(workingDirectoryPath.begin(), workingDirectoryPath.end(), '\\', '/');
+	
+	
+	cout << "CSI2372 Final Project" << endl;
+	cout << "by Patrice Boulet & Mazhar Shar" << endl << endl;
+	cout << "************************************************************************" << endl;
+	cout << "***********************************AGAME********************************" << endl;
+	cout << "************************************************************************" << endl << endl;
     
     bool startedGame = false;
     while(!startedGame)
@@ -171,7 +182,6 @@ int main()
     bool hasWon = false;
     while (!hasWon)
     {
-        
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
