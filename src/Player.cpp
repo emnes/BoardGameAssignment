@@ -8,6 +8,11 @@
 
 #include "Player.h"
 
+/*
+ * Pay 1 gold to a player.
+ * 	@param player
+ * 		player to pay
+ */
 bool Player::pay(Player& player)
 {
     if( this->getGold() > 0)
@@ -20,6 +25,11 @@ bool Player::pay(Player& player)
         return false;
 }
 
+/* 
+ * Increments the size of the 
+ * cart, i.e. number of items
+ * it actually holds.
+ */
 bool Player::incrementCartSize()
 {
     if( currentCartSize < cart )
@@ -31,12 +41,20 @@ bool Player::incrementCartSize()
         return false;
 }
 
+/*
+ * Player are qual if they have the same name
+ * as one cannot create two player with the same
+ * name inside a game.
+ */
 bool operator==(const Player& playerA, const Player& playerB)
 {
     return playerA.getName()==playerB.getName();
 }
 
-// Save friendly insertion operator.
+/* 
+ * Insertion operator. Is used to save the
+ * game to file.
+ */
 ostream& operator<<(ostream& os, const Player& player)
 {
     // You can add a print function for the UI here or in main
@@ -47,6 +65,10 @@ ostream& operator<<(ostream& os, const Player& player)
     << player.getCartSize();
 }
 
+/* 
+ * Prints the status of a player.
+ * Used to print the status in gameplay ui.
+ */
 void Player::print() const
 {
     cout << "Gold\tFood\tSpice\tFabric\tJewel\tRuby\tCart Capacity\tCart Size" << endl
@@ -60,8 +82,10 @@ void Player::print() const
     << getCartSize() << endl;
 }
 
-// Load friendly extraction operator. (Might not use in final).
-
+/*
+ * Extraction opertor.  Used
+ * in loading of a player from file.
+ */
 istream& operator>>(istream& is, Player& player)
 {
     is >> player.gold;
