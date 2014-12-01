@@ -38,6 +38,7 @@ public:
 	vector<J> players;												// Vector of all players.
 	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
+	int currentPlayerIndex = 0;											// index of the current player in the players vector
 
 public:
 	GameBoard();													// GameBoard constructor for loading from file.
@@ -47,11 +48,13 @@ public:
 	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile.
     void addPlayer(string playerName); 								// Adds a player to the game.
     void setPlayer(J player);                                       // Updates player -- maybe need for loading **
+    void setCurrentPlayerIndex(int index){currentPlayerIndex = index;}
 
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name.
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name.
 	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile.
 	void getValidMoves(bool* b, int i, int j);                      // Returns boolean array of moves a play can make. Dependant on placement of player's current tile.
+	int getCurrentPlayerIndex() const {return currentPlayerIndex;}
 	
 	void printCurrentLocation(const string& playerName);            // Prints X where player is located.
 	const T& move(Move move, const std::string& playerName );       // Moves player.
@@ -241,8 +244,6 @@ const T& GameBoard<T, J, ROW, COL>::getTile(int row, int col) const
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
 {
-	//if( players[playerName] ))			// should be a search here and if pointer to end is returned then throw. -P
-        //throw std::out_of_range("Player does not exist.");
     for( Player& player : players){
     	if (player.getName() == playerName)
     		return player;
@@ -488,6 +489,9 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
             os << "<tile>" << " " << *(tile) << " " << "</tile>" << endl;
         }
     }
+    
+    os << "CurrentPlayerIndex " << gameBoard.getCurrentPlayerIndex();
+    
     return os;
 }
 template<typename U, typename L, unsigned int R, unsigned int C>
@@ -564,23 +568,13 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                     break;
                 }
             }
-        }
-    }
-    // read current player index
-    
-    /*for (Player p: gameBoard.players)
-    {
-        is >> p;
-        cout << p;
-    }
-    
-    for (auto column : gameBoard.board)
-    {
-        for (auto tile : column)
+        }else if ( token == "CurrentPlayerIndex")
         {
-            is >> *(tile);
-        }
-    }*/
+        	streamLine >> token;
+        	int currentPlayerIndex = atoi( token.c_str());
+        	gameBoard.setCurrentPlayerIndex(currentPlayerIndex);
+		}
+    }
     return is;
 }
 
