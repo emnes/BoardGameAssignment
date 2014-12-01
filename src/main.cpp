@@ -270,7 +270,7 @@ int main()
                                 {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
 								}else{
-									if( currentPlayer.getRuby() == 5)
+									if( currentPlayer.getRuby() >= 5)
                                     {
 										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
 										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 
