@@ -226,7 +226,7 @@ int main()
 						invalidInput = false;
 						gameBoard->move(direction, currentPlayer.getName());
 						cout << string( 100, '\n' );
-						cout << "Current player:" << endl;
+						cout << "Current player:" << currentPlayer.getName() << endl;
 						currentPlayer.print();
 						gameBoard->printCurrentLocation(currentPlayer.getName());
 						currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
