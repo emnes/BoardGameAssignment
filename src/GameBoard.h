@@ -511,6 +511,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
             {
                 if (streamLine >> token)
                 {
+                	cout<< token << endl;
                     gameBoard.addPlayer(token);
                 }
             }

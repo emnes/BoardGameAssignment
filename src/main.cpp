@@ -53,7 +53,7 @@ void saveGame()
 bool loadGame()
 {
     ifstream infile;
-    infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    infile.open(workingDirectoryPath + "/gameData.txt");
     if (infile.is_open())
     {
         gameBoard =
