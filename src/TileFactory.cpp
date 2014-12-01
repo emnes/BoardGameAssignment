@@ -31,7 +31,7 @@ Tile <J>* TileFactory<J>::next()
 template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
-	int numTilesToCreate = _nTiles;								// We could improve randomness here. -P
+	int numTilesToCreate = _nTiles;							
 	int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
 	for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
 		for ( int j = 1; j < 14; j++){
@@ -46,12 +46,6 @@ TileFactory<J>::TileFactory(int _nTiles)
 	
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
   	shuffle (randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
-	
-	/*
-	for( TileType tileTypeA : randomTiles){
-		cout<< tileTypeA;
-	}
-	*/
 	
 	Register(DESERT, &Desert<J>::Create);
 	Register(RESTAURANT, &Restaurant<J>::Create);

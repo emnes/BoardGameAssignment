@@ -40,7 +40,6 @@ public:
 private:
 	vector<TileType> randomTiles;		     // Holds the remaining types of tile to be created randomly
     TileFactory<J> (int _nTiles);
-    TileFactory<J> (const TileFactory<J> &); // Unimplemented copy ctor prevents singleton being copied
     TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }
     
     FactoryMap m_FactoryMap;
