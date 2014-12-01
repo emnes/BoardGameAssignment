@@ -396,9 +396,8 @@ TileType GemMerchant<J>::getType() const { return GEMMERCHANT;}
 
 template <typename J>
     
-void GemMerchant<J>::print() const
-{
-    cout << "GemMerchant : Buy a ruby for 12 pieces of gold + numbers of times bought here? (Y/N)" << endl;
+void GemMerchant<J>::print() const {
+	cout << "GemMerchant : Buy a ruby for " << GemMerchant<J>::getRubyPrice() << " pieces of gold? (Y/N)" << endl;
 }
 
 template <typename J>
