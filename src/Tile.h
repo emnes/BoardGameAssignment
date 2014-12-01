@@ -47,9 +47,9 @@ public:
         return false;
     }
 	virtual bool action( Player& player) = 0;										// Action that a player can do on the tile
-	virtual TileType getType() const = 0;													// Dynamic type of a tile, refer to the enum
+	virtual TileType getType() const = 0;											// Dynamic type of a tile, refer to the enum
     virtual Tile* clone() = 0;
-	virtual void print() const= 0;														// Prints the action prompt for a tile of a certain type
+	virtual void print() const= 0;													// Prints the action prompt for a tile of a certain type
 	
 	template <typename K>
 	friend ostream& operator<<(ostream& os, const Tile<K>& tile);					// Print the type and action definition of a tile
@@ -57,7 +57,7 @@ public:
     template <typename K>
     friend istream& operator>>(istream& is, Tile<K>& tile);
 	
-	vector<string> getPlayers() const{return players;}									// Returns a vector of the player names
+	vector<string> getPlayers() const{return players;}								// Returns a vector of the player names
    
    	void addPlayer( const string& playerName){players.push_back(playerName);}		// Adds a player to the tile's current player list
    	void removePlayer(string playerName);											// Removes a player to the tile's current players list
@@ -263,37 +263,14 @@ ostream& operator<<(ostream& os, const Tile<K>& tile)
     {
         os << " " << "Player" << " " << p;
     }
-    if (tile.getType() == GEMMERCHANT) {
-       // os << " " << tile.getRubyPrice();
-    }
+    //if (tile.getType() == GEMMERCHANT) {
+    //	if(const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile))
+   	// 	{
+    //    	os << " " << tile.getRubyPrice();
+    // 	}
+    //}
     return os;
 }
-
-
-/*template <typename K>
-istream& operator>>(istream& is, Tile<K>& tile)
-{
-    string coordinates;
-    is >> coordinates;
-    string yCoordinate = coordinates.substr(coordinates.find(","));
-    cout << yCoordinate;
-    tile.coordinates[0] = coordinates[0];
-    tile.coordinates[1] = std::stoi(yCoordinate);
-    cout << "y Coordinate: " << tile.coordinates[1];
-    
-    // Next we want to set the next line to be the type but we can't just change the tile
-    
-    if (is) // if tile being read has player then add
-    {
-        // remove all of the tile's current players
-        string playerName;
-        is >> playerName;
-        tile.addPlayer(playerName);
-    }
-     
-    
-    return is;
-}*/
 
 
 #endif /* defined(__BoardGame__Tile__) */
