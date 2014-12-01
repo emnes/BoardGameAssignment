@@ -122,6 +122,7 @@ void playerWon(const string& playerName)
 {
     cout<< "\t\t\t" << playerName << " HAS WON." << endl;
     cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl;
+    delete gameBoard;
     exit(0);
 }
 int main()
@@ -170,12 +171,6 @@ int main()
     bool hasWon = false;
     while (!hasWon)
     {
-        
-        /*if (pause)
-         {
-         saveGame(cCurrentPath);
-         exit(0);
-         }*/
         
         // currentPlayerIndex holds whose turn it is (useful for a save)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
@@ -239,8 +234,8 @@ int main()
                     {
                         invalidInput = false;
                         saveGame();
+                        delete gameBoard;
                         exit(0);
-                        break;
                     }
                     else
                     {
