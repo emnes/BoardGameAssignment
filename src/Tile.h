@@ -263,12 +263,10 @@ ostream& operator<<(ostream& os, const Tile<K>& tile)
     {
         os << " " << "Player" << " " << p;
     }
-    //if (tile.getType() == GEMMERCHANT) {
-    //	if(const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile))
-   	// 	{
-    //    	os << " " << tile.getRubyPrice();
-    // 	}
-    //}
+    if (tile.getType() == GEMMERCHANT) {
+    	const GemMerchant<K>& gemMerchant = dynamic_cast<const GemMerchant<K>&>(tile);   	 	
+    	os << " " << gemMerchant.getRubyPrice();
+    }
     return os;
 }
 
