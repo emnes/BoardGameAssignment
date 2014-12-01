@@ -33,21 +33,22 @@ template < class J >
 TileFactory<J>::TileFactory(int _nTiles)
 {
     int numTilesToCreate = _nTiles;
-    int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;
-    for ( int i = 0; i < numSpecializedTilesOfEachType; i++){
+    int numSpecializedTilesOfEachType = (1.0/14.0)*_nTiles;						// Get the number of specialized tile do generate for each type
+    for ( int i = 0; i < numSpecializedTilesOfEachType; i++){					// Put them into an array
         for ( int j = 1; j < 14; j++){
             randomTiles.push_back(static_cast<TileType>(j));
             numTilesToCreate--;
         }
     }
-    while( numTilesToCreate > 0){
+    while( numTilesToCreate > 0){												// The rest of the remaining tile are going to be of type DESERT
         randomTiles.push_back(DESERT);
         numTilesToCreate--;
     }
     
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    shuffle(randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();		
+    shuffle(randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));	// Shuffles the array we just created
     
+    // Registers all tile types Create function pointers
     Register(DESERT, &Desert<J>::Create);
     Register(RESTAURANT, &Restaurant<J>::Create);
     Register(SPICEMERCHANT, &SpiceMerchant<J>::Create);
