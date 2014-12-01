@@ -27,26 +27,26 @@ public:
     typedef Tile<J>* (*CreateTileFn)(void);
     typedef map<TileType, CreateTileFn>  FactoryMap;
     
-    static TileFactory* Get(int _nTiles)
+    static TileFactory* Get(int _nTiles)					    		// Gets a singleton instance of a TileFactory
     {
         static TileFactory instance(_nTiles);
         return &instance;
     }
-    ~TileFactory()
+    ~TileFactory()														// d-tor
     {
         m_FactoryMap.clear();
     }
-    Tile<J>* next();
+    Tile<J>* next();													// Returns new tile pointer of a random tileType.
     
-    void Register(const TileType &tileType, CreateTileFn pfnCreate);
-    Tile<J>* CreateTile(const TileType &tileType);
+    void Register(const TileType &tileType, CreateTileFn pfnCreate);	// Register the create function of each tile type.
+    Tile<J>* CreateTile(const TileType &tileType);						// Broker for more specific tile Create functinos
     
 private:
-    vector<TileType> randomTiles;		     // Holds the remaining types of tile to be created randomly
+    vector<TileType> randomTiles;		     							// Holds the remaining types of tile to be created randomly
     TileFactory<J> (int _nTiles);
-    TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }
+    TileFactory<J> &operator=(const TileFactory<J> &) { return *this; }	// Singleton pattern, cannot created a new instance while one exists
     
-    FactoryMap m_FactoryMap;
+    FactoryMap m_FactoryMap;											// Holds function pointers associated with each tile type Create function
 };
 
 #endif /* defined(__BoardGame__TileFactory__) */

@@ -5,6 +5,10 @@
 //  Created by Mazhar Shar & Patrice Boulet on 28/10/2014.
 //  Copyright (c) 2014 Mazhar Shar & Patrice Boulet. All rights reserved.
 //
+// A player in the board game.  A player has gold and food as well as 
+// goods( rubies, spice, fabric & jewels ) which it hold in a cart
+// of a certain capacity.
+//
 
 #ifndef __src__Player__
 #define __src__Player__

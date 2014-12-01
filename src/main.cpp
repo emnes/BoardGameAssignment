@@ -5,17 +5,23 @@
 //  Created by Mazhar Shar & Patrice Boulet on 28/10/2014.
 //  Copyright (c) 2014 Mazhar Shar & Patrice Boulet. All rights reserved.
 //
+//  Here is implemented the main loop of the game.  One can
+//  choose to load the latest saved game or to start a new game.
+//  The first player that gets 5 rubies wins.  Each action costs
+//  1 food item and when other players are on the same tile a player
+//  pays 1 gold to each of the other players to perform an action.  When
+//  a player has no more food he can move but cannot do any action.
+//
 
 #include <iostream>
 #include <unistd.h>
 #include <array>
 #include <time.h>
 #include <limits>
-#include <limits>
 #include "GameBoard.h"
 #include <stdio.h>
 
-#ifdef WINDOWS /* defines FILENAME_MAX */
+#ifdef WINDOWS 										// Conditionnal inclusions dependent on operating system type
     #include <direct.h>
     #define GetCurrentDir _getcwd
 #else
@@ -25,8 +31,8 @@
 
 using std::cin;
 
-GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
-vector<string> playerNames;
+GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;	// Object that holds the state of the game
+vector<string> playerNames;							// Simply hold all the names of the players
 string workingDirectoryPath;						// Current working directory path
 
 /*
@@ -182,16 +188,18 @@ int main()
     bool hasWon = false;
     while (!hasWon)
     {
-        // currentPlayerIndex holds whose turn it is (useful for a save)
+        // currentPlayerIndex holds whose turn it is (useful for a saving & loading)
         for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
             string currentPlayerName = playerNames[i];
             
+            // print the UI
             Player currentPlayer = gameBoard->getPlayer(currentPlayerName);
             cout << "Current player:" << currentPlayerName << endl;
             currentPlayer.print();
             gameBoard->printCurrentLocation(currentPlayerName);
             
+            // prompt for move
             Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
             int xCoord, yCoord;
             currentPlayerTile->getCoordinate(&xCoord, &yCoord);
@@ -286,7 +294,9 @@ int main()
                                     }
                                     if( currentPlayerTile->getType() != RESTAURANT)
                                         currentPlayer.eat();
-                                    for(string recipientPlayerName : currentPlayerTile->getPlayers())
+                                    
+									// paying other players on tile, if applicable
+									for(string recipientPlayerName : currentPlayerTile->getPlayers())
                                     {
                                         if( recipientPlayerName.compare(currentPlayerName))
                                         {
@@ -295,6 +305,7 @@ int main()
                                             gameBoard->setPlayer(recipientPlayer);				
                                         }
                                     }
+                                    //print the status of the player after performing the action
                                     gameBoard->setPlayer(currentPlayer);
                                     cout << endl << "Your status after performing this action is: " << endl;
                                     currentPlayer.print();	
@@ -317,6 +328,7 @@ int main()
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 cout << string( 100, '\n' );
             }
+            // update currentPlayerIndex here is crucial for loading and saving
             gameBoard->setCurrentPlayerIndex(gameBoard->getCurrentPlayerIndex() + 1);
             if( gameBoard->getCurrentPlayerIndex() == playerNames.size() )
                 gameBoard->setCurrentPlayerIndex(0); // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
