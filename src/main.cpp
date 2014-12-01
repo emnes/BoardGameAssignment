@@ -118,7 +118,12 @@ void createGame()
     new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard(playerNames.data(), playerNames.size());
 }
 
-
+void playerWon(const string& playerName)
+{
+    cout<< "\t\t\t" << playerName << " HAS WON." << endl;
+    cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl;
+    exit(0);
+}
 int main()
 {
 	// Fetch the current working directory
@@ -267,14 +272,13 @@ int main()
 								if( !currentPlayerTile->action(currentPlayer))
                                 {
 									cout<< "Sorry, you do not have enough ressources to perform this action." << endl;
-								}else{
+								}
+                                else
+                                {
 									if( currentPlayer.getRuby() >= 5)
                                     {
-										cout<< "\t\t\t" << currentPlayerName << " HAS WON." << endl;
-										cout<< endl << endl << "\t\t\tThank you for playing." << endl << endl; 
-										hasWon = true;
-										break;
-									}
+                                        playerWon(currentPlayerName);
+                                    }
 									if( currentPlayerTile->getType() != RESTAURANT)
 										currentPlayer.eat();
 									for(string recipientPlayerName : currentPlayerTile->getPlayers())
@@ -291,10 +295,12 @@ int main()
 									currentPlayer.print();	
 								}
 								invalidInput = false;
-							}else if( !actionInput.compare("n") || !actionInput.compare("N") )
+							}
+                            else if( !actionInput.compare("n") || !actionInput.compare("N") )
                             {
 								invalidInput = false;
-							}else
+							}
+                            else
                             {
 								cout<<"Sorry, your input is not valid, please choose Y or N" << endl;		
 							}
