@@ -9,8 +9,8 @@
 //  choose to load the latest saved game or to start a new game.
 //  The first player that gets 5 rubies wins.  Each action costs
 //  1 food item and when other players are on the same tile a player
-//  pay 1 gold to each of the other players to perform an action.  When
-//  player has no more food he an move but cannot do any action.
+//  pays 1 gold to each of the other players to perform an action.  When
+//  a player has no more food he can move but cannot do any action.
 //
 
 #include <iostream>
