@@ -42,6 +42,7 @@ public:
 public:
 	GameBoard();													// GameBoard constructor for loading from file.
 	GameBoard(string *playerNames, size_t playerNamesSize);			// GameBoard constructor.
+    ~GameBoard();                                                   // GameBoard destructor.
 	void add(const T& tile, int row, int col);						// Adds a tile to position row,col to the board.
 	const T& getTile(int row, int col) const;						// Returns the tile located at position row,col of the board.
 	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile.
@@ -67,7 +68,8 @@ GameBoard<T, J, ROW, COL>::GameBoard(){
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize){
+GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize)
+{
 
 	array<float, 14> tileCreationRates = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		// for testing purpose. -P
     tileFactory = TileFactory<J>::Get(ROW*COL);
@@ -108,9 +110,9 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize
 						    addPlayer(*(playerNames + i));							// Add players 
 						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
 						    int row, col;
-						    int* rowPtr = &row;
-						    int* colPtr = &col;					
-							playersCurrentTile[*(playerNames + i)]->getCoordinate(rowPtr, colPtr);
+						    //int* rowPtr = &row;
+						    //int* colPtr = &col;
+							playersCurrentTile[*(playerNames + i)]->getCoordinate(&row, &col);
 							//cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl; 
 							tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
 						}
@@ -199,6 +201,20 @@ GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize
 			*/
 }
 
+template<typename T, typename J, unsigned int ROW, unsigned int COL>
+GameBoard<T, J, ROW, COL>::~GameBoard()
+{
+    
+    if(tileFactory)
+        delete tileFactory;
+    
+    if(board)
+        for(auto row : board)
+            for (auto tile : row)
+            {
+                delete tile;
+            }
+}
 /*
  * Adds referenced tile to board.
  * Parameters: reference to tile, row and column of where to place tile.

@@ -17,6 +17,7 @@
 #include <random>       // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
 
+
 template< class J>
 Tile <J>* TileFactory<J>::next()
 {		
@@ -45,7 +46,7 @@ TileFactory<J>::TileFactory(int _nTiles)
 	}
 	
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  	shuffle (randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
+    shuffle(randomTiles.begin(), randomTiles.end(), std::default_random_engine(seed));
 	
 	/*
 	for( TileType tileTypeA : randomTiles){
