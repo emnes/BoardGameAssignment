@@ -22,7 +22,6 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-//#include "Tile.h" -- included through TileFactory
 #include "TileFactory.h"
 
 using std::ofstream;
@@ -38,6 +37,7 @@ public:
 	vector<J> players;												// Vector of all players.
 	map<string, T> playersCurrentTile;								// Keeps a reference of a player's current tile.
 	TileFactory<J>* tileFactory;		 							// Singleton instance of TileFactory.
+	int currentPlayerIndex = 0;											// index of the current player in the players vector
 
 public:
 	GameBoard();													// GameBoard constructor for loading from file.
@@ -48,11 +48,13 @@ public:
 	void getCoordinate(const T &tile, int *row, int *col) const;   	// Returns the coordinates of a tile.
     void addPlayer(string playerName); 								// Adds a player to the game.
     void setPlayer(J player);                                       // Updates player -- maybe need for loading **
+    void setCurrentPlayerIndex(int index){currentPlayerIndex = index;}
 
 	J getPlayer(const std::string& playerName);						// Get a Player object by player name.
 	const T& getTile(const std::string& playerName) const;			// Get the current tile of a Player by player name.
 	std::vector<J> getPlayers(const T& tile) const;					// Get all the players located at a tile.
 	void getValidMoves(bool* b, int i, int j);                      // Returns boolean array of moves a play can make. Dependant on placement of player's current tile.
+	int getCurrentPlayerIndex() const {return currentPlayerIndex;}
 	
 	void printCurrentLocation(const string& playerName);            // Prints X where player is located.
 	const T& move(Move move, const std::string& playerName );       // Moves player.
@@ -64,141 +66,33 @@ public:
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(){
-	TileFactory<J>* tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton	
+	tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton	
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
-GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize)
-{
-
-	array<float, 14> tileCreationRates = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		// for testing purpose. -P
+GameBoard<T, J, ROW, COL>::GameBoard(string *playerNames, size_t playerNamesSize){
     tileFactory = TileFactory<J>::Get(ROW*COL);
-	
-	bool playersAreSetToStartTile = false;
-	
+    bool playersAreSetToStartTile = false;
     for(int i = 0; i < ROW; i++){
-    	for( int j = 0; j < COL; j++){
-    		Tile<J>* tileToInsert = tileFactory->next();
-    		tileToInsert->setXCoordinate(i);
-    		tileToInsert->setYCoordinate(j);
-    		// for testing purpose -P
-            /*if (tileToInsert->getType() == RESTAURANT) {
-                if( !playersAreSetToStartTile ){// NOT FOR TESTING PURPOSE DON'T REMOVE THIS PART*************
+        for( int j = 0; j < COL; j++){
+            Tile<J>* tileToInsert = tileFactory->next();
+            tileToInsert->setXCoordinate(i);
+            tileToInsert->setYCoordinate(j);
+            if (tileToInsert->getType() == RESTAURANT) {
+                if( !playersAreSetToStartTile ){
                     for (auto i = 0; i < playerNamesSize; i++){
-                        addPlayer(*(playerNames + i));							// Add players
-                        playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
+                        addPlayer(*(playerNames + i)); // Add players
+                        playersCurrentTile[*(playerNames + i)] = tileToInsert; // Set the player to start a Restaurant
                         int row, col;
-                        int* rowPtr = &row;
-                        int* colPtr = &col;
-                        playersCurrentTile[*(playerNames + i)]->getCoordinate(rowPtr, colPtr);
-                        //cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl;
-                        tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
+                        playersCurrentTile[*(playerNames + i)]->getCoordinate(&row, &col);
+                        tileToInsert->addPlayer(*(playerNames + i)); // Adds the player to this Restaurant tile
                     }
                     playersAreSetToStartTile = true;
                 }
-            }*/ // USE ABOVE FOR FINAL. Will not need switch case for one case.
-            
-			switch (tileToInsert->getType()){
-    			/*case DESERT:
-    				cout << "DESERT tile created" << endl;
-    				tileCreationRates.at(DESERT)++;
-    				break; */
-    			case RESTAURANT:
-    				//cout << "RESTAURANT tile created" << endl;
-    				if( !playersAreSetToStartTile ){// NOT FOR TESTING PURPOSE DON'T REMOVE THIS PART*************
-    					for (auto i = 0; i < playerNamesSize; i++){
-						    addPlayer(*(playerNames + i));							// Add players 
-						    playersCurrentTile[*(playerNames + i)] = tileToInsert;	// Set the player to start a Restaurant
-						    int row, col;
-						    //int* rowPtr = &row;
-						    //int* colPtr = &col;
-							playersCurrentTile[*(playerNames + i)]->getCoordinate(&row, &col);
-							//cout << endl << "Player " << *(playerNames + i) << " was set to (" << row << "," << col << ")" << endl; 
-							tileToInsert->addPlayer(*(playerNames + i));			// Adds the player to this Restaurant tile
-						}
-						playersAreSetToStartTile = true;
-					}
-    				//tileCreationRates.at(RESTAURANT)++;
-    				break;
-				/*case SPICEMERCHANT:
-    				cout << "SPICEMERCHANT tile created" << endl;
-    				tileCreationRates.at(SPICEMERCHANT)++;
-    				break;
-				case FABRICMANUFACTURER:
-    				cout << "FABRICMANUFACTURER tile created" << endl;
-    				tileCreationRates.at(FABRICMANUFACTURER)++;
-    				break;
-				case JEWELER:
-    				cout << "JEWELER tile created" << endl;
-    				tileCreationRates.at(JEWELER)++;
-    				break;
-				case CARTMANUFACTURER:
-    				cout << "CARTMANUFACTURER tile created" << endl;
-    				tileCreationRates.at(CARTMANUFACTURER)++;
-    				break;
-				case SMALLMARKET: 
-    				cout << "SMALLMARKET tile created" << endl;
-    				tileCreationRates.at(SMALLMARKET)++;
-    				break;
-				case SPICEMARKET:
-    				cout << "SPICEMARKET tile created" << endl;
-    				tileCreationRates.at(SPICEMARKET)++;
-    				break;
-				case JEWELRYMARKET: 
-    				cout << "JEWELRYMARKET tile created" << endl;
-    				tileCreationRates.at(JEWELRYMARKET)++;
-    				break;
-				case FABRICMARKET:
-    				cout << "FABRICMARKET tile created" << endl;
-    				tileCreationRates.at(FABRICMARKET)++;
-    				break;
-				case BLACKMARKET:
-    				cout << "BLACKMARKET tile created" << endl;
-    				tileCreationRates.at(BLACKMARKET)++;
-    				break;
-				case CASINO:
-    				cout << "CASINO tile created" << endl;
-    				tileCreationRates.at(CASINO)++;
-    				break;
-				case GEMMERCHANT:
-    				cout << "GEMMERCHANT tile created" << endl;
-    				tileCreationRates.at(GEMMERCHANT)++;
-    				break;
-				case PALACE: 
-    				cout << "PALACE tile created" << endl;
-    				tileCreationRates.at(PALACE)++;
-    				break; */
-			}
-    						
-    		add(tileToInsert, i, j); // Add tile to board
-    	}
-    }		
-    		/*
-    		for (int i = 0; i<14; i++){
-				tileCreationRates.at(i) = tileCreationRates.at(i)/(static_cast<double>(ROW*COL))*100;
-			}
-			
-			cout<< endl;
-			cout<< "Tile Type\t\tOccurence Rate" << endl << endl;
-			
-			cout<< "Desert\t\t\t"<< tileCreationRates.at(DESERT) << "%" << endl;
-			cout<< "Restaurant\t\t" << tileCreationRates.at(RESTAURANT) << "%" << endl;
-			cout<< "SpiceMerchant\t\t" << tileCreationRates.at(SPICEMERCHANT) << "%" << endl;
-			cout<< "FabricManufacturer\t" << tileCreationRates.at(FABRICMANUFACTURER) << "%" << endl;
-			cout<< "Jeweler\t\t\t" << tileCreationRates.at(JEWELER) << "%" << endl;
-			cout<< "CartManufacturer\t" << tileCreationRates.at(CARTMANUFACTURER) << "%" << endl;
-			cout<< "SmallMarket\t\t" << tileCreationRates.at(SMALLMARKET) << "%" << endl;
-			cout<< "SpiceMarket\t\t" << tileCreationRates.at(SPICEMARKET) << "%" << endl;
-			cout<< "JewelryMarket\t\t" << tileCreationRates.at(JEWELRYMARKET) << "%" << endl;
-			cout<< "FabricMarket\t\t" << tileCreationRates.at(FABRICMARKET) << "%" << endl;
-			cout<< "BlackMarket\t\t" << tileCreationRates.at(BLACKMARKET) << "%" << endl;
-			cout<< "Casino\t\t\t" << tileCreationRates.at(CASINO) << "%" << endl;
-			cout<< "GemMerchant\t\t" << tileCreationRates.at(GEMMERCHANT) << "%" << endl;
-			cout<< "Palace\t\t\t" << tileCreationRates.at(PALACE) << "%" << endl;  
-			
-			cout<< "Tile Creation is a success" << endl;
-			
-			*/
+            }
+            add(tileToInsert, i, j); // Add tile to board
+        }
+    }
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -257,8 +151,6 @@ const T& GameBoard<T, J, ROW, COL>::getTile(int row, int col) const
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 J GameBoard<T, J, ROW, COL>::getPlayer(const string& playerName)
 {
-	//if( players[playerName] ))			// should be a search here and if pointer to end is returned then throw. -P
-        //throw std::out_of_range("Player does not exist.");
     for( Player& player : players){
     	if (player.getName() == playerName)
     		return player;
@@ -314,8 +206,9 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::setPlayer(J player){
    for( int i; i < players.size(); i ++){
-   		if( players.at(i) == player )
-   			players.at(i) = player;
+   		if( players.at(i) == player ){
+   				players.at(i) = player;
+		   }
    }
 }
 
@@ -379,7 +272,7 @@ void GameBoard<T, J, ROW, COL>::printCurrentLocation(const string& playerName){
 		cout << endl;
 	}
 	
-	bool showTileTypes = true; // True to show the tile types on the board GUI, otherwise they won't be shown.
+	bool showTileTypes = false; // True to show the tile types on the board GUI, otherwise they won't be shown.
 	
 	for (int j = COL-1; j > -1; j--){
 		cout<< "\t\t  ** ";
@@ -480,9 +373,6 @@ void GameBoard<T, J, ROW, COL>::getValidMoves(bool* b, int i, int j){
 		*(b + static_cast<int>(LEFT)) = false;
 }
 
-// Need to change typename variables
-// WORK ON THIS TOMORROW. Need gameBoard to save players into text file when 'p' is entered....
-// Look into: template operators. Why was gameBoard's operator not being called?
 template<typename U, typename L, unsigned int R, unsigned int C>
 ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
 {
@@ -503,6 +393,9 @@ ostream& operator<<(ostream& os, const GameBoard<U, L, R, C>& gameBoard)
             os << "<tile>" << " " << *(tile) << " " << "</tile>" << endl;
         }
     }
+    
+    os << "CurrentPlayerIndex " << gameBoard.getCurrentPlayerIndex();
+    
     return os;
 }
 template<typename U, typename L, unsigned int R, unsigned int C>
@@ -526,7 +419,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
             for (int i = 0; i < numOfPlayers; ++i)
             {
                 if (streamLine >> token)
-                {
+                {	
                     gameBoard.addPlayer(token);
                 }
             }
@@ -542,60 +435,53 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                 if (token == "</player>" )
                 {
                     gameBoard.setPlayer(tempPlayer);
-                    for (Player p: gameBoard.players)
-                        cout << p;
                     break;
                 }
             }
         }
         else if (token == "<tile>")
         {
-            /*// Reading main attributes
+            //Reading main attributes
             streamLine >> token;
-            Tile<J> tempTile;
-            tempTile.setType();
+            TileType tileType = static_cast<TileType>(atoi(token.c_str()));
+			Tile<L>* tileToInsert = gameBoard.tileFactory->CreateTile(tileType); 
             int xCoord;
             int yCoord;
             streamLine >> xCoord;
             streamLine >> yCoord;
-            
+            tileToInsert->setXCoordinate(xCoord);
+            tileToInsert->setYCoordinate(yCoord);
             // Optional attributes
             while (streamLine >> token)
             {
                 if (token == "Player")
                 {
                     streamLine >> token; // get name
-                    tempTile.addPlayer(token);
+                    tileToInsert->addPlayer(token);
+                    gameBoard.playersCurrentTile[token] = tileToInsert;
                 }
-                if (token == "RubyPrice")
+            	if (token == "RubyPrice")
                 {
                     int rubyPrice;
                     streamLine >> rubyPrice; //get ruby
-                    tempTile.setRubyPrice(rubyPrice);
+                    if(GemMerchant<L>* gemMerchant= dynamic_cast<GemMerchant<L>*>(tileToInsert))
+    				{
+        				gemMerchant->setRubyPrice(rubyPrice);
+    				}
                 }
                 if (token == "</tile>" )
                 {
-                    gameBoard.add(tempTile, xCoord, yCoord);
+                    gameBoard.add(tileToInsert, xCoord, yCoord);
                     break;
                 }
-            }*/
-        }
-    }
-    // read current player index
-    
-    /*for (Player p: gameBoard.players)
-    {
-        is >> p;
-        cout << p;
-    }
-    
-    for (auto column : gameBoard.board)
-    {
-        for (auto tile : column)
+            }
+        }else if ( token == "CurrentPlayerIndex")
         {
-            is >> *(tile);
-        }
-    }*/
+        	streamLine >> token;
+        	int currentPlayerIndex = atoi( token.c_str());
+        	gameBoard.setCurrentPlayerIndex(currentPlayerIndex);
+		}
+    }
     return is;
 }
 

@@ -29,7 +29,6 @@ GameBoard<Tile<Player>*, Player, 6 ,6>* gameBoard;
 //enum GameState {PLAYING, PAUSED};
 //GameState currentGameState = PLAYING;
 vector<string> playerNames;							
-int currentPlayerIndex;								// index of the current player in the players vector
 string workingDirectoryPath;						// Current working directory path
 
 void saveGame()
@@ -39,7 +38,6 @@ void saveGame()
     if (outfile.is_open())
     {
         outfile << *(gameBoard);
-        outfile << currentPlayerIndex;
         cout << "Game saved." << endl;
     }
     else
@@ -53,14 +51,11 @@ void saveGame()
 bool loadGame()
 {
     ifstream infile;
-    infile.open("/Users/Maz/Documents/Work/BoardGameAssignment/istanbul.txt");
+    infile.open(workingDirectoryPath + "/gameData.txt");
     if (infile.is_open())
     {
-        gameBoard =
-        new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard();
-        infile >> *(gameBoard);
-        infile >> currentPlayerIndex;
-        cout << currentPlayerIndex;
+        gameBoard = new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard();
+        infile >> *gameBoard;
         cout << "Game loaded." << endl;
         infile.clear();
         infile.close();
@@ -78,7 +73,6 @@ bool loadGame()
 void createGame()
 {
     // UI prompts for the number of players and stores it
-    currentPlayerIndex = 0;
     int numOfPlayers = 0;
     bool invalidNumberOfPlayers = true;
     cout<< "\t\t\tEnter the number of players:";
@@ -160,18 +154,17 @@ int main()
         }
         else
         {
-            if(loadGame())
-            startedGame = true;
+            if(loadGame()){
+            	for( Player p : gameBoard->players){
+        			playerNames.push_back(p.getName());
+				}
+		        startedGame = true;
+			}
         }
     }
 	bool hasWon = false;
 	while (!hasWon)
     {
-        
-        if (playerNames.size() == 0) // DEBUGGING purposes
-        {
-            cout << "NO Players. ERROR " << endl; sleep(5);
-        }
         
         /*if (pause)
         {
@@ -180,7 +173,7 @@ int main()
         }*/
 
         // currentPlayerIndex holds whose turn it is (useful for a save)
-        for (int i = currentPlayerIndex; i < playerNames.size(); ++i)
+        for (int i = gameBoard->getCurrentPlayerIndex(); i < playerNames.size(); ++i)
         {
             string currentPlayerName = playerNames[i];
  
@@ -188,15 +181,12 @@ int main()
 			cout << "Current player:" << currentPlayerName << endl;
 			currentPlayer.print();
 			gameBoard->printCurrentLocation(currentPlayerName);
-		
+			
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 			int xCoord, yCoord;
-			//int* xCoordPtr = &xCoord;
-			//int* yCoordPtr = &yCoord;
 			currentPlayerTile->getCoordinate(&xCoord, &yCoord);
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
-			//int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if(validMoves[UP])
@@ -315,9 +305,10 @@ int main()
 				cin.sync();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << string( 100, '\n' );
-                
-                currentPlayerIndex = 0; // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
 			}
+		gameBoard->setCurrentPlayerIndex(gameBoard->getCurrentPlayerIndex() + 1);
+		if( gameBoard->getCurrentPlayerIndex() == playerNames.size() )
+			gameBoard->setCurrentPlayerIndex(0); // Resets currentPlayerIndex after loop completes to ensure next turn starts from first player.
 	}
 }
 	
