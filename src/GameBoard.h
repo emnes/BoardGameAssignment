@@ -63,7 +63,7 @@ public:
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 GameBoard<T, J, ROW, COL>::GameBoard(){
-	TileFactory<J>* tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton	
+	tileFactory = TileFactory<J>::Get(ROW*COL);	// Tile factory singleton	
 }
 
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
@@ -298,8 +298,9 @@ void GameBoard<T, J, ROW, COL>::addPlayer(string playerName){
 template<typename T, typename J, unsigned int ROW, unsigned int COL>
 void GameBoard<T, J, ROW, COL>::setPlayer(J player){
    for( int i; i < players.size(); i ++){
-   		if( players.at(i) == player )
-   			players.at(i) = player;
+   		if( players.at(i) == player ){
+   				players.at(i) = player;
+		   }
    }
 }
 
@@ -510,8 +511,7 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
             for (int i = 0; i < numOfPlayers; ++i)
             {
                 if (streamLine >> token)
-                {
-                	cout<< token << endl;
+                {	
                     gameBoard.addPlayer(token);
                 }
             }
@@ -527,43 +527,43 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                 if (token == "</player>" )
                 {
                     gameBoard.setPlayer(tempPlayer);
-                    for (Player p: gameBoard.players)
-                        cout << p;
                     break;
                 }
             }
         }
         else if (token == "<tile>")
         {
-            /*// Reading main attributes
+            //Reading main attributes
             streamLine >> token;
-            Tile<J> tempTile;
-            tempTile.setType();
+            TileType tileType = static_cast<TileType>(atoi(token.c_str()));
+			Tile<L>* tileToInsert = gameBoard.tileFactory->CreateTile(tileType); 
             int xCoord;
             int yCoord;
             streamLine >> xCoord;
             streamLine >> yCoord;
-            
+            tileToInsert->setXCoordinate(xCoord);
+            tileToInsert->setYCoordinate(yCoord);
             // Optional attributes
             while (streamLine >> token)
             {
                 if (token == "Player")
                 {
                     streamLine >> token; // get name
-                    tempTile.addPlayer(token);
+                    tileToInsert->addPlayer(token);
+                    gameBoard.playersCurrentTile[token] = tileToInsert;
                 }
-                if (token == "RubyPrice")
-                {
-                    int rubyPrice;
-                    streamLine >> rubyPrice; //get ruby
-                    tempTile.setRubyPrice(rubyPrice);
-                }
+                //if (token == "RubyPrice")
+                //{
+                //    int rubyPrice;
+                //    streamLine >> rubyPrice; //get ruby
+                //    tileToInsert->setRubyPrice(rubyPrice);
+                //}
                 if (token == "</tile>" )
                 {
-                    gameBoard.add(tempTile, xCoord, yCoord);
+                    gameBoard.add(tileToInsert, xCoord, yCoord);
                     break;
                 }
-            }*/
+            }
         }
     }
     // read current player index

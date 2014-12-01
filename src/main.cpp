@@ -56,11 +56,10 @@ bool loadGame()
     infile.open(workingDirectoryPath + "/gameData.txt");
     if (infile.is_open())
     {
-        gameBoard =
-        new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard();
-        infile >> *(gameBoard);
+        gameBoard = new typename GameBoard<Tile<Player>*, Player, 6, 6>::GameBoard();
+        infile >> *gameBoard;
         infile >> currentPlayerIndex;
-        cout << currentPlayerIndex;
+        cout << "Current Player Index is " <<currentPlayerIndex;
         cout << "Game loaded." << endl;
         infile.clear();
         infile.close();
@@ -160,18 +159,17 @@ int main()
         }
         else
         {
-            if(loadGame())
-            startedGame = true;
+            if(loadGame()){
+            	for( Player p : gameBoard->players){
+        			playerNames.push_back(p.getName());
+				}
+		        startedGame = true;
+			}
         }
     }
 	bool hasWon = false;
 	while (!hasWon)
     {
-        
-        if (playerNames.size() == 0) // DEBUGGING purposes
-        {
-            cout << "NO Players. ERROR " << endl; sleep(5);
-        }
         
         /*if (pause)
         {
@@ -188,15 +186,12 @@ int main()
 			cout << "Current player:" << currentPlayerName << endl;
 			currentPlayer.print();
 			gameBoard->printCurrentLocation(currentPlayerName);
-		
+			
 			Tile<Player>* currentPlayerTile = gameBoard->getTile(currentPlayer.getName());
 			int xCoord, yCoord;
-			//int* xCoordPtr = &xCoord;
-			//int* yCoordPtr = &yCoord;
 			currentPlayerTile->getCoordinate(&xCoord, &yCoord);
 			array<bool, 4> validMoves = {true,true,true,true};
 			gameBoard->getValidMoves(validMoves.data(), xCoord, yCoord);
-			//int moveInt; // delete because not used? - M
 			cout << "Where do you want to move next ? Enter your command number and press ENTER " << endl;
 			
 			if(validMoves[UP])
