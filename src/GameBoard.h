@@ -556,12 +556,15 @@ istream& operator>>(istream& is, GameBoard<U, L, R, C>& gameBoard)
                     tileToInsert->addPlayer(token);
                     gameBoard.playersCurrentTile[token] = tileToInsert;
                 }
-                //if (token == "RubyPrice")
-                //{
-                //    int rubyPrice;
-                //    streamLine >> rubyPrice; //get ruby
-                //    tileToInsert->setRubyPrice(rubyPrice);
-                //}
+            	if (token == "RubyPrice")
+                {
+                    int rubyPrice;
+                    streamLine >> rubyPrice; //get ruby
+                    if(GemMerchant<L>* gemMerchant= dynamic_cast<GemMerchant<L>*>(tileToInsert))
+    				{
+        				gemMerchant->setRubyPrice(rubyPrice);
+    				}
+                }
                 if (token == "</tile>" )
                 {
                     gameBoard.add(tileToInsert, xCoord, yCoord);
